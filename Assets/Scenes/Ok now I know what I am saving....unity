@@ -500,13 +500,16 @@ MonoBehaviour:
   moveSpeed: 5
   airMovementMultiplyer: 0.067
   airDrag: 0.003
-  sprintAddition: 5
+  sprintAddition: 4
   jumpStrength: 5
-  wallJumpStrength: 3
   lookSensitivity: 0.1
   jumpBufferTime: 0.15
   cameraPivot: {fileID: 2015598919}
   cameraTransform: {fileID: 451627756}
+  baseFov: 80
+  fovChangeSpeed: 3
+  tiltAmount: 30
+  tiltSpeed: 3
 --- !u!54 &818389885
 Rigidbody:
   m_ObjectHideFlags: 0

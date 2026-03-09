@@ -2,46 +2,61 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float airMovementMultiplyer = 0.1f;
-    public float airDrag = 0.05f;
-    public float sprintAddition = 4.0f;
-    public float jumpStrength = 5.0f;
-    public float wallJumpStrength = 3.0f;
-    public float lookSensitivity = 0.1f;
-    public float jumpBufferTime = 0.15f;
-    public Transform cameraPivot;
-    public Transform cameraTransform;
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private float airMovementMultiplyer = 0.067f;
+    [SerializeField] private float airDrag = 0.003f;
+    [SerializeField] private float sprintAddition = 4.0f;
 
+    [Header("Jump")]
+    [SerializeField] private float jumpStrength = 5.0f;
+    [SerializeField] private float lookSensitivity = 0.1f;
+    [SerializeField] private float jumpBufferTime = 0.15f;
+
+    [Header("Body Parts")]
+    [SerializeField] private Transform cameraPivot;
+    [SerializeField] private Transform cameraTransform;
+
+    [Header("Camera Effects")]
+    [SerializeField] private int baseFov = 80;
+    [SerializeField] private float fovChangeSpeed = 3f;
+    [SerializeField] private float tiltAmount = 15f;
+    [SerializeField] private float tiltSpeed = 3f;
     private Rigidbody rb;
-    private float pitch = 0f;
-    private bool isSprinting;
-    private bool onGround;
-    private bool touchingGround;
-    private bool hasWallJumped;
-    private float jumpBufferCounter = 0f;
-    private Vector3 averageNormal;
+    private Camera cam;
+    private struct PlayerStates
+    {
+        public float pitch;
+        public bool isSprinting;
+        public bool onGround;
+        public bool touchingGround;
+        public float jumpBufferCounter;
+        public ContactPoint contact;  
+    };
+    PlayerStates state;
     private PlayerInputs controls;
-    private struct Input
+    private struct InputStates
     {
         public Vector2 Move;
         public bool Jump;
         public Vector2 Look;
         public bool Sprint;
     };
-    Input inputs;
+    InputStates inputs;
     void Awake()
     {
         // Basic Initiating...
         rb = GetComponent<Rigidbody>();
+        cam = cameraTransform.GetComponent<Camera>();
         controls = new PlayerInputs();
-        inputs = new Input();
+        inputs = new InputStates();
+        state = new PlayerStates();
 
         // Initiate All The Input Event Triggers (stuff you neither need to understand nor touch)
         var actionMap = controls.asset.FindActionMap("Inputs");
         foreach(var action in actionMap.actions)
         {
-            var field = typeof(Input).GetField(action.name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            var field = typeof(InputStates).GetField(action.name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
             if(field == null)
             {
                 continue;
@@ -74,34 +89,27 @@ public class PlayerControls : MonoBehaviour
 
         Vector3 currentVelocity = rb.linearVelocity;
         Vector3 targetVelocity = Vector3.zero;
-        if(touchingGround)
+        if(state.touchingGround)
         {
             targetVelocity = new Vector3(move.x * moveSpeed, currentVelocity.y, move.z * moveSpeed);
-            if(inputs.Sprint || isSprinting)
+            if(inputs.Sprint || state.isSprinting)
             {
-                if(inputs.Move.y > 0 && Vector3.Dot(currentVelocity, camForward) > 0)
+                if(inputs.Move.y > 0 && Vector3.Dot(currentVelocity.normalized, camForward) >= 1 / Mathf.Sqrt(2)) // 45° Angle
                 {
-                    targetVelocity += camForward * ((inputs.Sprint) ? sprintAddition : sprintAddition / 2);
-                    isSprinting = true;
+                    targetVelocity += camForward * (inputs.Sprint ? sprintAddition : sprintAddition / 2);
+                    state.isSprinting = true;
                 }
                 else
                 {
-                    isSprinting = false;
+                    state.isSprinting = false;
                 }
             }
-            if(jumpBufferCounter > 0)
+            if(state.jumpBufferCounter > 0)
             {
-                if(onGround)
+                if(state.onGround)
                 {
-                    jumpBufferCounter = 0;
+                    state.jumpBufferCounter = 0;
                     targetVelocity.y = jumpStrength;
-                    hasWallJumped = false;
-                }
-                else if(!hasWallJumped)
-                {
-                    jumpBufferCounter = 0;
-                    targetVelocity += (averageNormal + move + (Vector3.up / 2)) * wallJumpStrength;
-                    hasWallJumped = true;
                 }
             }
         }
@@ -112,7 +120,7 @@ public class PlayerControls : MonoBehaviour
             {
                 maxAirSpeed += sprintAddition;
             } 
-            else if(isSprinting)
+            else if(state.isSprinting)
             {
                 maxAirSpeed += sprintAddition / 2;
             }
@@ -123,6 +131,7 @@ public class PlayerControls : MonoBehaviour
             targetVelocity.y = currentVelocity.y;
         }
         rb.linearVelocity = targetVelocity;
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, Mathf.Clamp(targetVelocity.magnitude, 7, 10) * (float)baseFov / 10, fovChangeSpeed * Time.deltaTime);
     }
 
     // Frame Updates
@@ -132,46 +141,46 @@ public class PlayerControls : MonoBehaviour
         {
             cameraPivot.Rotate(Vector3.up * inputs.Look.x * lookSensitivity);
 
-            pitch -= inputs.Look.y * lookSensitivity;
-            pitch = Mathf.Clamp(pitch, -80f, 80f);
-            cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+            state.pitch -= inputs.Look.y * lookSensitivity;
+            state.pitch = Mathf.Clamp(state.pitch, -80f, 80f);
+            cameraTransform.localRotation = Quaternion.Euler(state.pitch, 0f, 0f);
+
+            Vector3 newCamUp;
+            if(state.touchingGround && !state.onGround)
+            {
+                newCamUp = Vector3.RotateTowards(state.contact.normal, Vector3.up, Mathf.Deg2Rad * (90f - tiltAmount), 0f);
+            }
+            else
+            {
+                newCamUp = Vector3.up;
+            }
+            Quaternion targetRotation = Quaternion.LookRotation(cameraPivot.forward, newCamUp);
+            cameraPivot.rotation = Quaternion.Slerp(cameraPivot.rotation, targetRotation, tiltSpeed * Time.deltaTime);
         }
 
         if(inputs.Jump)
         {
-            jumpBufferCounter = jumpBufferTime;
+            inputs.Jump = false;
+            state.jumpBufferCounter = jumpBufferTime;
         }
-        else if(jumpBufferCounter > 0)
+        else if(state.jumpBufferCounter > 0)
         {
-            jumpBufferCounter -= Time.deltaTime;
+            state.jumpBufferCounter -= Time.deltaTime;
         }
     }
 
     void OnCollisionStay(Collision collision)
     {
         if(collision.gameObject.CompareTag("Ground")) {
-            touchingGround = true;
+            state.touchingGround = true;
+            state.contact = collision.contacts[0];
             foreach(ContactPoint contact in collision.contacts)
             {
                 if(contact.normal.y > 0.5f)
                 {
-                    hasWallJumped = true; // this may look weird, but this makes walljumps only possible after a normal jump, which is nice
-                    onGround = true;
+                    state.onGround = true;
                     return;
                 }
-            }
-            if(!onGround)
-            {
-                foreach(ContactPoint contact in collision.contacts)
-                { 
-                    averageNormal += contact.normal;
-                }
-                averageNormal /= (collision.contactCount + 1);
-                averageNormal.Normalize();
-            }
-            else
-            {
-                averageNormal = Vector3.zero;
             }
         }
     }
@@ -180,8 +189,8 @@ public class PlayerControls : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Ground"))
         {
-            onGround = false;
-            touchingGround = false;
+            state.onGround = false;
+            state.touchingGround = false;
         }
     }
 }
