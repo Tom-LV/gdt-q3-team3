@@ -15,22 +15,24 @@ public class Item : MonoBehaviour
 
     public void PickUp(Collider player)
     {
+        rb.linearVelocity = Vector3.zero;
         rb.useGravity = false;
+        rb.isKinematic = true;
         ignoredCol = player;
         Physics.IgnoreCollision(col, ignoredCol, true);
-        rb.linearVelocity = Vector3.zero;
         isHeld = true;
     }
     public void SetPosition(Vector3 newPos, Vector3 camForward)
     {
         if (isHeld)
         {
-            rb.MovePosition(newPos);
+            transform.position = newPos;
         }
     }
     public void Drop()
     {
         rb.useGravity = true;
+        rb.isKinematic = false;
         Physics.IgnoreCollision(col, ignoredCol, false);
         ignoredCol = null;
         isHeld = false;

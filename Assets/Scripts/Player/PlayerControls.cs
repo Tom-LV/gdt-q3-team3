@@ -221,7 +221,7 @@ public class PlayerControls : MonoBehaviour
             Interactable interactablePointer = state.lookObject.GetComponent<Interactable>(); // same as itemPointer
             if(interactablePointer != null)
             {
-                string uiDisplayText = interactablePointer.interactName; // I just want this as a reference for later when I make the ui
+                string uiDisplayText = interactablePointer.interactName; // I just want this as a reference for later when we make the ui
             }
             if(inputs.Interact)
             {
