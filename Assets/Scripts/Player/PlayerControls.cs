@@ -29,6 +29,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float tiltAmount; // default: 15f
     [SerializeField] private float tiltSpeed; // default: 3f
     private Rigidbody rb;
+    private Collider col;
     private Camera cam;
     private struct PlayerStates
     {
@@ -60,6 +61,7 @@ public class PlayerControls : MonoBehaviour
     {
         // Basic Initiating...
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         cam = cameraTransform.GetComponent<Camera>();
         controls = new PlayerInputs();
         inputs = new InputStates();
@@ -208,12 +210,12 @@ public class PlayerControls : MonoBehaviour
                 if(inputs.RightHold && state.rightHeldItem == null)
                 {
                     state.rightHeldItem = itemPointer;
-                    itemPointer.PickUp();
+                    itemPointer.PickUp(col);
                 }
                 if(inputs.LeftHold && state.leftHeldItem == null)
                 {
                     state.leftHeldItem = itemPointer;
-                    itemPointer.PickUp();
+                    itemPointer.PickUp(col);
                 }
             }
             Interactable interactablePointer = state.lookObject.GetComponent<Interactable>(); // same as itemPointer

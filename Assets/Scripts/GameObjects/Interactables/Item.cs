@@ -6,16 +6,18 @@ public class Item : MonoBehaviour
     private bool isHeld = false;
     private Rigidbody rb;
     private Collider col;
+    private Collider ignoredCol;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
 
-    public void PickUp()
+    public void PickUp(Collider player)
     {
         rb.useGravity = false;
-        col.enabled = false;
+        ignoredCol = player;
+        Physics.IgnoreCollision(col, ignoredCol, true);
         rb.linearVelocity = Vector3.zero;
         isHeld = true;
     }
@@ -23,13 +25,14 @@ public class Item : MonoBehaviour
     {
         if (isHeld)
         {
-            transform.position = newPos;
+            rb.MovePosition(newPos);
         }
     }
     public void Drop()
     {
         rb.useGravity = true;
-        col.enabled = true;
+        Physics.IgnoreCollision(col, ignoredCol, false);
+        ignoredCol = null;
         isHeld = false;
     }
     public void Throw(Vector3 direction)
