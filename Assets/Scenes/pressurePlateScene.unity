@@ -4983,6 +4983,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (1)
@@ -5138,6 +5142,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (5)
@@ -5273,7 +5281,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09ce2b156d5dba46b56adbb97c0a2d7, type: 2}
+  - {fileID: 2100000, guid: 214d0a2f2bcc26644ac8374032eab3c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5315,7 +5323,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.3323104, y: 0, z: -8.13157}
-  m_LocalScale: {x: 48, y: 13, z: 1}
+  m_LocalScale: {x: 50, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5475,6 +5483,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (2)
@@ -5662,7 +5674,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -5718,6 +5730,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (12)
@@ -5853,7 +5869,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09ce2b156d5dba46b56adbb97c0a2d7, type: 2}
+  - {fileID: 2100000, guid: 214d0a2f2bcc26644ac8374032eab3c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5895,7 +5911,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -18.66769, y: 0, z: -0.13157186}
-  m_LocalScale: {x: 48, y: 13, z: 1}
+  m_LocalScale: {x: 50, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -10779,9 +10795,9 @@ Transform:
   m_GameObject: {fileID: 610468280}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.05, z: -0.9999999}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 829169319}
   - {fileID: 1983256782}
@@ -10837,6 +10853,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (10)
@@ -16109,7 +16129,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09ce2b156d5dba46b56adbb97c0a2d7, type: 2}
+  - {fileID: 2100000, guid: 214d0a2f2bcc26644ac8374032eab3c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16151,7 +16171,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 20.83231, y: 0, z: -0.1315695}
-  m_LocalScale: {x: 48, y: 13, z: 1}
+  m_LocalScale: {x: 50, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -16192,7 +16212,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -16223,7 +16243,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e82900d6ab9a37a41ad0c68bbbab7b54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16435,6 +16455,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (4)
@@ -16541,6 +16565,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (7)
@@ -16647,6 +16675,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (3)
@@ -16753,6 +16785,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (11)
@@ -16859,6 +16895,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (6)
@@ -17032,7 +17072,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.5467616e-33, y: 4.59239e-40, z: 5.0598e-41, w: 773.13007}
+  m_BoundingSphereOverride: {x: 5.067e-41, y: 3e-45, z: 4.135903e-25, w: 5.51118e-40}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -17092,6 +17132,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (8)
@@ -22104,8 +22148,8 @@ Transform:
   m_GameObject: {fileID: 1501073906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3323104, y: 6.5, z: -1.5}
-  m_LocalScale: {x: 48, y: 1, z: 40}
+  m_LocalPosition: {x: 2.3323104, y: 5.5, z: -0.5}
+  m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -22218,7 +22262,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 50, y: 1, z: 50}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -22259,7 +22303,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -22290,7 +22334,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e82900d6ab9a37a41ad0c68bbbab7b54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22375,6 +22419,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (9)
@@ -22481,6 +22529,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (15)
@@ -22616,7 +22668,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09ce2b156d5dba46b56adbb97c0a2d7, type: 2}
+  - {fileID: 2100000, guid: 214d0a2f2bcc26644ac8374032eab3c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22658,7 +22710,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.3323104, y: 0, z: 9.86843}
-  m_LocalScale: {x: 48, y: 13, z: 1}
+  m_LocalScale: {x: 50, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -22691,6 +22743,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 5272207760919485146, guid: f3007a168e064184a8a75e3165cd4eb4, type: 3}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (13)
@@ -22793,6 +22849,10 @@ PrefabInstance:
       propertyPath: 'glyphPrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate (14)
@@ -22931,7 +22991,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -22962,7 +23022,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e82900d6ab9a37a41ad0c68bbbab7b54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23047,7 +23107,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -23078,7 +23138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e82900d6ab9a37a41ad0c68bbbab7b54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23143,6 +23203,10 @@ PrefabInstance:
       propertyPath: powerOffValue
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 8612418020566338591, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b58d8fc1b1a6c9e439a639553a7c1836, type: 2}
     - target: {fileID: 9071097675906827522, guid: a5fa6f67fd7ee704c8f037ed5ee28346, type: 3}
       propertyPath: m_Name
       value: plate
