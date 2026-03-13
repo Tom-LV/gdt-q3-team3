@@ -39,13 +39,11 @@ public class PlateManager : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) OnGlyphPressed(1);
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) OnGlyphPressed(2);
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) OnGlyphPressed(3);
-        if (Keyboard.current.digit4Key.wasPressedThisFrame) OnGlyphPressed(4);
+
     }
 
-    private void OnGlyphPressed(int pressedGlyphID)
+
+    public void OnGlyphPressed(int pressedGlyphID)
     {
         foreach (PlateScript plate in allPlates)
         {

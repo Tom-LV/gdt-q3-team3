@@ -209,14 +209,16 @@ public class PlayerControls : MonoBehaviour
             Item itemPointer = state.lookObject.GetComponent<Item>(); // if it is an item, this references that cs instance
             if(itemPointer != null && itemPointer != state.rightHeldItem && itemPointer != state.leftHeldItem)
             {
-                if(inputs.RightHold && state.rightHeldItem == null)
+                if (inputs.RightHold && state.rightHeldItem == null)
                 {
                     state.rightHeldItem = itemPointer;
+                    state.lookObject.gameObject.layer = 0;
                     itemPointer.PickUp(col);
                 }
                 if(inputs.LeftHold && state.leftHeldItem == null)
                 {
                     state.leftHeldItem = itemPointer;
+                    state.lookObject.gameObject.layer = 0;
                     itemPointer.PickUp(col);
                 }
             }
