@@ -233,7 +233,7 @@ public class PlayerControls : MonoBehaviour
         if(inputs.Interact)
         {
             if(interactablePointer != null){
-                interactablePointer.Interact();
+                interactablePointer.Interact(this);
             }
             else if(!TryUseItem(state.rightHeldItem))
             {

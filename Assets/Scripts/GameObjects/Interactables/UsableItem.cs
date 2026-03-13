@@ -11,14 +11,13 @@ public abstract class UsableItem : Item
             cooldownTimer -= Time.deltaTime;
         }
     }
-    public bool Use(PlayerControls player)
+    public void Use(PlayerControls player)
     {
         if(cooldownTimer <= 0)
         {
             cooldownTimer = cooldown;
             UseItem(player);
         }
-        return true;
     }
     protected abstract void UseItem(PlayerControls player);
 }
