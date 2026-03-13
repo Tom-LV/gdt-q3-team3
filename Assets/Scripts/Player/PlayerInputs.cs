@@ -127,6 +127,42 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""2e41756d-8dc9-42ec-8320-7576dd6b6e7d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a868e99-9b36-4bf7-8dcc-8d2285a76d00"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""0934ab9d-5dc2-478b-9dbf-676d14c82a2a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""7435879d-ebc5-41aa-95ca-7288d3f80f70"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +308,50 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44af982f-30a2-4fa9-8bf3-c0518701d8cd"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa0ee0d1-4ada-482d-bff0-abe56258bfb3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58ea65fe-e89f-4514-9c67-0daaeaffa350"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78ea88e4-c652-4af1-8d34-e30ce5ea7322"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -284,6 +364,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Inputs_Jump = m_Inputs.FindAction("Jump", throwIfNotFound: true);
         m_Inputs_Look = m_Inputs.FindAction("Look", throwIfNotFound: true);
         m_Inputs_Sprint = m_Inputs.FindAction("Sprint", throwIfNotFound: true);
+        m_Inputs_Interact = m_Inputs.FindAction("Interact", throwIfNotFound: true);
+        m_Inputs_LeftHold = m_Inputs.FindAction("LeftHold", throwIfNotFound: true);
+        m_Inputs_RightHold = m_Inputs.FindAction("RightHold", throwIfNotFound: true);
+        m_Inputs_Throw = m_Inputs.FindAction("Throw", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
@@ -368,6 +452,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Inputs_Jump;
     private readonly InputAction m_Inputs_Look;
     private readonly InputAction m_Inputs_Sprint;
+    private readonly InputAction m_Inputs_Interact;
+    private readonly InputAction m_Inputs_LeftHold;
+    private readonly InputAction m_Inputs_RightHold;
+    private readonly InputAction m_Inputs_Throw;
     /// <summary>
     /// Provides access to input actions defined in input action map "Inputs".
     /// </summary>
@@ -395,6 +483,22 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Inputs/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Inputs_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputs/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_Inputs_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputs/LeftHold".
+        /// </summary>
+        public InputAction @LeftHold => m_Wrapper.m_Inputs_LeftHold;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputs/RightHold".
+        /// </summary>
+        public InputAction @RightHold => m_Wrapper.m_Inputs_RightHold;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputs/Throw".
+        /// </summary>
+        public InputAction @Throw => m_Wrapper.m_Inputs_Throw;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -433,6 +537,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @LeftHold.started += instance.OnLeftHold;
+            @LeftHold.performed += instance.OnLeftHold;
+            @LeftHold.canceled += instance.OnLeftHold;
+            @RightHold.started += instance.OnRightHold;
+            @RightHold.performed += instance.OnRightHold;
+            @RightHold.canceled += instance.OnRightHold;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
         }
 
         /// <summary>
@@ -456,6 +572,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @LeftHold.started -= instance.OnLeftHold;
+            @LeftHold.performed -= instance.OnLeftHold;
+            @LeftHold.canceled -= instance.OnLeftHold;
+            @RightHold.started -= instance.OnRightHold;
+            @RightHold.performed -= instance.OnRightHold;
+            @RightHold.canceled -= instance.OnRightHold;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
         }
 
         /// <summary>
@@ -524,5 +652,33 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftHold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftHold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightHold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightHold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Throw" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThrow(InputAction.CallbackContext context);
     }
 }
