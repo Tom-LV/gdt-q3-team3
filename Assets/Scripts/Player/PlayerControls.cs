@@ -188,7 +188,7 @@ public class PlayerControls : MonoBehaviour
             state.jumpBufferCounter -= Time.deltaTime;
         }
 
-        if(inputs.Throw)
+        if(inputs.Throw) // TODO show tragectory and allow aiming
         {
             if(state.rightHeldItem != null)
             {
@@ -197,10 +197,12 @@ public class PlayerControls : MonoBehaviour
             }
             else if(state.leftHeldItem != null)
             {
-                state.leftHeldItem.Throw(throwForce * cameraTransform.forward);
+                state.leftHeldItem.Throw(throwForce * cameraTransform.forward + Vector3.ClampMagnitude(rb.linearVelocity, 11) / 11);
                 state.leftHeldItem = null;
             }
+            inputs.Throw = false;
         }
+        InteractableObject interactablePointer = null;
         if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, reach))
         {
             state.lookObject = hit.collider;
@@ -218,19 +220,26 @@ public class PlayerControls : MonoBehaviour
                     itemPointer.PickUp(col);
                 }
             }
-            Interactable interactablePointer = state.lookObject.GetComponent<Interactable>(); // same as itemPointer
+            interactablePointer = state.lookObject.GetComponent<InteractableObject>(); // same as itemPointer
             if(interactablePointer != null)
             {
                 string uiDisplayText = interactablePointer.interactName; // I just want this as a reference for later when we make the ui
-            }
-            if(inputs.Interact)
-            {
-
             }
         }
         else
         {
             state.lookObject = null;
+        }
+        if(inputs.Interact)
+        {
+            if(interactablePointer != null){
+                interactablePointer.Interact();
+            }
+            else if(!TryUseItem(state.rightHeldItem))
+            {
+                TryUseItem(state.leftHeldItem);
+            }
+            inputs.Interact = false;
         }
         if(!inputs.RightHold && state.rightHeldItem)
         {
@@ -270,5 +279,40 @@ public class PlayerControls : MonoBehaviour
             state.onGround = false;
             state.touchingGround = false;
         }
+    }
+
+    bool TryUseItem(Item item)
+    {
+        if(item == null)
+        {
+            return false;
+        }
+        UsableItem usable = item.GetComponent<UsableItem>();
+        if(usable == null)
+        {
+            return false;
+        }
+        usable.Use(this);
+        return true;
+    }
+
+    public void SetVelocity(Vector3 newVelocity)
+    {
+        rb.linearVelocity = newVelocity;
+    }
+
+    public void AddForceImpulse(Vector3 force)
+    {
+        rb.AddForce(force, ForceMode.Impulse);
+    }
+
+    public Vector3 GetCameraForward()
+    {
+        return cameraTransform.forward;
+    }
+
+    public Vector3 GetPivotForward()
+    {
+        return cameraPivot.forward;
     }
 }

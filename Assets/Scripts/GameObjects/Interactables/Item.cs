@@ -34,7 +34,6 @@ public class Item : MonoBehaviour
         rb.useGravity = true;
         rb.isKinematic = false;
         Physics.IgnoreCollision(col, ignoredCol, false);
-        ignoredCol = null;
         isHeld = false;
     }
     public void Throw(Vector3 direction)
