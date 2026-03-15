@@ -38,9 +38,22 @@ public class PlayerInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 1. Check if we are allowed to interact
+        if (!canInteract || PhoneController.isGamePaused)
+        {
+            // If the phone opens while we are hovering over an item, clear the hover state
+            if (lookingAtItem != null)
+            {
+                lookingAtItem.OnHoverLeave();
+                lookingAtItem = null;
+            }
+            return; // Stop running the rest of the interact logic
+        }
+
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactRange))
         {
-            InteractableItem interactableItem = hit.collider.GetComponent<InteractableItem>();
+            InteractableItem interactableItem = hit.collider.GetComponentInParent<InteractableItem>();
+
             if (interactableItem != null && !interactableItem.IsInteractable())
             {
                 interactableItem = null;
@@ -58,7 +71,6 @@ public class PlayerInteract : MonoBehaviour
                 {
                     lookingAtItem = interactableItem;
                     lookingAtItem.OnHoverEnter();
-                    return;
                 }
                 else if (lookingAtItem != interactableItem)
                 {
