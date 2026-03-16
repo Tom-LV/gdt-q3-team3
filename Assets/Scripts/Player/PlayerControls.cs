@@ -92,8 +92,17 @@ public class PlayerControls : MonoBehaviour
     // Physics Updates
     void FixedUpdate()
     {
-        // Movement Physics
-        Vector3 playerMovement = new Vector3(inputs.Move.x, 0f, inputs.Move.y);
+        
+        if (PhoneController.isGamePaused)
+        {
+            controls.Inputs.Disable();
+        } else
+        {
+            controls.Inputs.Enable();
+        }
+
+            // Movement Physics
+            Vector3 playerMovement = new Vector3(inputs.Move.x, 0f, inputs.Move.y);
 
         Vector3 camForward = cameraPivot.forward;
         camForward.y = 0;
@@ -157,6 +166,8 @@ public class PlayerControls : MonoBehaviour
     // Frame Updates
     void Update()
     {
+        if (PhoneController.isGamePaused) return;
+
         if (inputs.Look != Vector2.zero)
         {
             cameraPivot.Rotate(Vector3.up * inputs.Look.x * lookSensitivity);

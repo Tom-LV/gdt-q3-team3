@@ -4,7 +4,9 @@ using UnityEngine.Events;
 public class InteractableItem : MonoBehaviour
 {
     private bool interactable = true;
-    private LayerMask interactOutlineLayer;
+
+    private int interactOutlineLayer;
+
     [SerializeField]
     UnityEvent m_OnInteract;
 
@@ -20,11 +22,14 @@ public class InteractableItem : MonoBehaviour
 
     public void OnHoverEnter()
     {
-        gameObject.layer = interactOutlineLayer;
+        // Apply the outline layer to this object and all its children
+        SetLayerRecursively(gameObject, interactOutlineLayer);
     }
+
     public void OnHoverLeave()
     {
-        gameObject.layer = 0;
+        // Reset this object and all children back to layer 0 (Default)
+        SetLayerRecursively(gameObject, 0);
     }
 
     public void OnInteract()
@@ -35,15 +40,19 @@ public class InteractableItem : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         interactOutlineLayer = LayerMask.NameToLayer("InteractOutline");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetLayerRecursively(GameObject obj, int newLayer)
     {
-        
+
+        Transform[] allChildren = obj.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in allChildren)
+        {
+            child.gameObject.layer = newLayer;
+        }
     }
 }
