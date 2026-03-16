@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlateScript : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class PlateScript : MonoBehaviour
     public float heightOffset = 0.02f; // Keeps the glyphs from clipping into the stone
     public Boolean isActive = false;
     public float powerOnValue = 2f;
-    public float powerOffValue = 0f;
+    public float powerOffValue = 0.1f;
+
+    public UnityEvent<Boolean> m_OnToggle;
 
     [HideInInspector]
     public List<int> myGlyphIDs = new List<int>();
@@ -24,7 +27,7 @@ public class PlateScript : MonoBehaviour
     void Start()
     {
         ArrangeGlyphs();
-        SetGlyphPower(powerOffValue);
+        SetState(isActive);
     }
 
     void ArrangeGlyphs()
@@ -96,8 +99,18 @@ public class PlateScript : MonoBehaviour
         SetGlyphPower(targetPower);
     }
 
+    private void SetState(bool isActive)
+    {
+        this.isActive = isActive;
+        float targetPower = isActive ? powerOnValue : powerOffValue;
+        transform.localPosition = new Vector3(transform.localPosition.x, isActive ? 0.05f : 0f, transform.localPosition.z);
+        SetGlyphPower(targetPower);
+    }
+
     private void SetGlyphPower(float powerValue)
     {
+        if (m_OnToggle != null) m_OnToggle.Invoke(isActive);
+
         foreach (Renderer r in spawnedRenderers)
         {
             if (r != null)
