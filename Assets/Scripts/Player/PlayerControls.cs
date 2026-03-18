@@ -7,14 +7,17 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float airMovementMultiplier; // default: 0.067f
     [SerializeField] private float airDrag; // default: 0.003f
     [SerializeField] private float sprintAddition; // default: 4f
+    [SerializeField] private float stepHeight; // default 0.4f
 
     [Header("Jump")]
     [SerializeField] private float jumpStrength; // default: 5f
     [SerializeField] private float jumpBufferTime; // default: 0.15f
+    [SerializeField] private float lastJumpTime; // default: 0.15f
 
     [Header("Body Parts")]
     [SerializeField] private Transform cameraPivot;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private InteractionUI interactionDisplay;
 
     [Header("Interaction")]
     [SerializeField] private float reach; // default: 5f
@@ -92,7 +95,6 @@ public class PlayerControls : MonoBehaviour
     // Physics Updates
     void FixedUpdate()
     {
-        
         if (PhoneController.isGamePaused)
         {
             controls.Inputs.Disable();
@@ -102,7 +104,7 @@ public class PlayerControls : MonoBehaviour
         }
 
             // Movement Physics
-            Vector3 playerMovement = new Vector3(inputs.Move.x, 0f, inputs.Move.y);
+        Vector3 playerMovement = new Vector3(inputs.Move.x, 0f, inputs.Move.y);
 
         Vector3 camForward = cameraPivot.forward;
         camForward.y = 0;
@@ -111,7 +113,6 @@ public class PlayerControls : MonoBehaviour
         camRight.y = 0;
         camRight.Normalize();
         Vector3 move = camForward * playerMovement.z + camRight * playerMovement.x;
-
         Vector3 currentVelocity = rb.linearVelocity;
         Vector3 targetVelocity = Vector3.zero;
 
@@ -136,6 +137,7 @@ public class PlayerControls : MonoBehaviour
                 {
                     state.jumpBufferCounter = 0;
                     targetVelocity.y = jumpStrength;
+                    lastJumpTime = Time.time;
                 }
             }
         }
@@ -156,11 +158,23 @@ public class PlayerControls : MonoBehaviour
             targetVelocity = Vector3.ClampMagnitude(targetVelocity, maxAirSpeed);
             targetVelocity.y = currentVelocity.y;
         }
+
+        if(state.touchingGround && targetVelocity.y < -3)
+        {
+            targetVelocity.y = -3f;
+        }
+
+        Debug.DrawRay(cameraTransform.position, -2 * Vector3.up, Color.red);
+        if(Time.time - lastJumpTime > 1 && !state.onGround && targetVelocity.y >= 0 && Physics.Raycast(cameraTransform.position, -1 * Vector3.up, out RaycastHit bla, 2f))
+        {
+            targetVelocity.y = -0.5f;
+        }
+
         rb.linearVelocity = targetVelocity;
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, Mathf.Clamp(targetVelocity.magnitude, 7, 10) * (float)baseFov / 10, fovChangeSpeed * Time.deltaTime);
         
         state.rightHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * rightHoldPosition), cameraTransform.forward);
-        state.leftHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * leftHoldPosition), cameraTransform.forward);    
+        state.leftHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * leftHoldPosition), cameraTransform.forward);
     }
 
     // Frame Updates
@@ -213,7 +227,7 @@ public class PlayerControls : MonoBehaviour
             }
             inputs.Throw = false;
         }
-        InteractableObject interactablePointer = null;
+        InteractableItem interactablePointer = null;
         if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, reach))
         {
             state.lookObject = hit.collider;
@@ -233,22 +247,24 @@ public class PlayerControls : MonoBehaviour
                     itemPointer.PickUp(col);
                 }
             }
-            interactablePointer = state.lookObject.GetComponent<InteractableObject>(); // same as itemPointer
-            if(interactablePointer != null)
+            interactablePointer = state.lookObject.GetComponent<InteractableItem>(); // same as itemPointer
+            if(interactablePointer != null && interactablePointer.IsInteractable())
             {
-                string uiDisplayText = interactablePointer.interactName; // I just want this as a reference for later when we make the ui
+                interactionDisplay.UpdateText(interactablePointer.getDisplayText());
+            }
+            else
+            {
+                interactionDisplay.UpdateText(null);
             }
         }
         else
         {
             state.lookObject = null;
+            interactionDisplay.UpdateText(null);
         }
         if(inputs.Interact)
         {
-            if(interactablePointer != null){
-                interactablePointer.Interact(this);
-            }
-            else if(!TryUseItem(state.rightHeldItem))
+            if(interactablePointer != null && !TryUseItem(state.rightHeldItem))
             {
                 TryUseItem(state.leftHeldItem);
             }
