@@ -1,331 +1,111 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+// 1. We replace Rigidbody and CapsuleCollider with CharacterController
+[RequireComponent(typeof(CharacterController))]
 public class PlayerControls : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed; // default: 5f
-    [SerializeField] private float airMovementMultiplier; // default: 0.067f
-    [SerializeField] private float airDrag; // default: 0.003f
-    [SerializeField] private float sprintAddition; // default: 4f
+    [Header("Movement Settings")]
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 8f;
+    [SerializeField] private float gravity = -15f;
 
-    [Header("Jump")]
-    [SerializeField] private float jumpStrength; // default: 5f
-    [SerializeField] private float jumpBufferTime; // default: 0.15f
+    [Header("Jump Settings")]
+    [SerializeField] private float jumpHeight = 1.5f;
 
-    [Header("Body Parts")]
-    [SerializeField] private Transform cameraPivot;
+    [Header("Look Settings")]
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private float mouseSensitivity = 15f;
+    [SerializeField] private float maxLookAngle = 85f;
 
-    [Header("Interaction")]
-    [SerializeField] private float reach; // default: 5f
-    [SerializeField] private Vector3 leftHoldPosition; // default: (-0.5, 0.25, 0.5)
-    [SerializeField] private Vector3 rightHoldPosition; // default: (0.5, 0.25, 0.5)
-    [SerializeField] private float throwForce; // default: 2f
+    // References
+    private CharacterController cc;
+    private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction sprintAction;
+    private InputAction jumpAction;
 
-    [Header("Camera Effects")]
-    [SerializeField] private float lookSensitivity; // default: 0.1f
-    [SerializeField] private int baseFov; // default: 80f
-    [SerializeField] private float fovChangeSpeed; // default: 3f
-    [SerializeField] private float tiltAmount; // default: 15f
-    [SerializeField] private float tiltSpeed; // default: 3f
-    private Rigidbody rb;
-    private Collider col;
-    private Camera cam;
-    private struct PlayerStates
-    {
-        public float pitch;
-        public bool isSprinting;
-        public bool onGround;
-        public bool touchingGround;
-        public float jumpBufferCounter;
-        public ContactPoint contact;
-        public Collider lookObject;
-        public Item leftHeldItem;
-        public Item rightHeldItem;
-    };
-    PlayerStates state;
-    private PlayerInputs controls;
-    private struct InputStates
-    {
-        public Vector2 Move;
-        public bool Jump;
-        public Vector2 Look;
-        public bool Sprint;
-        public bool Interact;
-        public bool LeftHold;
-        public bool RightHold;
-        public bool Throw;
-    };
-    InputStates inputs;
+    // State Variables
+    private Vector2 moveInput;
+    private Vector2 lookInput;
+    private bool isSprinting;
+    private float cameraPitch = 0f;
+    private float playerYaw = 0f;
+    private Vector3 velocity;
+
     void Awake()
     {
-        // Basic Initiating...
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
-        cam = cameraTransform.GetComponent<Camera>();
-        controls = new PlayerInputs();
-        inputs = new InputStates();
-        state = new PlayerStates();
+        cc = GetComponent<CharacterController>();
+        playerYaw = transform.eulerAngles.y;
 
-        // Initiate All The Input Event Triggers (stuff you neither need to understand nor touch)
-        var actionMap = controls.asset.FindActionMap("Inputs");
-        foreach(var action in actionMap.actions)
-        {
-            var field = typeof(InputStates).GetField(action.name, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-            if(field == null)
-            {
-                continue;
-            }
-            action.performed += ctx => field.SetValueDirect(__makeref(inputs), (field.FieldType == typeof(bool)) ? true : ctx.ReadValue<Vector2>());
-            action.canceled += ctx => field.SetValueDirect(__makeref(inputs), (field.FieldType == typeof(bool)) ? false : Vector2.zero);
-        }
-
-        // Invisible Locked Cursor!!
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    // More Input Event Trigger Stuff...
-    void OnEnable() => controls.Inputs.Enable();
-    void OnDisable() => controls.Inputs.Disable();
-
-    // Physics Updates
-    void FixedUpdate()
+    void Start()
     {
-        
-        if (PhoneController.isGamePaused)
-        {
-            controls.Inputs.Disable();
-        } else
-        {
-            controls.Inputs.Enable();
-        }
-
-            // Movement Physics
-            Vector3 playerMovement = new Vector3(inputs.Move.x, 0f, inputs.Move.y);
-
-        Vector3 camForward = cameraPivot.forward;
-        camForward.y = 0;
-        camForward.Normalize();
-        Vector3 camRight = cameraPivot.right;
-        camRight.y = 0;
-        camRight.Normalize();
-        Vector3 move = camForward * playerMovement.z + camRight * playerMovement.x;
-
-        Vector3 currentVelocity = rb.linearVelocity;
-        Vector3 targetVelocity = Vector3.zero;
-
-        if(state.touchingGround) // Grounded Movement
-        {
-            targetVelocity = new Vector3(move.x * moveSpeed, currentVelocity.y, move.z * moveSpeed);
-            if(inputs.Sprint || state.isSprinting) // Sprint Logic
-            {
-                if(inputs.Move.y > 0 && Vector3.Dot(currentVelocity.normalized, camForward) >= 1 / Mathf.Sqrt(2)) // 45° Angle
-                {
-                    targetVelocity += camForward * (inputs.Sprint ? sprintAddition : sprintAddition / 2);
-                    state.isSprinting = true;
-                }
-                else
-                {
-                    state.isSprinting = false;
-                }
-            }
-            if(state.jumpBufferCounter > 0) // Jump Logic
-            {
-                if(state.onGround)
-                {
-                    state.jumpBufferCounter = 0;
-                    targetVelocity.y = jumpStrength;
-                }
-            }
-        }
-        else // Air Movement
-        {
-            float maxAirSpeed = moveSpeed;
-            if(inputs.Sprint)
-            {
-                maxAirSpeed += sprintAddition;
-            } 
-            else if(state.isSprinting)
-            {
-                maxAirSpeed += sprintAddition / 2;
-            }
-            targetVelocity.x = (currentVelocity.x * (1 - airDrag)) + (move.x * moveSpeed * airMovementMultiplier);
-            targetVelocity.y = 0;
-            targetVelocity.z = (currentVelocity.z * (1 - airDrag)) + (move.z * moveSpeed * airMovementMultiplier);
-            targetVelocity = Vector3.ClampMagnitude(targetVelocity, maxAirSpeed);
-            targetVelocity.y = currentVelocity.y;
-        }
-        rb.linearVelocity = targetVelocity;
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, Mathf.Clamp(targetVelocity.magnitude, 7, 10) * (float)baseFov / 10, fovChangeSpeed * Time.deltaTime);
-        
-        state.rightHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * rightHoldPosition), cameraTransform.forward);
-        state.leftHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * leftHoldPosition), cameraTransform.forward);    
+        moveAction = InputSystem.actions.FindAction("Move");
+        lookAction = InputSystem.actions.FindAction("Look");
+        sprintAction = InputSystem.actions.FindAction("Sprint");
+        jumpAction = InputSystem.actions.FindAction("Jump");
     }
 
-    // Frame Updates
     void Update()
     {
         if (PhoneController.isGamePaused) return;
 
-        if (inputs.Look != Vector2.zero)
-        {
-            cameraPivot.Rotate(Vector3.up * inputs.Look.x * lookSensitivity);
-
-            state.pitch -= inputs.Look.y * lookSensitivity;
-            state.pitch = Mathf.Clamp(state.pitch, -80f, 80f);
-            cameraTransform.localRotation = Quaternion.Euler(state.pitch, 0f, 0f);
-
-            Vector3 newCamUp;
-            if(state.touchingGround && !state.onGround)
-            {
-                newCamUp = Vector3.RotateTowards(state.contact.normal, Vector3.up, Mathf.Deg2Rad * (90f - tiltAmount), 0f);
-            }
-            else
-            {
-                newCamUp = Vector3.up;
-            }
-            Quaternion targetRotation = Quaternion.LookRotation(cameraPivot.forward, newCamUp);
-            cameraPivot.rotation = Quaternion.Slerp(cameraPivot.rotation, targetRotation, tiltSpeed * Time.deltaTime);
-        }
-
-        if(inputs.Jump)
-        {
-            inputs.Jump = false;
-            state.jumpBufferCounter = jumpBufferTime;
-        }
-        else if(state.jumpBufferCounter > 0)
-        {
-            state.jumpBufferCounter -= Time.deltaTime;
-        }
-
-        if(inputs.Throw) // TODO show tragectory and allow aiming
-        {
-            if(state.rightHeldItem != null)
-            {
-                state.rightHeldItem.Throw(throwForce * cameraTransform.forward + Vector3.ClampMagnitude(rb.linearVelocity, 11) / 11);
-                state.rightHeldItem = null;
-            }
-            else if(state.leftHeldItem != null)
-            {
-                state.leftHeldItem.Throw(throwForce * cameraTransform.forward + Vector3.ClampMagnitude(rb.linearVelocity, 11) / 11);
-                state.leftHeldItem = null;
-            }
-            inputs.Throw = false;
-        }
-        InteractableObject interactablePointer = null;
-        if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, reach))
-        {
-            state.lookObject = hit.collider;
-            Item itemPointer = state.lookObject.GetComponent<Item>(); // if it is an item, this references that cs instance
-            if(itemPointer != null && itemPointer != state.rightHeldItem && itemPointer != state.leftHeldItem)
-            {
-                if (inputs.RightHold && state.rightHeldItem == null)
-                {
-                    state.rightHeldItem = itemPointer;
-                    state.lookObject.gameObject.layer = 0;
-                    itemPointer.PickUp(col);
-                }
-                if(inputs.LeftHold && state.leftHeldItem == null)
-                {
-                    state.leftHeldItem = itemPointer;
-                    state.lookObject.gameObject.layer = 0;
-                    itemPointer.PickUp(col);
-                }
-            }
-            interactablePointer = state.lookObject.GetComponent<InteractableObject>(); // same as itemPointer
-            if(interactablePointer != null)
-            {
-                string uiDisplayText = interactablePointer.interactName; // I just want this as a reference for later when we make the ui
-            }
-        }
-        else
-        {
-            state.lookObject = null;
-        }
-        if(inputs.Interact)
-        {
-            if(interactablePointer != null){
-                interactablePointer.Interact(this);
-            }
-            else if(!TryUseItem(state.rightHeldItem))
-            {
-                TryUseItem(state.leftHeldItem);
-            }
-            inputs.Interact = false;
-        }
-        if(!inputs.RightHold && state.rightHeldItem)
-        {
-            state.rightHeldItem.Drop();
-            state.rightHeldItem = null;
-        }
-        if(!inputs.LeftHold && state.leftHeldItem)
-        {
-            state.leftHeldItem.Drop();
-            state.leftHeldItem = null;
-        }
-
-        state.rightHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * rightHoldPosition), cameraTransform.forward);
-        state.leftHeldItem?.SetPosition(cameraPivot.position + (cameraPivot.rotation * leftHoldPosition), cameraTransform.forward);
+        ReadInputs();
+        HandleLooking();
+        HandleMovement();
     }
 
-    void OnCollisionStay(Collision collision)
+    private void ReadInputs()
     {
-        if(collision.gameObject.CompareTag("Ground")) {
-            state.touchingGround = true;
-            state.contact = collision.contacts[0];
-            foreach(ContactPoint contact in collision.contacts)
-            {
-                if(contact.normal.y > 0.5f)
-                {
-                    state.onGround = true;
-                    return;
-                }
-            }
-        }
+        moveInput = moveAction.ReadValue<Vector2>();
+        lookInput = lookAction.ReadValue<Vector2>();
+        isSprinting = sprintAction.IsPressed();
     }
 
-    void OnCollisionExit(Collision collision)
+    private void HandleLooking()
     {
-        if(collision.gameObject.CompareTag("Ground"))
+        float mouseX = lookInput.x * mouseSensitivity;
+        float mouseY = lookInput.y * mouseSensitivity;
+
+        cameraPitch -= mouseY;
+        cameraPitch = Mathf.Clamp(cameraPitch, -maxLookAngle, maxLookAngle);
+        cameraTransform.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
+
+        playerYaw += mouseX;
+        transform.rotation = Quaternion.Euler(0f, playerYaw, 0f);
+    }
+
+    private void HandleMovement()
+    {
+        bool isGrounded = cc.isGrounded;
+
+        if (isGrounded && velocity.y < 0)
         {
-            state.onGround = false;
-            state.touchingGround = false;
+            velocity.y = -2f;
         }
-    }
 
-    bool TryUseItem(Item item)
-    {
-        if(item == null)
+        Vector3 moveDirection = (transform.right * moveInput.x) + (transform.forward * moveInput.y);
+        moveDirection.Normalize();
+
+        float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+        cc.Move(moveDirection * currentSpeed * Time.deltaTime);
+
+        if (jumpAction.WasPressedThisFrame() && isGrounded)
         {
-            return false;
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        UsableItem usable = item.GetComponent<UsableItem>();
-        if(usable == null)
-        {
-            return false;
-        }
-        usable.Use(this);
-        return true;
-    }
 
-    public void SetVelocity(Vector3 newVelocity)
-    {
-        rb.linearVelocity = newVelocity;
-    }
-
-    public void AddForceImpulse(Vector3 force)
-    {
-        rb.AddForce(force, ForceMode.Impulse);
+        velocity.y += gravity * Time.deltaTime;
+        cc.Move(velocity * Time.deltaTime);
     }
 
     public Vector3 GetCameraForward()
     {
         return cameraTransform.forward;
-    }
-
-    public Vector3 GetPivotForward()
-    {
-        return cameraPivot.forward;
     }
 }
