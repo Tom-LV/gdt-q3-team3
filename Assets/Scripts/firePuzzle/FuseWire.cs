@@ -7,7 +7,6 @@ public class FuseWire : MonoBehaviour
     public Color burntColor = new Color(0.2f, 0.2f, 0.2f);
     public float lineWidth = 0.05f;
 
-    [Tooltip("Assign a Material that uses the 'Sprites/Default' or 'Unlit/Color' shader")]
     public Material lineMaterial;
 
     private LineRenderer burntLine;
@@ -38,7 +37,7 @@ public class FuseWire : MonoBehaviour
         lr.endWidth = lineWidth;
         lr.positionCount = 2;
 
-        // Apply material (Fallback to a default unlit material if you forget to assign one)
+        // Apply material
         lr.material = lineMaterial != null ? lineMaterial : new Material(Shader.Find("Sprites/Default"));
 
         // Set to a solid color
@@ -68,8 +67,6 @@ public class FuseWire : MonoBehaviour
 
     void Update()
     {
-        // Because this runs in Update, the lines will perfectly track the Tetris blocks 
-        // even while they are sliding from a button press!
         if (nodeA != null && nodeB != null)
         {
             UpdateLineGeometry();
@@ -81,7 +78,7 @@ public class FuseWire : MonoBehaviour
         Vector3 posA = nodeA.transform.position;
         Vector3 posB = nodeB.transform.position;
 
-        // Calculate the exact mathematical center of the spark particle
+        // Calculate the exact center of the spark particle
         Vector3 sparkPos = burningFromA ?
             Vector3.Lerp(posA, posB, currentBurnPct) :
             Vector3.Lerp(posB, posA, currentBurnPct);

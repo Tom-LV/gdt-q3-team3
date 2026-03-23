@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1844393785302030564}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +134,8 @@ MonoBehaviour:
   interactRange: 5
   cameraTransform: {fileID: 2041171735964456609}
   holdPosition: {fileID: 4285526377648423750}
+  throwForceMultiplier: 12
+  itemRadius: 0.2
 --- !u!114 &1844393785302030564
 MonoBehaviour:
   m_ObjectHideFlags: 0

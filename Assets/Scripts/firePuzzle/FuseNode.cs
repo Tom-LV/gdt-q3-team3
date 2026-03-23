@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(SphereCollider))]
 public class FuseNode : MonoBehaviour
@@ -8,8 +9,11 @@ public class FuseNode : MonoBehaviour
     public List<FuseNode> connectedNodes;
 
     [Header("Visuals")]
-    [Tooltip("Drag your FuseWire Prefab here!")]
+    [Tooltip("Drag FuseWire Prefab here")]
     public FuseWire wirePrefab;
+
+    [SerializeField]
+    private UnityEvent m_OnSparkReached;
 
     // A dictionary so the Spark can easily look up which wire connects to which node
     public Dictionary<FuseNode, FuseWire> connectingWires = new Dictionary<FuseNode, FuseWire>();
@@ -33,6 +37,11 @@ public class FuseNode : MonoBehaviour
                 neighbor.connectingWires.Add(this, newWire);
             }
         }
+    }
+
+    public void OnSparkReached()
+    {
+        if (m_OnSparkReached != null) m_OnSparkReached.Invoke();
     }
 
     private void OnDrawGizmos()
