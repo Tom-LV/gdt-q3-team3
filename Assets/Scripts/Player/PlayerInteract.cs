@@ -6,9 +6,11 @@ public class PlayerInteract : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float interactRange = 5f;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private PlayerControls player;
 
     [Header("Hold Settings")]
-    public Transform holdPosition;
+    public Transform holdPositionR;
+    public Transform holdPositionL;
     [SerializeField] private float throwForceMultiplier = 12f;
 
     [Tooltip("How thick the item is. Used to prevent dropping items inside walls.")]
@@ -16,15 +18,16 @@ public class PlayerInteract : MonoBehaviour
 
     private bool canInteract = true;
     private InteractableItem lookingAtItem;
-    private PickableItem currentHeldItem;
+    private PickableItem currentHeldItemR;
+    private PickableItem currentHeldItemL;
 
     private InputAction interactAction;
-    private InputAction throwAction;
+    private InputAction dropAction;
 
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
-        throwAction = InputSystem.actions.FindAction("Throw");
+        dropAction = InputSystem.actions.FindAction("Throw");
     }
 
     public void SetInteract(bool canInteract)
@@ -32,9 +35,19 @@ public class PlayerInteract : MonoBehaviour
         this.canInteract = canInteract;
     }
 
-    public void SetHeldItem(PickableItem item)
+    public Transform GetPickupHandAndPickUpItem(PickableItem item)
     {
-        currentHeldItem = item;
+        if (currentHeldItemR == null)
+        {
+            currentHeldItemR = item;
+            return holdPositionR;
+        }
+        if (currentHeldItemL == null)
+        {
+            currentHeldItemL = item;
+            return holdPositionL;
+        }
+        return null;
     }
 
     void Update()
@@ -45,38 +58,6 @@ public class PlayerInteract : MonoBehaviour
             return;
         }
 
-        bool interactPressed = interactAction.WasPressedThisFrame();
-        bool throwPressed = throwAction != null && throwAction.WasPressedThisFrame();
-
-        // Holding item
-        if (currentHeldItem != null)
-        {
-            ClearHoverState();
-
-            if (throwPressed)
-            {
-                // 1. Move the item to a safe position so it doesn't clip through walls
-                currentHeldItem.transform.position = GetSafeDropPosition();
-
-                Vector3 force = cameraTransform.forward * throwForceMultiplier;
-                force += Vector3.up * (throwForceMultiplier * 0.2f);
-
-                currentHeldItem.Throw(force);
-                currentHeldItem = null;
-            }
-            else if (interactPressed)
-            {
-                // 1. Move the item to a safe position
-                currentHeldItem.transform.position = GetSafeDropPosition();
-
-                currentHeldItem.Drop();
-                currentHeldItem = null;
-            }
-
-            return;
-        }
-
-        // Not holding item
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactRange))
         {
             InteractableItem interactableItem = hit.collider.GetComponentInParent<InteractableItem>();
@@ -100,10 +81,13 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
         }
 
-        if (lookingAtItem != null && interactPressed)
+        if (lookingAtItem != null && interactAction.WasPressedThisFrame())
         {
             lookingAtItem.OnInteract(this);
         }
+
+        if(currentHeldItemR != null) DoHeldItemStuff(currentHeldItemR, holdPositionR);
+        else if(currentHeldItemL != null) DoHeldItemStuff(currentHeldItemL, holdPositionL);
     }
 
     private void ClearHoverState()
@@ -115,7 +99,44 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private Vector3 GetSafeDropPosition()
+    private void DoHeldItemStuff(PickableItem currentHeldItem, Transform holdPosition)
+    {
+        if (dropAction.WasPressedThisFrame())
+        {
+            DropItem(currentHeldItem, holdPosition);
+        }
+        else if(interactAction.WasPressedThisFrame() && lookingAtItem == null)
+        {
+            currentHeldItem.Use();
+        }
+    }
+
+    private void DropItem(PickableItem currentHeldItem, Transform holdPosition)
+    {
+        currentHeldItem.transform.position = GetSafeDropPosition(holdPosition);
+
+        if (player.IsSprinting())
+        {
+            Vector3 force = cameraTransform.forward * throwForceMultiplier;
+            force += Vector3.up * (throwForceMultiplier * 0.2f);
+
+            currentHeldItem.Throw(force);
+        }
+        else
+        {
+            currentHeldItem.Drop();
+        }
+
+        ClearItem(currentHeldItem);
+    }
+
+    private void ClearItem(PickableItem currentHeldItem)
+    {
+        if(currentHeldItem == currentHeldItemR) currentHeldItemR = null;
+        else if(currentHeldItem == currentHeldItemL) currentHeldItemL = null;
+    }
+
+    private Vector3 GetSafeDropPosition(Transform holdPosition)
     {
         Vector3 origin = cameraTransform.position;
         Vector3 target = holdPosition.position;
