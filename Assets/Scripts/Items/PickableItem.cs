@@ -4,14 +4,13 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class PickableItem : InteractableItem
 {
-    [SerializeField]
-    UnityEvent m_OnPickup;
-
-    [SerializeField]
-    UnityEvent m_OnDrop;
+    [SerializeField] protected UnityEvent m_OnPickup;
+    [SerializeField] protected UnityEvent m_OnDrop;
+    [SerializeField] protected UnityEvent m_OnUse;
 
     private Rigidbody rb;
     private Collider col;
+
 
     protected override void Start()
     {
@@ -20,28 +19,40 @@ public class PickableItem : InteractableItem
         col = GetComponent<Collider>();
     }
 
+    public override bool OffCooldown() // now the cooldown is not for "Interacting" (picking up) but "Using" the item, soooo
+    {
+        return true;
+    }
     public override void OnInteract(PlayerInteract player)
     {
         if (m_OnInteract != null) m_OnInteract.Invoke();
 
-        Pickup(player);
+        Pickup(player.GetPickupHandAndPickUpItem(this));
     }
 
-    private void Pickup(PlayerInteract player)
+    private void Pickup(Transform holdPosition)
     {
+        if(holdPosition == null) return;
+
         rb.isKinematic = true;
         col.enabled = false;
 
-        transform.SetParent(player.holdPosition);
+        transform.SetParent(holdPosition);
 
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        player.SetHeldItem(this);
-
         OnHoverLeave();
 
         if (m_OnPickup != null) m_OnPickup.Invoke();
+    }
+
+    public void Use()
+    {
+        if(Time.time - lastUseTime < cooldown) return;
+        lastUseTime = Time.time;
+
+        if (m_OnUse != null) m_OnUse.Invoke();
     }
 
     public void Drop()

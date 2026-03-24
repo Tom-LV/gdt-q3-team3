@@ -6,9 +6,11 @@ public class InteractableItem : MonoBehaviour
     private bool interactable = true;
     private int interactOutlineLayer;
 
-    [SerializeField]
-    protected UnityEvent m_OnInteract;
+    [SerializeField] protected UnityEvent m_OnInteract;
+    [SerializeField] private string displayText;
+    [SerializeField] protected float cooldown;
 
+    protected float lastUseTime = float.NegativeInfinity;
     public void SetInteractable(bool interactable)
     {
         this.interactable = interactable;
@@ -17,6 +19,11 @@ public class InteractableItem : MonoBehaviour
     public bool IsInteractable()
     {
         return interactable;
+    }
+
+    public virtual bool OffCooldown()
+    {
+        return Time.time - lastUseTime > cooldown;
     }
 
     public void OnHoverEnter()
@@ -30,10 +37,9 @@ public class InteractableItem : MonoBehaviour
     }
     public virtual void OnInteract(PlayerInteract player)
     {
-        if (m_OnInteract != null)
-        {
-            m_OnInteract.Invoke();
-        }
+        if(!IsInteractable() || !OffCooldown()) return;
+        if (m_OnInteract != null) m_OnInteract.Invoke();
+        lastUseTime = Time.time;
     }
 
     protected virtual void Start()
