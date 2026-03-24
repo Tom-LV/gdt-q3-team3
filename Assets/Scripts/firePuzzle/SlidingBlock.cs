@@ -18,10 +18,10 @@ public class SlidingBlock : MonoBehaviour
     }
 
     // Unity Event Wrappers
-    public void MoveForward() { TryMove(Vector3.back); }
-    public void MoveBack() { TryMove(Vector3.forward); }
-    public void MoveRight() { TryMove(Vector3.left); }
-    public void MoveLeft() { TryMove(Vector3.right); }
+    public void MoveForward() { TryMove(Vector3.forward); }
+    public void MoveBack() { TryMove(Vector3.back); }
+    public void MoveRight() { TryMove(Vector3.right); }
+    public void MoveLeft() { TryMove(Vector3.left); }
 
     private void TryMove(Vector3 direction)
     {
