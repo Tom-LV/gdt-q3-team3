@@ -78,7 +78,7 @@ public class Spark : MonoBehaviour
         for (int i = 1; i < validNextNodes.Count; i++)
         {
             // Spawn a clone for every extra path
-            Spark splitSpark = Instantiate(this.gameObject, transform.position, transform.rotation).GetComponent<Spark>();
+            Spark splitSpark = Instantiate(this.gameObject, transform.position, transform.rotation, currentNode.transform.parent).GetComponent<Spark>();
             splitSpark.Branch(currentNode, validNextNodes[i]);
         }
 
@@ -88,7 +88,7 @@ public class Spark : MonoBehaviour
 
     private IEnumerator TravelAndContinue(FuseNode fromNode, FuseNode toNode)
     {
-        transform.SetParent(fromNode.transform.root);
+        transform.SetParent(fromNode.transform.parent);
 
         // Check if there is a physical wire between these nodes
         FuseWire currentWire = null;

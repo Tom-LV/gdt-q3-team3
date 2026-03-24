@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3691346b58230324b9d2fb35e5335e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuseWire
-  unburntColor: {r: 0.8, g: 0.7, b: 0.5, a: 1}
+  unburntColor: {r: 0.5849056, g: 0.41040993, b: 0.20140618, a: 1}
   burntColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   lineWidth: 0.05
   lineMaterial: {fileID: 2100000, guid: 1316ce8ca612e5c4f8e245aa164bde92, type: 2}
