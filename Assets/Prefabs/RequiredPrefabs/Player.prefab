@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1844393785302030564}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +133,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
   interactRange: 5
   cameraTransform: {fileID: 2041171735964456609}
-  holdPosition: {fileID: 4285526377648423750}
+  player: {fileID: 0}
+  holdPositionR: {fileID: 0}
+  holdPositionL: {fileID: 0}
+  throwForceMultiplier: 12
+  itemRadius: 0.2
 --- !u!114 &1844393785302030564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,8 +152,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
   walkSpeed: 5
   sprintSpeed: 8
+  airSpeed: 1
   gravity: -15
   jumpHeight: 1.5
+  jumpBufferTime: 0.2
+  cameraPivotTransform: {fileID: 6679835883971722511}
   cameraTransform: {fileID: 2041171735964456609}
   mouseSensitivity: 15
   maxLookAngle: 85
