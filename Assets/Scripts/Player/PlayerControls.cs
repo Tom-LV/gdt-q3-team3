@@ -1,25 +1,31 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// 1. We replace Rigidbody and CapsuleCollider with CharacterController
+// 1. We replace Rigidbody and CapsuleCollider with CharacterController (I approve! It's so much nicer)
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControls : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
+    [SerializeField] private float airSpeed = 1f;
     [SerializeField] private float gravity = -15f;
 
     [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float jumpBufferTime = 0.2f;
+
 
     [Header("Look Settings")]
+    [SerializeField] private Transform cameraPivotTransform;
+
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float mouseSensitivity = 15f;
     [SerializeField] private float maxLookAngle = 85f;
 
     // References
     private CharacterController cc;
+    private Transform tr;
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction sprintAction;
@@ -29,6 +35,8 @@ public class PlayerControls : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lookInput;
     private bool isSprinting;
+
+    private float jumpBuffer;
     private float cameraPitch = 0f;
     private float playerYaw = 0f;
     private Vector3 velocity;
@@ -36,6 +44,7 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         cc = GetComponent<CharacterController>();
+        tr = GetComponent<Transform>();
         playerYaw = transform.eulerAngles.y;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -63,7 +72,7 @@ public class PlayerControls : MonoBehaviour
     {
         moveInput = moveAction.ReadValue<Vector2>();
         lookInput = lookAction.ReadValue<Vector2>();
-        isSprinting = sprintAction.IsPressed();
+        jumpBuffer = jumpAction.WasPressedThisFrame() ? jumpBufferTime : jumpBuffer - Time.deltaTime;
     }
 
     private void HandleLooking()
@@ -83,29 +92,68 @@ public class PlayerControls : MonoBehaviour
     {
         bool isGrounded = cc.isGrounded;
 
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0) // step logic
         {
             velocity.y = -2f;
         }
 
-        Vector3 moveDirection = (transform.right * moveInput.x) + (transform.forward * moveInput.y);
+        Vector3 moveDirection = (transform.right * moveInput.x) + (transform.forward * moveInput.y); // movement direction
         moveDirection.Normalize();
 
-        float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+        float currentSpeed; // movement speed
+        if (sprintAction.IsPressed() && isSprinting)
+        {
+            currentSpeed = sprintSpeed;
+        }
+        else if(isSprinting)
+        {
+            currentSpeed = (sprintSpeed + walkSpeed) / 2;
+        }
+        else
+        {
+            currentSpeed = walkSpeed;
+        }
 
-        cc.Move(moveDirection * currentSpeed * Time.deltaTime);
+        Vector3 xzMovement = new Vector3(velocity.x, 0, velocity.z); // movement vector
+        if (isGrounded)
+        {
+            xzMovement = moveDirection * currentSpeed;
+            velocity.x = xzMovement.x;
+            velocity.z = xzMovement.z;
+        }
+        else
+        {
+            Vector3 diff = (moveDirection * currentSpeed) - xzMovement;
+            xzMovement = Vector3.ClampMagnitude(xzMovement + diff.normalized * airSpeed * 0.05f, currentSpeed);
+            velocity.x = xzMovement.x;
+            velocity.z = xzMovement.z;
+        }
 
-        if (jumpAction.WasPressedThisFrame() && isGrounded)
+        if (jumpAction.IsPressed() && jumpBuffer > 0 && isGrounded) // jump logic
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-
+        
+        Vector3 oldPosition = tr.position; // apply movement
         velocity.y += gravity * Time.deltaTime;
         cc.Move(velocity * Time.deltaTime);
+        xzMovement = (oldPosition - tr.position) / Time.deltaTime; // find actual velocity
+        xzMovement.y = 0;
+
+        isSprinting = sprintAction.IsPressed() ? true : isSprinting; // sprint logic for next update
+        if (Vector3.Dot(xzMovement.normalized, cameraPivotTransform.forward) > -0.7 || xzMovement.magnitude < walkSpeed)
+        {
+            isSprinting = false;
+        }
     }
 
     public Vector3 GetCameraForward()
     {
         return cameraTransform.forward;
+    }
+
+    public bool IsSprinting()
+    {
+        return isSprinting;
     }
 }
