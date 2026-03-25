@@ -10508,7 +10508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!1001 &1715254913861359729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10598,7 +10598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!1001 &1869327653943517617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10683,7 +10683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!4 &2196515156259980890 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0492b5dd2ca6a8c4192325fae0f04131, type: 3}
@@ -10773,7 +10773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!4 &1999202389172133421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bdd9ee6c4e86fcd47a47dd0f23ad479e, type: 3}
@@ -10876,7 +10876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!1001 &3969126918541970916
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11254,7 +11254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!1001 &7842586743209162626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11339,7 +11339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!4 &7736285215308779625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ded7617be4cd3f14087fd05a90ef0ad7, type: 3}
@@ -11433,7 +11433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlidingBlock
   gridSize: 4
-  slideSpeed: 5
+  slideSpeed: 6
 --- !u!4 &8763212185759798337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0492b5dd2ca6a8c4192325fae0f04131, type: 3}
