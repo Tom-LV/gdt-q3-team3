@@ -9,7 +9,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
     [SerializeField] private float airSpeed = 1f;
-    [SerializeField] private float pushSpeed = 2f;
+    [SerializeField] private float pushSpeed = 1f;
     [SerializeField] private float pushExitTime = 0.5f;
     [SerializeField] private float gravity = -15f;
 
@@ -43,17 +43,6 @@ public class PlayerControls : MonoBehaviour
     private float playerYaw = 0f;
     private Vector3 velocity;
 
-    // State-Specific stuff
-    private bool isShifting;
-    readonly float shiftDuration = 1f;
-    private Vector3 shiftTargetPos;
-    private Vector3 shiftStartPos;
-    private Quaternion shiftTargetOrientation;
-    private Quaternion shiftStartRot;
-    private float shiftTimer;
-    private PushableItem pushObject;
-    private float pushExitTimer;
-
     void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -78,8 +67,8 @@ public class PlayerControls : MonoBehaviour
         if (PhoneController.isGamePaused) return;
 
         ReadInputs();
-        HandleLooking();
         HandleMovement();
+        HandleLooking();
     }
 
     private void ReadInputs()
@@ -138,31 +127,42 @@ public class PlayerControls : MonoBehaviour
         Vector3 oldPosition = tr.position; // apply movement
         velocity.y += gravity * Time.deltaTime;
         cc.Move(velocity * Time.deltaTime);
-        xzMovement = (tr.position - oldPosition) / Time.deltaTime; // find actual velocity
-        xzMovement.y = 0;
+        Vector3 xzTrueVelocity = (tr.position - oldPosition) / Time.deltaTime; // find actual velocity
+        xzTrueVelocity.y = 0;
 
         if(IsPushing())
         {
-            if (xzMovement.sqrMagnitude < 0.01f) pushExitTimer -= Time.deltaTime;
-            else pushExitTimer = pushExitTime;
-            if (pushExitTimer <= 0){
-                ClearPushState();
-                return;
-            }
-            
             ClampToPath();
             pushObject.PushToPlayerPos(tr.position);
+            
+            xzTrueVelocity = (tr.position - oldPosition) / Time.deltaTime; // find actual, actual velocity
+            xzTrueVelocity.y = 0;
+            Quaternion angleChange = pushObject.GetAngleChange(oldPosition, oldPosition + xzTrueVelocity);
+            cameraPitch += angleChange.eulerAngles.x;
+            playerYaw += angleChange.eulerAngles.y;
+            if (xzTrueVelocity.sqrMagnitude < 0.3f && xzMovement.sqrMagnitude > 0.01f) pushExitTimer -= Time.deltaTime;
+            else pushExitTimer = pushExitTime;
+            if (pushExitTimer <= 0) ClearPushState();
             return;
         }
 
         isSprinting = sprintAction.IsPressed() ? true : isSprinting; // sprint logic for next update
-        if (Vector3.Dot(xzMovement.normalized, cameraPivotTransform.forward) < 0.7 || xzMovement.magnitude < walkSpeed)
+        if (Vector3.Dot(xzTrueVelocity.normalized, cameraPivotTransform.forward) < 0.7 || xzTrueVelocity.magnitude < walkSpeed)
             isSprinting = false;
     }
 
     //---------------------
     // special interactions
-
+    private bool isShifting;
+    readonly float shiftDuration = 1f;
+    private Vector3 shiftTargetPos;
+    private Vector3 shiftStartPos;
+    private Quaternion shiftTargetOrientation;
+    private Quaternion shiftStartRot;
+    private float shiftTimer;
+    private PushableItem pushObject;
+    private float pushExitTimer;
+    
     public Vector3 GetCameraForward()
     {
         return cameraTransform.forward;
@@ -190,6 +190,7 @@ public class PlayerControls : MonoBehaviour
         {
             isShifting = false;
             PhoneController.isGamePaused = false;
+            playerYaw = transform.rotation.eulerAngles.y;
             return;
         }
         shiftTimer += Time.deltaTime;
@@ -199,15 +200,13 @@ public class PlayerControls : MonoBehaviour
 
         float easedT = Mathf.SmoothStep(0f, 1f, t);
 
-        // Lerp position and rotation
         tr.position = Vector3.Lerp(shiftStartPos, shiftTargetPos, easedT);
         tr.rotation = Quaternion.Slerp(shiftStartRot, shiftTargetOrientation, easedT);
     }
 
     public void SetPushObject(PushableItem pushable)
     {
-        Vector3 target = pushable.FindStartPointOnPath();
-        ShiftToPos(target, pushable.FindOrientationOfPointOnPath(target));
+        ShiftToPos(pushable.FindStartPointOnPath(), pushable.FindStartOrientation());
         pushObject = pushable;
     }
 
@@ -215,7 +214,6 @@ public class PlayerControls : MonoBehaviour
     {
         pushObject = null;
         pushExitTimer = 0;
-        Debug.Log("Exited!!");
     }
 
     public bool IsPushing()
@@ -229,7 +227,5 @@ public class PlayerControls : MonoBehaviour
         Vector3 delta = clampedPos - tr.position;
         delta.y = 0;
         cc.Move(delta);
-
-        tr.rotation = pushObject.FindOrientationOfPointOnPath(clampedPos);
     }
 }

@@ -19,12 +19,12 @@ public class LightPole : PushableItem
         dir.Normalize();
         return pushObject.position + dir * turnRadius;
     }
-    public override Quaternion FindOrientationOfPointOnPath(Vector3 pos)
+    public override Quaternion FindStartOrientation()
     {
-        Vector3 radiusDir = pos - pushObject.position;
-        radiusDir.y = 0f;
-        radiusDir.Normalize();
-        Vector3 tangent = Vector3.Cross(Vector3.up, radiusDir);
+        Vector3 dir = relativeStartPos;
+        dir.y = 0f;
+        dir.Normalize();
+        Vector3 tangent = Vector3.Cross(Vector3.up, dir);
         return Quaternion.LookRotation(tangent);
     }
     public override void PushToPlayerPos(Vector3 pos)
@@ -35,6 +35,20 @@ public class LightPole : PushableItem
         dir.Normalize();
         float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         topTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+    }
+    public override Quaternion GetAngleChange(Vector3 startPos, Vector3 endPos)
+    {
+        Vector3 dir = startPos;
+        dir.y = 0f;
+        dir.Normalize();
+        Vector3 startAngle = Vector3.Cross(Vector3.up, dir);
+
+        dir = endPos;
+        dir.y = 0f;
+        dir.Normalize();
+        Vector3 endAngle = Vector3.Cross(Vector3.up, dir);
+
+        return Quaternion.FromToRotation(startAngle, endAngle);
     }
     public void Collapse()
     {
