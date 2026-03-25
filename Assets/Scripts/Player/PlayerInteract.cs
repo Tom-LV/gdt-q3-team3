@@ -57,6 +57,10 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
             return;
         }
+        if(player.IsPushing()) {
+            if(interactAction.WasPressedThisFrame()) player.ClearPushState();
+            return;
+        }
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactRange))
         {
@@ -151,5 +155,14 @@ public class PlayerInteract : MonoBehaviour
 
         // The path is clear, it's safe to drop it directly at the hand position
         return target;
+    }
+
+
+    //---------------------
+    // special interactions
+
+    public void StartPushInteraction(PushableItem pushable)
+    {
+        player.SetPushObject(pushable);
     }
 }
