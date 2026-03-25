@@ -9,6 +9,7 @@ public class PhoneController : MonoBehaviour
     public Animator phoneAnimator;
 
     public static bool isGamePaused = false;
+    static PhoneController phoneController;
 
     private string animatorBoolName = "IsPhoneOpen";
 
@@ -18,9 +19,17 @@ public class PhoneController : MonoBehaviour
     [SerializeField]
     UnityEvent m_OnPhoneClose;
 
+    private InputAction togglePhoneAction;
+
+    private void Start()
+    {
+        togglePhoneAction = InputSystem.actions.FindAction("TogglePhone");
+        phoneController = this;
+    }
+
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (togglePhoneAction != null && togglePhoneAction.WasPressedThisFrame())
         {
             isGamePaused = !isGamePaused;
             UpdatePhoneState();
@@ -63,12 +72,12 @@ public class PhoneController : MonoBehaviour
 
     
 
-    public void ClosePhoneFromButton()
+    public static void ClosePhoneFromButton()
     {
         if (isGamePaused)
         {
             isGamePaused = false;
-            UpdatePhoneState();
+            phoneController.UpdatePhoneState();
         }
     }
 }
