@@ -135,12 +135,12 @@ public class PlayerControls : MonoBehaviour
             ClampToPath();
             pushObject.PushToPlayerPos(tr.position);
             
-            xzTrueVelocity = (tr.position - oldPosition) / Time.deltaTime; // find actual, actual velocity
+            xzTrueVelocity = tr.position - oldPosition; // find actual, actual velocity
             xzTrueVelocity.y = 0;
-            Quaternion angleChange = pushObject.GetAngleChange(oldPosition, oldPosition + xzTrueVelocity);
-            cameraPitch += angleChange.eulerAngles.x;
-            playerYaw += angleChange.eulerAngles.y;
-            if (xzTrueVelocity.sqrMagnitude < 0.3f && xzMovement.sqrMagnitude > 0.01f) pushExitTimer -= Time.deltaTime;
+            float[] angleChange = pushObject.GetAngleChange(oldPosition, oldPosition + xzTrueVelocity);
+            cameraPitch += angleChange[0];
+            playerYaw += angleChange[1];
+            if ((xzTrueVelocity / Time.deltaTime).sqrMagnitude < 0.3f && xzMovement.sqrMagnitude > 0.01f) pushExitTimer -= Time.deltaTime;
             else pushExitTimer = pushExitTime;
             if (pushExitTimer <= 0) ClearPushState();
             return;
@@ -179,6 +179,7 @@ public class PlayerControls : MonoBehaviour
         shiftStartRot = tr.rotation;
         shiftTimer = 0f;
         PhoneController.isGamePaused = true;
+        velocity = Vector3.zero;
         shiftTargetPos = pos;
         shiftTargetOrientation = orientation;
         isShifting = true;
@@ -212,6 +213,7 @@ public class PlayerControls : MonoBehaviour
 
     public void ClearPushState()
     {
+        pushObject.ExitInteraction();
         pushObject = null;
         pushExitTimer = 0;
     }

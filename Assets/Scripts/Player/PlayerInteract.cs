@@ -52,9 +52,13 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        if (!canInteract || PhoneController.isGamePaused || player.IsPushing())
+        if (!canInteract || PhoneController.isGamePaused)
         {
             ClearHoverState();
+            return;
+        }
+        if(player.IsPushing()) {
+            if(interactAction.WasPressedThisFrame()) player.ClearPushState();
             return;
         }
 

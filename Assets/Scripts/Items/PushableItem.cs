@@ -13,9 +13,19 @@ public abstract class PushableItem : InteractableItem
         cooldown = 1f;
         tr = GetComponent<Transform>();
     }
+    public override void OnInteract(PlayerInteract player)
+    {
+        if (!OffCooldown()) return;
+        player.StartPushInteraction(this);
+        base.OnInteract(player);
+    }
     public Vector3 FindStartPointOnPath() => pushObject.position + relativeStartPos;
     public abstract Vector3 FindNearestPointOnPath(Vector3 pos);
     public abstract Quaternion FindStartOrientation();
     public abstract void PushToPlayerPos(Vector3 pos);
-    public abstract Quaternion GetAngleChange(Vector3 startPos, Vector3 endPos);
+    public virtual void ExitInteraction()
+    {
+        return;
+    }
+    public virtual float[] GetAngleChange(Vector3 startPos, Vector3 endPos) => new float[2];
 }

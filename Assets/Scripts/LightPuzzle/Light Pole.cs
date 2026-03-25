@@ -1,16 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class LightPole : PushableItem
 {
+    [SerializeField] private Collider storedItem;
     [SerializeField] private Transform topTransform;
+    [SerializeField] protected Transform bottomTransform;
+    [SerializeField] protected float collapseTime = 2f;
     [SerializeField] private float turnRadius;
+    private float rotationOffset;
 
-    public override void OnInteract(PlayerInteract player)
-    {
-        if (!OffCooldown()) return;
-
-        player.StartPushInteraction(this);
-    }
     public override Vector3 FindNearestPointOnPath(Vector3 pos)
     {
         Vector3 dir = pos - pushObject.position;
@@ -33,26 +32,81 @@ public class LightPole : PushableItem
         dir.y = 0f;
         if (dir.sqrMagnitude < 0.0001f) return;
         dir.Normalize();
-        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-        topTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+        float angle = Vector3.SignedAngle(relativeStartPos, dir, Vector3.up);
+        pushObject.rotation = Quaternion.Euler(0f, angle + rotationOffset, 0f);
     }
-    public override Quaternion GetAngleChange(Vector3 startPos, Vector3 endPos)
+    public override float[] GetAngleChange(Vector3 startPos, Vector3 endPos)
     {
-        Vector3 dir = startPos;
-        dir.y = 0f;
-        dir.Normalize();
-        Vector3 startAngle = Vector3.Cross(Vector3.up, dir);
+        startPos -= pushObject.position;
+        startPos.y = 0f;
+        startPos.Normalize();
 
-        dir = endPos;
-        dir.y = 0f;
-        dir.Normalize();
-        Vector3 endAngle = Vector3.Cross(Vector3.up, dir);
+        endPos -= pushObject.position;
+        endPos.y = 0f;
+        endPos.Normalize();
 
-        return Quaternion.FromToRotation(startAngle, endAngle);
+        float[] angle = {0f, Vector3.SignedAngle(startPos, endPos, Vector3.up)};
+        return angle;
     }
-    public void Collapse()
+    public override void ExitInteraction() => rotationOffset = pushObject.eulerAngles.y;
+    public virtual void Collapse()
     {
+        if (!IsInteractable()) return;
         SetInteractable(false);
-        // move the stuff together
+        StartCoroutine(CollapseRoutine());
+    }
+    private IEnumerator CollapseRoutine()
+    {
+        float t = 0f;
+        Vector3 startPos = topTransform.position;
+        Vector3 endPos = bottomTransform.position;
+
+        while (t < collapseTime)
+        {
+            t += Time.deltaTime;
+            float lerpT = t / collapseTime;
+            topTransform.position = Vector3.Lerp(startPos, endPos, lerpT);
+
+            yield return null;
+        }
+        FireBeam();
+    }
+    private void FireBeam()
+    {
+        Vector3 origin = topTransform.position;
+        Vector3 direction = topTransform.forward;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit))
+        {
+            DrawBeam(origin, hit.point);
+
+            LightPole other = hit.collider.GetComponentInParent<LightPole>();
+            other?.Collapse();
+        }
+        else
+        {
+            DrawBeam(origin, origin + direction * 100f);
+        }
+    }
+
+    // light stuff
+    private LineRenderer lr;
+    void Awake()
+    {
+        if(storedItem != null) Physics.IgnoreCollision(topTransform.GetComponent<Collider>(), storedItem);
+
+        lr = gameObject.AddComponent<LineRenderer>();
+        lr.positionCount = 2;
+        lr.startWidth = 0.05f;
+        lr.endWidth = 0.05f;
+        lr.material = new Material(Shader.Find("Unlit/Color")) {color = Color.yellow};
+
+        rotationOffset = pushObject.eulerAngles.y;
+        Debug.Log("offset: " + rotationOffset);
+    }
+    public void DrawBeam(Vector3 start, Vector3 end)
+    {
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 }
