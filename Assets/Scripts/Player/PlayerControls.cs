@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
     [SerializeField] private float airSpeed = 1f;
+    [SerializeField] private float pushSpeed = 2f;
+    [SerializeField] private float pushExitTime = 0.5f;
     [SerializeField] private float gravity = -15f;
 
     [Header("Jump Settings")]
@@ -41,6 +43,17 @@ public class PlayerControls : MonoBehaviour
     private float playerYaw = 0f;
     private Vector3 velocity;
 
+    // State-Specific stuff
+    private bool isShifting;
+    readonly float shiftDuration = 1f;
+    private Vector3 shiftTargetPos;
+    private Vector3 shiftStartPos;
+    private Quaternion shiftTargetOrientation;
+    private Quaternion shiftStartRot;
+    private float shiftTimer;
+    private PushableItem pushObject;
+    private float pushExitTimer;
+
     void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -61,6 +74,7 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
+        if(isShifting) HandleShiftLerp();
         if (PhoneController.isGamePaused) return;
 
         ReadInputs();
@@ -92,27 +106,16 @@ public class PlayerControls : MonoBehaviour
     {
         bool isGrounded = cc.isGrounded;
 
-        if (isGrounded && velocity.y < 0) // step logic
-        {
-            velocity.y = -2f;
-        }
+        if (isGrounded && velocity.y < 0) velocity.y = -2f; // step logic
 
         Vector3 moveDirection = (transform.right * moveInput.x) + (transform.forward * moveInput.y); // movement direction
         moveDirection.Normalize();
 
         float currentSpeed; // movement speed
-        if (sprintAction.IsPressed() && isSprinting)
-        {
-            currentSpeed = sprintSpeed;
-        }
-        else if(isSprinting)
-        {
-            currentSpeed = (sprintSpeed + walkSpeed) / 2;
-        }
-        else
-        {
-            currentSpeed = walkSpeed;
-        }
+        if (IsPushing()) currentSpeed = pushSpeed;
+        else if (sprintAction.IsPressed() && isSprinting) currentSpeed = sprintSpeed;
+        else if (isSprinting) currentSpeed = (sprintSpeed + walkSpeed) / 2;
+        else currentSpeed = walkSpeed;
 
         Vector3 xzMovement = new Vector3(velocity.x, 0, velocity.z); // movement vector
         if (isGrounded)
@@ -129,23 +132,36 @@ public class PlayerControls : MonoBehaviour
             velocity.z = xzMovement.z;
         }
 
-        if (jumpAction.IsPressed() && jumpBuffer > 0 && isGrounded) // jump logic
-        {
+        if (jumpAction.IsPressed() && jumpBuffer > 0 && isGrounded && !IsPushing()) // jump logic
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
         
         Vector3 oldPosition = tr.position; // apply movement
         velocity.y += gravity * Time.deltaTime;
         cc.Move(velocity * Time.deltaTime);
-        xzMovement = (oldPosition - tr.position) / Time.deltaTime; // find actual velocity
+        xzMovement = (tr.position - oldPosition) / Time.deltaTime; // find actual velocity
         xzMovement.y = 0;
 
-        isSprinting = sprintAction.IsPressed() ? true : isSprinting; // sprint logic for next update
-        if (Vector3.Dot(xzMovement.normalized, cameraPivotTransform.forward) > -0.7 || xzMovement.magnitude < walkSpeed)
+        if(IsPushing())
         {
-            isSprinting = false;
+            if (xzMovement.sqrMagnitude < 0.01f) pushExitTimer -= Time.deltaTime;
+            else pushExitTimer = pushExitTime;
+            if (pushExitTimer <= 0){
+                ClearPushState();
+                return;
+            }
+            
+            ClampToPath();
+            pushObject.PushToPlayerPos(tr.position);
+            return;
         }
+
+        isSprinting = sprintAction.IsPressed() ? true : isSprinting; // sprint logic for next update
+        if (Vector3.Dot(xzMovement.normalized, cameraPivotTransform.forward) < 0.7 || xzMovement.magnitude < walkSpeed)
+            isSprinting = false;
     }
+
+    //---------------------
+    // special interactions
 
     public Vector3 GetCameraForward()
     {
@@ -155,5 +171,65 @@ public class PlayerControls : MonoBehaviour
     public bool IsSprinting()
     {
         return isSprinting;
+    }
+
+    public void ShiftToPos(Vector3 pos, Quaternion orientation)
+    {
+        shiftStartPos = tr.position;
+        shiftStartRot = tr.rotation;
+        shiftTimer = 0f;
+        PhoneController.isGamePaused = true;
+        shiftTargetPos = pos;
+        shiftTargetOrientation = orientation;
+        isShifting = true;
+    }
+
+    public void HandleShiftLerp()
+    {
+        if(Vector3.Distance(tr.position, shiftTargetPos) < 0.01f && Quaternion.Angle(tr.rotation, shiftTargetOrientation) < 1f)
+        {
+            isShifting = false;
+            PhoneController.isGamePaused = false;
+            return;
+        }
+        shiftTimer += Time.deltaTime;
+        float t = shiftTimer / shiftDuration;
+
+        t = Mathf.Clamp01(t);
+
+        float easedT = Mathf.SmoothStep(0f, 1f, t);
+
+        // Lerp position and rotation
+        tr.position = Vector3.Lerp(shiftStartPos, shiftTargetPos, easedT);
+        tr.rotation = Quaternion.Slerp(shiftStartRot, shiftTargetOrientation, easedT);
+    }
+
+    public void SetPushObject(PushableItem pushable)
+    {
+        Vector3 target = pushable.FindStartPointOnPath();
+        ShiftToPos(target, pushable.FindOrientationOfPointOnPath(target));
+        pushObject = pushable;
+    }
+
+    public void ClearPushState()
+    {
+        pushObject = null;
+        pushExitTimer = 0;
+        Debug.Log("Exited!!");
+    }
+
+    public bool IsPushing()
+    {
+        return pushObject != null;
+    }
+
+    public void ClampToPath()
+    {
+        Vector3 clampedPos = pushObject.FindNearestPointOnPath(tr.position);
+        Vector3 delta = clampedPos - tr.position;
+        delta.y = 0;
+        cc.Move(delta);
+
+        tr.rotation = pushObject.FindOrientationOfPointOnPath(clampedPos);
     }
 }

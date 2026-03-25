@@ -52,7 +52,7 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        if (!canInteract || PhoneController.isGamePaused)
+        if (!canInteract || PhoneController.isGamePaused || player.IsPushing())
         {
             ClearHoverState();
             return;
@@ -151,5 +151,14 @@ public class PlayerInteract : MonoBehaviour
 
         // The path is clear, it's safe to drop it directly at the hand position
         return target;
+    }
+
+
+    //---------------------
+    // special interactions
+
+    public void StartPushInteraction(PushableItem pushable)
+    {
+        player.SetPushObject(pushable);
     }
 }
