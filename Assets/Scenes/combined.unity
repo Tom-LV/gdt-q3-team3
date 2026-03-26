@@ -14309,11 +14309,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2212759638426804124, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.092
+      value: 0.065
       objectReference: {fileID: 0}
     - target: {fileID: 2212759638426804124, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.116
+      value: 2.155
       objectReference: {fileID: 0}
     - target: {fileID: 3191832153615942040, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: near clip plane
@@ -14476,6 +14476,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4953187386897991740, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: mainMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ac5b0e3d79e50a741846f15b0959ddc4, type: 2}
+    - target: {fileID: 4953187386897991740, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: playerControls
       value: 
       objectReference: {fileID: 200774466}
@@ -14630,6 +14634,10 @@ PrefabInstance:
     - target: {fileID: 6938203643090975423, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_VerticalAlignment
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187254758450550897, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.84408
       objectReference: {fileID: 0}
     - target: {fileID: 7306960266250242353, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_Name
@@ -29361,6 +29369,9 @@ MonoBehaviour:
   triggerOnlyOnce: 1
   linkedRoom: {fileID: 659576077}
   respawnTransform: {fileID: 1015841411}
+  m_OnCheckpointActivated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1636349741
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31528,7 +31539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6026828429018276515, guid: dda36df2af419dd4ebfe2b37550e8865, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.45
       objectReference: {fileID: 0}
     - target: {fileID: 6026828429018276515, guid: dda36df2af419dd4ebfe2b37550e8865, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32110,6 +32121,9 @@ MonoBehaviour:
   triggerOnlyOnce: 1
   linkedRoom: {fileID: 54281694}
   respawnTransform: {fileID: 1039657406}
+  m_OnCheckpointActivated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1952720072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32129,8 +32143,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 1.7000008, z: 20}
-  m_Center: {x: 2, y: 0.35000038, z: -9.5}
+  m_Size: {x: 5, y: 14.500003, z: 20.000793}
+  m_Center: {x: 2, y: 6.7499995, z: -9.499603}
 --- !u!1001 &1967171337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35082,7 +35096,7 @@ AudioSource:
   m_GameObject: {fileID: 2044210406}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 9211174510334486693, guid: ac5b0e3d79e50a741846f15b0959ddc4, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 80472c7b9b7ba9641933d0c77331dc53, type: 3}
   m_PlayOnAwake: 1
