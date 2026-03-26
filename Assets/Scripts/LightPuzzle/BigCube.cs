@@ -8,10 +8,6 @@ public class BigCube : PushableItem
         base.Start();
         rb = pushObject.GetComponent<Rigidbody>();
     }
-    void FixedUpdate()
-    {
-        if(Vector3.Distance(tr.position, pushObject.position) > 4) rb.linearVelocity = Vector3.zero;
-    }
     public override Vector3 FindNearestPointOnPath(Vector3 pos)
     {
         Vector3 zVector = new Vector3(0, 0, 1);
@@ -21,13 +17,13 @@ public class BigCube : PushableItem
     }
     public override Quaternion FindStartOrientation()
     {
-        return Quaternion.identity;
+        return new Quaternion(0, 1, 0, 0);
     }
     public override void PushToPlayerPos(Vector3 pos)
     {
         Vector3 currentPos = rb.position;
         Vector3 targetPos = currentPos;
-        targetPos.z = pos.z + 2;
+        targetPos.z = pos.z - 2;
 
         Vector3 direction = targetPos - currentPos;
         float distance = direction.magnitude;
