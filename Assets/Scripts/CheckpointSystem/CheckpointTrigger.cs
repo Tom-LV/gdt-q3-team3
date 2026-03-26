@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class CheckpointTrigger : MonoBehaviour
@@ -11,6 +12,9 @@ public class CheckpointTrigger : MonoBehaviour
 
     [Tooltip("Respawn transform")]
     public Transform respawnTransform;
+
+    [SerializeField]
+    private UnityEvent m_OnCheckpointActivated;
 
     private bool hasTriggered = false;
 
@@ -25,7 +29,7 @@ public class CheckpointTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            // Tell the manager to save this location and link the puzzle room
+            if (m_OnCheckpointActivated != null) m_OnCheckpointActivated.Invoke();
 
             CheckpointManager.Instance.SaveCheckpoint(respawnTransform == null ? this.transform : respawnTransform, linkedRoom);
             hasTriggered = true;
