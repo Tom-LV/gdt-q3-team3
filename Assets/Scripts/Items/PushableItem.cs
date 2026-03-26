@@ -4,7 +4,7 @@ public abstract class PushableItem : InteractableItem
 {
     [SerializeField] protected Transform pushObject;
     [SerializeField] protected Vector3 relativeStartPos;
-    private Transform tr;
+    protected Transform tr;
 
 
     protected override void Start()

@@ -51,11 +51,13 @@ public class LightPole : PushableItem
     public override void ExitInteraction() => rotationOffset = pushObject.eulerAngles.y;
     public virtual void Collapse()
     {
+        Debug.Log("Tried Collapsing, " + IsInteractable());
         if (!IsInteractable()) return;
         SetInteractable(false);
-        StartCoroutine(CollapseRoutine());
+        Debug.Log("Started Collapsing");
+        StartCoroutine(CollapseRoutine()); // this is magic to avoid lag
     }
-    private IEnumerator CollapseRoutine()
+    private IEnumerator CollapseRoutine() // afforementioned magic
     {
         float t = 0f;
         Vector3 startPos = topTransform.position;
@@ -69,6 +71,7 @@ public class LightPole : PushableItem
 
             yield return null;
         }
+        Debug.Log("Finished Collapsing");
         FireBeam();
     }
     private void FireBeam()

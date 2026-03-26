@@ -83,6 +83,7 @@ public class PlayerControls : MonoBehaviour
     void Update()
     {
         if(isShifting) HandleShiftLerp();
+        if (PhoneController.isGamePaused) return;
 
         ReadInputs();
         HandleLooking();
@@ -260,7 +261,6 @@ public class PlayerControls : MonoBehaviour
 
     public void ShiftToPos(Vector3 pos, Quaternion orientation)
     {
-        Debug.Log("ShiftAttempt");
         shiftStartPos = tr.position;
         shiftStartRot = tr.rotation;
         shiftTimer = 0f;
@@ -277,8 +277,6 @@ public class PlayerControls : MonoBehaviour
         float t = shiftTimer / shiftDuration;
 
         t = Mathf.Clamp01(t);
-
-        Debug.Log("Shift Timer: " + t);
 
         float easedT = Mathf.SmoothStep(0f, 1f, t);
 

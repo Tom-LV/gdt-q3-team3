@@ -134,7 +134,7 @@ public class PlayerInteract : MonoBehaviour
         ClearItem(currentHeldItem);
     }
 
-    private void ClearItem(PickableItem currentHeldItem)
+    public void ClearItem(PickableItem currentHeldItem)
     {
         if(currentHeldItem == currentHeldItemR) currentHeldItemR = null;
         else if(currentHeldItem == currentHeldItemL) currentHeldItemL = null;
@@ -164,5 +164,12 @@ public class PlayerInteract : MonoBehaviour
     public void StartPushInteraction(PushableItem pushable)
     {
         player.SetPushObject(pushable);
+    }
+
+    public PickableItem GetKeyItem(int keyID)
+    {
+        if(currentHeldItemR?.HasKeyID(keyID) == true) return currentHeldItemR;
+        if(currentHeldItemL?.HasKeyID(keyID) == true) return currentHeldItemL;
+        return null;
     }
 }
