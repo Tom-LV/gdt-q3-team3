@@ -6,6 +6,7 @@ public class LightPole : PushableItem
     [SerializeField] private Collider storedItem;
     [SerializeField] private Transform topTransform;
     [SerializeField] protected Transform bottomTransform;
+    [SerializeField] protected Transform crystalTransform;
     [SerializeField] protected float collapseTime = 2f;
     [SerializeField] private float turnRadius;
     private float rotationOffset;
@@ -76,7 +77,7 @@ public class LightPole : PushableItem
     }
     private void FireBeam()
     {
-        Vector3 origin = topTransform.position;
+        Vector3 origin = crystalTransform.position;
         Vector3 direction = topTransform.forward;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit))

@@ -221,6 +221,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6624584299781615326, guid: 5e599b805c31aee42940726c4690c652, type: 3}
   m_PrefabInstance: {fileID: 9177905198373625852}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5865107834677408818 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3331384607899380686, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+  m_PrefabInstance: {fileID: 9177905198373625852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8226312730778424639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 970459743532812995, guid: 5e599b805c31aee42940726c4690c652, type: 3}
@@ -248,6 +253,7 @@ MonoBehaviour:
   storedItem: {fileID: 0}
   topTransform: {fileID: 2643956530572538146}
   bottomTransform: {fileID: 1432963210164130731}
+  crystalTransform: {fileID: 5865107834677408818}
   collapseTime: 2
   turnRadius: 1.2
   topCover: {fileID: 8766742067687522004}
