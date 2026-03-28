@@ -1,42 +1,33 @@
+/* ========================================= */
+/* BASE PHONE & BACKGROUND                   */
+/* ========================================= */
+
 .phone-background {
     background-color: rgb(15, 15, 18);
+    border-color: rgb(40, 40, 45);
     border-radius: 40px;
     border-width: 6px;
-    border-color: rgb(40, 40, 45);
     padding: 25px;
     overflow: hidden;
-    border-left-color: rgb(40, 40, 45);
-    border-right-color: rgb(40, 40, 45);
-    border-top-color: rgb(40, 40, 45);
-    border-bottom-color: rgb(40, 40, 45);
 }
 
-/* 1. The Base App Icon Shape */
+/* ========================================= */
+/* HOME SCREEN & APP GRID                    */
+/* ========================================= */
+
 .app-button {
-    /* 1. Sizing: 18% width allows 4 apps per row beautifully! */
     width: 18%; 
-    height:auto;
-    margin: 60px;  /* Even spacing around the apps */
-    
+    height: auto;
+    margin: 60px; 
     border-radius: 30px; 
     border-width: 0; 
-    
-    /* 2. THE TEXT PUSH: This forces the text to the bottom */
-    /* 
-    padding-bottom: 15px;
-    flex-shrink: 0; */
-
-
-    /* 3. Text Styling */
     color: white;
-    font-size: 48px; /* Shrunk down to fit */
-    -unity-font-style: bold;
-    -unity-text-align: middle-center; /* Centers text horizontally */
-    white-space: normal; /* CRITICAL: Lets "Reload room" wrap to two lines! */
-    
-    /* Smooth physical animations */
+    font-size: 48px;
+    white-space: normal; 
     transition-duration: 0.15s;
     transition-property: scale, opacity;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
 }
 
 .app-button:hover {
@@ -48,50 +39,48 @@
     opacity: 0.8;
 }
 
-/* THE GRID CONTAINER */
-.app-grid {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center; /* or flex-start */
+/* ========================================= */
+/* NOTIFICATION DOTS                         */
+/* ========================================= */
+
+.notification-dot {
+    position: absolute;
+    top: -20px;      /* Pushes it slightly above the top edge */
+    right: -20px;    /* Pushes it slightly past the right edge */
+    width: 85px;     
+    height: 85px;
+    border-radius: 50%; /* Makes it a perfect circle */
     
-    /* THE BRICK WALLS */
-    width: 100%;
-    max-width: 100%; /* Absolutely forbids stretching off-screen */
-    
-    padding-top: 20px;
-}
-
-/* ----------------------------------------- */
-/* 2. THE BRAND COLORS (Make them unique!)   */
-/* ----------------------------------------- */
-
-.app-chat {
-    background-color: rgb(0, 150, 255); /* iMessage Blue */
-}
-
-.app-settings {
-    background-color: rgb(80, 80, 90); /* Metallic Grey */
-}
-
-.app-reset {
-    background-color: rgb(220, 50, 50); /* Danger Red */
-}
-
-.app-archive {
-    background-color: rgb(255, 160, 0); /* Folder Yellow/Gold */
-}
-
-.screen-title {
+    background-color: rgb(255, 55, 55); /* Bright notification red */
     color: white;
-    font-size: 32px;
+    font-size: 36px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    
+    /* Matches phone bg to create a gap between the dot and the app */
+    border-width: 12px;
+    border-color: rgb(15, 15, 18); 
+
+    /* Smooth pop-in animation */
+    transition-duration: 0.15s;
+    transition-property: scale, opacity;
 }
 
-/* 1. The main container */
+/* Add this to hide the dot when there are no notifications */
+.notification-dot.hidden {
+    scale: 0;
+    opacity: 0;
+}
+
+/* --- Brand Colors --- */
+.app-chat     { background-color: rgb(0, 150, 255); }
+.app-settings { background-color: rgb(80, 80, 90); }
+.app-reset    { background-color: rgb(220, 50, 50); }
+
+/* ========================================= */
+/* CUSTOM UI CONTROLS (SLIDERS)              */
+/* ========================================= */
+
 .unity-slider {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -99,71 +88,90 @@
     align-self: center;
 }
 
-/* 2. The Text Label (Matched to your Back button size) */
 .unity-slider__label {
     color: rgb(240, 240, 240);
-    font-size: 40px; /* Bumped up from 18px! */
-    -unity-font-style: bold;
-    min-width: 400px; /* Gives the text enough room so it doesn't get squished */
+    font-size: 40px;
+    min-width: 400px;
     padding-right: 30px;
+    -unity-font-style: bold;
 }
 
-/* 3. The Track (Thicker and much more visible) */
 .unity-base-slider__tracker {
-    background-color: rgb(40, 40, 45); /* Lightened up so it doesn't blend into the background */
+    background-color: rgb(40, 40, 45);
     border-color: rgb(20, 20, 25);
     border-width: 3px;
     border-radius: 10px;
-    height: 24px; /* More than doubled from 10px */
-    margin-top: -12px; /* Always exactly half of the height to keep it centered! */
+    height: 24px;
+    margin-top: -12px;
 }
 
-/* 4. The Knob / Dragger (Big, chunky, and easy to grab) */
 .unity-base-slider__dragger {
     background-color: rgb(255, 255, 255);
     border-color: rgb(200, 200, 200);
     border-width: 2px;
     border-radius: 50%;
-    width: 70px; /* Massive increase from 28px */
+    width: 70px;
     height: 70px; 
-    margin-top: -35px; /* Always exactly half of the height! */
-    
+    margin-top: -35px;
     transition-duration: 0.15s;
     transition-property: scale, background-color;
 }
 
-/* 5. The Hover Effect */
 .unity-base-slider__dragger:hover {
     scale: 1.2;
     background-color: rgb(0, 200, 255);
     border-color: rgb(255, 255, 255);
 }
 
-/* 6. The Grab Effect */
 .unity-base-slider__dragger:active {
     scale: 0.9;
     background-color: rgb(0, 150, 200);
 }
 
+/* ========================================= */
+/* UNIVERSAL APP HEADERS                     */
+/* ========================================= */
 
-
-/* --- CHAT HEADER --- */
-.chat-header {
+/* The top bar container for every screen */
+.app-header {
     flex-direction: row;
     align-items: center;
     border-bottom-width: 2px;
     border-color: rgba(255, 255, 255, 0.1);
-    padding-bottom: 15px; /* Dialed back from 30px so it doesn't eat the screen */
+    padding-bottom: 15px;
     margin-bottom: 10px;
 }
 
+/* The giant text at the top of every screen */
+.app-title {
+    flex-grow: 1; 
+    color: white;
+    font-size: 72px; 
+    letter-spacing: 2px;
+    padding-right: 80px; /* Counter-balances the back button */
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+/* The category dividers inside scroll views (e.g., "AUDIO", "CONTROLS") */
+.section-header {
+    color: rgb(0, 200, 255);
+    border-bottom-width: 2px;
+    border-color: rgba(255, 255, 255, 0.1);
+    font-size: 50px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    -unity-font-style: bold;
+}
+
 .chat-back-btn {
+    width: 120px; 
     background-color: transparent;
     border-width: 0;
     color: rgb(0, 200, 255); 
     font-size: 72px; 
     -unity-font-style: bold;
-    width: 120px; 
 }
 
 .chat-back-btn:hover {
@@ -171,33 +179,115 @@
     scale: 1.1;
 }
 
-.chat-title {
-    color: white;
-    font-size: 72px; 
-    -unity-font-style: bold;
-    flex-grow: 1; 
-    -unity-text-align: middle-center;
-    padding-right: 80px; /* Matches back button to keep title centered */
+/* ========================================= */
+/* CHAT BUBBLES                              */
+/* ========================================= */
+
+/* The invisible row that holds the bubble */
+.chat-bubble-container {
+    width: 100%; /* Takes up the whole row so we can push bubbles left or right */
+    margin-bottom: 25px;
 }
 
-/* --- CHAT FOOTER (The Fake Input) --- */
+/* The actual colored bubble */
+.chat-bubble {
+    background-color: rgb(40, 40, 45); 
+    border-radius: 40px; 
+    border-bottom-left-radius: 10px; /* Sharp tail on the left */
+    
+    /* Clean, even padding around the text */
+    padding: 25px 40px; 
+    
+    margin-left: 30px; /* Push it off the left wall */
+    max-width: 80%; 
+    
+    /* THE FIX: Forces the bubble to shrink-wrap the text instead of stretching! */
+    align-self: flex-start; 
+}
+
+.chat-sender-name {
+    color: rgb(0, 200, 255);
+    font-size: 45px;
+    margin-bottom: 10px;
+    -unity-font-style: bold;
+}
+
+.chat-message-text {
+    color: white;
+    font-size: 50px;
+    white-space: normal;
+}
+
+/* ========================================= */
+/* PLAYER ("ME") CHAT BUBBLES                */
+/* ========================================= */
+
+.chat-bubble.me {
+    background-color: rgb(0, 120, 255); 
+    border-bottom-left-radius: 40px; /* Make the left corner round again */
+    border-bottom-right-radius: 10px; /* Sharp tail on the right */
+    
+    margin-left: 0;
+    margin-right: 30px; /* Push it off the right wall */
+    
+    /* THE FIX: Snaps the bubble perfectly to the right side of the screen! */
+    align-self: flex-end; 
+}
+
+/* ========================================= */
+/* CHAT CHOICES (STORY GRAPH)                */
+/* ========================================= */
+
+.chat-choice-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-left: 15px;
+    margin-bottom: 15px; /* Slight gap so it hovers above the text bar */
+    flex-shrink: 0; /* Prevents the container from getting squished */
+}
+
+.chat-choice-btn {
+    background-color: rgb(0, 150, 200);
+    color: white;
+    border-radius: 40px;
+    border-width: 0;
+    padding: 20px 40px;
+    margin: 10px;
+    font-size: 40px;
+    -unity-font-style: bold;
+    transition-duration: 0.1s;
+    transition-property: scale, background-color;
+}
+
+.chat-choice-btn:hover {
+    scale: 1.05;
+    background-color: rgb(0, 180, 255);
+}
+
+.chat-choice-btn:active {
+    scale: 0.95;
+    background-color: rgb(0, 100, 150);
+}
+
+/* --- Chat Footer & Input --- */
 .chat-footer {
     flex-direction: row;
-    align-items: center; /* Crucial: stops the row from stretching the circle vertically */
-    padding-top: 15px;
-    padding-bottom: 15px;
+    align-items: center;
     border-top-width: 2px;
     border-color: rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .chat-fake-input {
     flex-grow: 1;
     background-color: rgb(25, 25, 30);
+    border-color: rgb(40, 40, 45);
     border-radius: 30px; 
     border-width: 2px;
-    border-color: rgb(40, 40, 45);
-    padding: 15px 20px; /* Thinner input bar so it doesn't take up 1/3 of the screen */
     margin-right: 15px;
+    padding: 15px 20px;
 }
 
 .chat-fake-input > Label {
@@ -205,24 +295,18 @@
     font-size: 24px; 
 }
 
-/* --- THE SEND BUTTON (Locked perfect circle) --- */
 .chat-fake-send {
+    align-items: center;
+    justify-content: center;
     background-color: rgb(0, 150, 200); 
-    
-    /* THE FIX: Absolute dimensional locking */
+    border-radius: 50%; 
     width: 70px;  
     height: 70px; 
     min-width: 70px; 
-    max-width: 70px;
     min-height: 70px;
+    max-width: 70px;
     max-height: 70px;
-    
-    border-radius: 50%; 
-    align-items: center;
-    justify-content: center;
     opacity: 0.5; 
-    
-    /* Tells Flexbox: Do not grow, do not shrink, just stay 70x70! */
     flex-shrink: 0; 
     flex-grow: 0; 
 }
@@ -233,132 +317,76 @@
     -unity-font-style: bold;
 }
 
-/* --- SUPER JUMBO CHAT BUBBLES --- */
-.chat-bubble-container {
-    margin-bottom: 50px; /* More vertical space between messages */
-    margin-left: 30px; /* Pushes the bubble off the edge */
-    align-items: flex-start;
-}
+/* ========================================= */
+/* CUSTOM SCROLLBAR                          */
+/* ========================================= */
 
-.chat-bubble {
-    background-color: rgb(40, 40, 45); 
-    border-radius: 60px; 
-    border-bottom-left-radius: 10px; 
-    
-    /* THE FIX: Decoupled padding so the roof is much tighter! */
-    padding-top: 20px;    /* Shrunk down from 50px */
-    padding-bottom: 50px; /* Kept large so the bottom text breathes */
-    padding-left: 60px;
-    padding-right: 60px;
-    
-    max-width: 85%; 
-}
-
-.chat-sender-name {
-    color: rgb(0, 200, 255); /* Cyan accent */
-    font-size: 56px; /* Larger, readable sender name */
-    -unity-font-style: bold;
-    margin-bottom: 15px; /* Space between name and message */
-}
-
-.chat-message-text {
-    color: white;
-    font-size: 50px; /* Much larger text that is clear and modern! */
-    white-space: normal; /* CRITICAL: Forces text to wrap to the next line! */
-}
-
-    /* --- MODERN SCROLLBAR --- */
-
-/* 1. Nuke the ugly default up/down arrow boxes completely */
 .unity-scroller__low-button,
 .unity-scroller__high-button {
     display: none;
 }
 
-/* 2. Set the overall width of the scrollbar area and push it off the right wall */
-/* 2. Set the overall width of the invisible scrollbar container */
 .unity-scroller--vertical {
-    width: 40px; /* Doubled from 20px! */
     background-color: transparent;
     border-width: 0;
-    margin-right: 25px; /* Pushed slightly further off the right wall */
+    width: 40px;
     margin-top: 20px; 
     margin-bottom: 20px;
+    margin-right: 25px;
 }
 
-/* 4. Style the actual scroll thumb (the part that moves) */
-.unity-scroller--vertical .unity-base-slider__dragger {
-    background-color: rgba(255, 255, 255, 0.15); 
-    border-radius: 15px; /* Slightly rounder to match the new thickness */
-    border-width: 0;
-    
-    /* THE FIX: A much thicker, grabbable scrollbar */
-    width: 24px; /* Doubled from 12px! */
-    
-    /* The Math: (40px container width - 24px thumb width) / 2 = 8px offset */
-    left: 8px; 
-    
-    margin-top: 0;
-    margin-bottom: 0;
-    
-    transition-duration: 0.15s;
-    transition-property: background-color;
-}
-
-/* 3. Make the background track completely invisible */
 .unity-scroller--vertical .unity-base-slider__tracker {
     background-color: transparent;
     border-width: 0;
 }
 
-/* 5. Highlight effect when the player hovers over the scroll thumb */
+.unity-scroller--vertical .unity-base-slider__dragger {
+    background-color: rgba(255, 255, 255, 0.15); 
+    border-radius: 15px;
+    border-width: 0;
+    width: 24px;
+    left: 8px; 
+    margin-top: 0;
+    margin-bottom: 0;
+    transition-duration: 0.15s;
+    transition-property: background-color;
+}
+
 .unity-scroller--vertical .unity-base-slider__dragger:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-/* --- SETTINGS DYNAMIC STYLES --- */
+/* ========================================= */
+/* SETTINGS SCREEN                           */
+/* ========================================= */
 
-/* The Category Headers (e.g., "SOUNDS") */
-.settings-header {
-    color: rgb(0, 200, 255); /* Cyan */
-    font-size: 50px;
-    -unity-font-style: bold;
-    margin-top: 60px;
-    margin-bottom: 30px;
-    border-bottom-width: 2px;
-    border-color: rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
-}
-
-/* The Container for Toggles and Keybinds */
 .settings-row {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between; /* Pushes label left, button right */
-    width: 85%;
+    justify-content: space-between;
     align-self: center;
+    width: 85%;
     margin-top: 25px;
     margin-bottom: 25px;
 }
 
-/* The Label for Toggles/Keybinds */
 .settings-row-label {
     color: rgb(240, 240, 240);
     font-size: 40px;
     -unity-font-style: bold;
 }
 
-/* The Pill Button used for Toggles & Keybinds */
 .settings-action-btn {
-    width: 200px;
-    height: 80px;
+    color: white;
+    background-color: transparent;
     border-radius: 40px;
     border-width: 0;
+    width: 200px;
+    height: 80px;
     font-size: 35px;
-    -unity-font-style: bold;
-    color: white;
     transition-duration: 0.15s;
     transition-property: scale, background-color;
+    -unity-font-style: bold;
 }
 
 .settings-action-btn:hover {
@@ -369,9 +397,7 @@
     scale: 0.95;
 }
 
-/* Toggle States */
-.toggle-on { background-color: rgb(0, 200, 100); } /* Green */
-.toggle-off { background-color: rgb(80, 80, 90); }  /* Grey */
-
-/* Keybind State */
-.keybind-btn { background-color: rgb(0, 150, 255); } /* Blue */
+/* --- Dynamic Toggle/Keybind States --- */
+.toggle-on   { background-color: rgb(0, 200, 100); }
+.toggle-off  { background-color: rgb(80, 80, 90); }
+.keybind-btn { background-color: rgb(0, 150, 255); }

@@ -42,7 +42,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Core_Color: {r: 8, g: 1.2616457, b: 0, a: 1}
+    - _Core_Color: {r: 65.29289, g: 10.597275, b: 0, a: 1}
     - _Edge_Color: {r: 0.6320754, g: 0.13929956, b: 0, a: 1}
     - _Flow_Speed: {r: 0, g: -0.05, b: 0, a: 0}
   m_BuildTextureStacks: []

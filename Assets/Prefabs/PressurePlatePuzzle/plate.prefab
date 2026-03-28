@@ -100,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09ce2b156d5dba46b56adbb97c0a2d7, type: 2}
+  - {fileID: 2100000, guid: 57a9f569b62ca5845b42083a7eefef4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,4 +165,10 @@ MonoBehaviour:
   surfaceCenter: {fileID: 1603875580464189649}
   spacing: 0.25
   heightOffset: 0.02
-  isPressed: 0
+  isActive: 0
+  powerOnValue: 2
+  powerOffValue: 0.1
+  m_OnToggle:
+    m_PersistentCalls:
+      m_Calls: []
+  myGlyphIDs: 
