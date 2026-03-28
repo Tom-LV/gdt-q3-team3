@@ -11,9 +11,12 @@ public class StoryRunner : MonoBehaviour
     [Header("Story Asset")]
     public StoryContainerSO StoryGraph;
 
+
     // --- EXTERNAL EVENTS ---
     // Other scripts (like AudioManagers or QuestManagers) can listen to this!
     public event Action<string> OnStoryEvent;
+
+    public NotificationGlow notificationGlow;
 
     // --- RUNTIME MEMORY (BLACKBOARD) ---
     private Dictionary<string, float> _numberVariables = new Dictionary<string, float>();
@@ -73,7 +76,6 @@ public class StoryRunner : MonoBehaviour
         // The Main Game Loop
         while (_currentNode != null)
         {
-            Debug.Log(_currentNode);
             if (_currentNode is MessageNodeData msgNode)
             {
                 // 1. Evaluate the dynamic delay port FIRST!
@@ -149,6 +151,7 @@ public class StoryRunner : MonoBehaviour
         string charName = character != null ? character.CharacterName : "Unknown";
         Color charColor = character != null ? character.ChatColor : Color.white;
 
+        if (notificationGlow != null) notificationGlow.TriggerGlow();
         // Send it directly to your UI Toolkit PhoneOS!
         PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage(charName, msgNode.MessageText, charColor);
 

@@ -14715,6 +14715,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: PulseCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: FadeInSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: FadeOutSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: MaxIntensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: BaseGlowColor.b
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8478144522672240085, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: BaseGlowColor.g
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8678644294111841153, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

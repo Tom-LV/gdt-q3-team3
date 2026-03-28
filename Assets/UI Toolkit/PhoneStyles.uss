@@ -39,6 +39,39 @@
     opacity: 0.8;
 }
 
+/* ========================================= */
+/* NOTIFICATION DOTS                         */
+/* ========================================= */
+
+.notification-dot {
+    position: absolute;
+    top: -20px;      /* Pushes it slightly above the top edge */
+    right: -20px;    /* Pushes it slightly past the right edge */
+    width: 85px;     
+    height: 85px;
+    border-radius: 50%; /* Makes it a perfect circle */
+    
+    background-color: rgb(255, 55, 55); /* Bright notification red */
+    color: white;
+    font-size: 36px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    
+    /* Matches phone bg to create a gap between the dot and the app */
+    border-width: 12px;
+    border-color: rgb(15, 15, 18); 
+
+    /* Smooth pop-in animation */
+    transition-duration: 0.15s;
+    transition-property: scale, opacity;
+}
+
+/* Add this to hide the dot when there are no notifications */
+.notification-dot.hidden {
+    scale: 0;
+    opacity: 0;
+}
+
 /* --- Brand Colors --- */
 .app-chat     { background-color: rgb(0, 150, 255); }
 .app-settings { background-color: rgb(80, 80, 90); }

@@ -7,7 +7,9 @@
             </ui:VisualElement>
             <ui:VisualElement name="AppGrid" picking-mode="Ignore" style="flex-direction: row; flex-wrap: wrap; width: 100%; flex-grow: 1; overflow: visible; max-width: none; min-width: auto; align-content: flex-start; justify-content: flex-start; flex-basis: auto; visibility: visible;">
                 <ui:Button text="Reload&#10;room" name="Btn_ResetRoom" class="app-chat app-button" style="aspect-ratio: 1;"/>
-                <ui:Button text="Chat" name="Btn_Chat" class="app-chat app-button" style="aspect-ratio: 1;"/>
+                <ui:Button text="Chat" name="Btn_Chat" class="app-chat app-button" style="aspect-ratio: 1;">
+                    <ui:Label text="12" name="Chat_NotifDot" picking-mode="Ignore" class="notification-dot hidden"/>
+                </ui:Button>
                 <ui:Button text="Reset&#10;world" name="Btn_ResetLevel" class="app-button app-reset" style="aspect-ratio: 1;"/>
                 <ui:Button text="Exit" name="Btn_Exit" class="app-button app-reset" style="aspect-ratio: 1; align-self: auto;"/>
                 <ui:Button text="Settings" name="Btn_Settings" class="app-button app-settings" style="aspect-ratio: 1;"/>

@@ -7,6 +7,8 @@ public class ChatApp : PhoneApp
     private ScrollView chatHistory;
     private VisualElement currentChoiceContainer;
 
+    private int notifCount = 0;
+
     public override void Initialize(VisualElement root, PhoneOS os)
     {
         base.Initialize(root, os);
@@ -47,11 +49,20 @@ public class ChatApp : PhoneApp
         container.Add(bubble);
 
         chatHistory.Add(container);
+        notifCount += 1;
+        if (!isOpen) PhoneOS.Instance.GetApp<HomeApp>().UpdateChatNotification(notifCount);
 
         chatHistory.schedule.Execute(() =>
         {
             chatHistory.scrollOffset = new Vector2(0, chatHistory.contentContainer.layout.height);
         }).ExecuteLater(50);
+    }
+
+    public override void OnClose()
+    {
+        base.OnClose();
+        notifCount = 0;
+        PhoneOS.Instance.GetApp<HomeApp>().UpdateChatNotification(notifCount);
     }
 
     public void ShowChoices(List<ChoiceSaveData> choices, System.Action<string> onChoiceMade)
