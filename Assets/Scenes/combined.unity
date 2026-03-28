@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 0
-  m_FogColor: {r: 0.9575472, g: 0.84359866, b: 0.6097588, a: 1}
+  m_FogColor: {r: 0.8490566, g: 0.6686463, b: 0.41251338, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.05
+  m_FogDensity: 0.015
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 52e7346edd947b14a889d8fc0c0f071e, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 4fe9c01347f6c104cb78439dd13fb7d1, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 80736f94528d8c6459a5536a156b469a, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -14643,6 +14643,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reload
       objectReference: {fileID: 0}
+    - target: {fileID: 7620212384504968387, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: mainMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ac5b0e3d79e50a741846f15b0959ddc4, type: 2}
+    - target: {fileID: 7620212384504968387, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
+      propertyPath: playerControls
+      value: 
+      objectReference: {fileID: 200774466}
     - target: {fileID: 7710194031296454469, guid: 96d3812c69f33984aab87ae5eeb803f2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2

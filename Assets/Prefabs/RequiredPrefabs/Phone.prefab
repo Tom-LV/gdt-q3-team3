@@ -623,8 +623,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2212759638426804124}
-  - component: {fileID: 1187140565063969748}
   - component: {fileID: 4953187386897991740}
+  - component: {fileID: 8837708905273000884}
+  - component: {fileID: 3567712902930632311}
+  - component: {fileID: 7620212384504968387}
+  - component: {fileID: 3823250758306666199}
+  - component: {fileID: 1187140565063969748}
   - component: {fileID: 3317558777879125393}
   m_Layer: 9
   m_Name: PhoneUI
@@ -648,6 +652,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5710448826695883474}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &4953187386897991740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986723686635347938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96f06c7be576194685b995b4f5f095a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhoneOS
+--- !u!114 &8837708905273000884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986723686635347938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798717835e10ed74ca9ad74e0765d809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChatApp
+--- !u!114 &3567712902930632311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986723686635347938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4bc92ecb236e1469ff1af17ebc25b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HomeApp
+--- !u!114 &7620212384504968387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986723686635347938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115814934771657498e5587bbcfc0fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsApp
+  playerControls: {fileID: 0}
+  mainMixer: {fileID: 0}
+--- !u!114 &3823250758306666199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986723686635347938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a175aae21dacfb4c9156a8d69600268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoryRunner
+  StoryGraph: {fileID: 11400000, guid: 87ce85230b20c5b4184c5dbbcf5f6aec, type: 2}
 --- !u!114 &1187140565063969748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,18 +738,6 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &4953187386897991740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3986723686635347938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a96f06c7be576194685b995b4f5f095a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhoneOS
 --- !u!114 &3317558777879125393
 MonoBehaviour:
   m_ObjectHideFlags: 0

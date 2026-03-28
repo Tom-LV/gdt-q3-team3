@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/UI%20Toolkit/PhoneStyles.uss?fileID=7433441132597879392&amp;guid=9dac2f8a2caaf4e43879c45a5c247915&amp;type=3#PhoneStyles"/>
     <ui:VisualElement name="ScreenRoot" picking-mode="Ignore" class="phone-background" style="flex-grow: 1; width: 100%; height: 100%;">
         <ui:VisualElement name="HomeScreen" enabled="true" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(45, 44, 44, 0); position: absolute; display: flex; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); top: 0; left: 0; border-top-width: 30px; border-left-width: 30px; border-bottom-width: 30px; border-right-width: 30px; overflow: visible;">
-            <ui:VisualElement name="HomeScreenHeader" enabled="true" class="chat-header" style="flex-grow: 0; overflow: visible;">
-                <ui:Label text="Apps&#10;" class="screen-title chat-title" style="border-top-width: 0; font-size: 72px;"/>
+            <ui:VisualElement name="HomeScreenHeader" enabled="true" class="chat-header app-header" style="flex-grow: 0; overflow: visible;">
+                <ui:Label text="Apps&#10;" class="screen-title chat-title app-title" style="border-top-width: 0; font-size: 72px;"/>
             </ui:VisualElement>
             <ui:VisualElement name="AppGrid" picking-mode="Ignore" style="flex-direction: row; flex-wrap: wrap; width: 100%; flex-grow: 1; overflow: visible; max-width: none; min-width: auto; align-content: flex-start; justify-content: flex-start; flex-basis: auto; visibility: visible;">
                 <ui:Button text="Reload&#10;room" name="Btn_ResetRoom" class="app-chat app-button" style="aspect-ratio: 1;"/>
@@ -14,16 +14,16 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="SettingsScreen" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; background-color: rgba(45, 44, 44, 0); font-size: 70px; display: none; border-left-color: rgba(40, 40, 45, 0); border-right-color: rgba(40, 40, 45, 0); border-top-color: rgba(40, 40, 45, 0); border-bottom-color: rgba(40, 40, 45, 0); left: 0; top: 0; border-top-width: 30px; border-left-width: 30px; border-right-width: 30px; border-bottom-width: 30px;">
-            <ui:VisualElement name="SettingsHeader" class="chat-header" style="flex-grow: 0;">
+            <ui:VisualElement name="SettingsHeader" class="chat-header app-header" style="flex-grow: 0;">
                 <ui:Button text="←&#10;" name="Btn_Back_Settings" class="chat-back-btn"/>
-                <ui:Label text="SETTINGS" name="Title_Settings" class="chat-title"/>
+                <ui:Label text="SETTINGS" name="Title_Settings" class="chat-title app-title"/>
             </ui:VisualElement>
             <ui:ScrollView name="SettingsContainer" style="flex-grow: 1;"/>
         </ui:VisualElement>
         <ui:VisualElement name="ChatScreen" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; background-color: rgba(45, 44, 44, 0); font-size: 70px; display: none; border-left-color: rgba(40, 40, 45, 0); border-right-color: rgba(40, 40, 45, 0); border-top-color: rgba(40, 40, 45, 0); border-bottom-color: rgba(40, 40, 45, 0); flex-shrink: 1; top: 0; left: 0; border-top-width: 30px; border-left-width: 30px; border-bottom-width: 30px; border-right-width: 30px;">
-            <ui:VisualElement name="ChatHeader" class="chat-header" style="flex-grow: 0;">
+            <ui:VisualElement name="ChatHeader" class="chat-header app-header" style="flex-grow: 0;">
                 <ui:Button text="←&#10;" name="Btn_Back_Chat" class="chat-back-btn"/>
-                <ui:Label text="CHAT&#10;" name="Title_Chat" class="chat-title"/>
+                <ui:Label text="CHAT&#10;" name="Title_Chat" class="chat-title app-title"/>
             </ui:VisualElement>
             <ui:ScrollView name="ChatHistory" style="flex-grow: 1;"/>
             <ui:VisualElement name="ChatFooter" class="chat-footer" style="flex-grow: 0; bottom: auto; flex-shrink: 0; flex-direction: row;">

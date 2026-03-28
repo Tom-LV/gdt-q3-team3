@@ -36,7 +36,7 @@ public class CheckpointManager : MonoBehaviour
         savedRotation = checkpointNode.rotation;
         activeRoom = roomToLink;
 
-        PhoneOS.Instance.ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
+        PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
 
         Debug.Log("Checkpoint saved");
     }
