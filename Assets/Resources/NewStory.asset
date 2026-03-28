@@ -94,26 +94,26 @@ MonoBehaviour:
     TargetNodeGUID: 7fd4e722-bda7-4f6a-a04a-3fe7bc0832e6
     TargetPortName: In
   StoryNodes:
-  - rid: 1000
-  - rid: 1001
-  - rid: 1002
-  - rid: 1003
-  - rid: 1004
-  - rid: 1005
-  - rid: 1006
-  - rid: 1007
-  - rid: 1008
-  - rid: 1009
-  - rid: 1010
-  - rid: 1011
-  - rid: 1012
-  - rid: 1013
-  - rid: 1014
-  - rid: 1015
+  - rid: 1016
+  - rid: 1017
+  - rid: 1018
+  - rid: 1019
+  - rid: 1020
+  - rid: 1021
+  - rid: 1022
+  - rid: 1023
+  - rid: 1024
+  - rid: 1025
+  - rid: 1026
+  - rid: 1027
+  - rid: 1028
+  - rid: 1029
+  - rid: 1030
+  - rid: 1031
   references:
     version: 2
     RefIds:
-    - rid: 1000
+    - rid: 1016
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 73b5ed62-4cd0-49b9-b9ed-fca6f03d0de3
@@ -121,7 +121,7 @@ MonoBehaviour:
         CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
         MessageText: Hello
         FallbackDelay: 1
-    - rid: 1001
+    - rid: 1017
       type: {class: ConditionNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 82fb2614-a83e-492d-bc30-db6aa5ea4aad
@@ -129,13 +129,13 @@ MonoBehaviour:
         VariableName: HasKey
         Operator: ==
         Value: False
-    - rid: 1002
+    - rid: 1018
       type: {class: VariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: bdbdae23-336d-4fab-9277-fa48be227b83
         Position: {x: -255, y: 741}
         VariableName: times
-    - rid: 1003
+    - rid: 1019
       type: {class: CompareNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 50e093ce-017d-4d5b-9a11-3751aba8409c
@@ -143,19 +143,19 @@ MonoBehaviour:
         Operator: '>='
         FallbackA: 0
         FallbackB: 5
-    - rid: 1004
+    - rid: 1020
       type: {class: VariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: f658e47a-9426-498b-a621-4f80ae4e60e1
         Position: {x: -318, y: 1044}
         VariableName: times
-    - rid: 1005
+    - rid: 1021
       type: {class: TimerNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 85ebda1f-8d1c-4454-8876-4738b13936ff
         Position: {x: 254.5, y: 721.5}
         WaitTime: 1
-    - rid: 1006
+    - rid: 1022
       type: {class: MathNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: c7db260f-2ded-4340-a070-5a7ea662e072
@@ -163,7 +163,7 @@ MonoBehaviour:
         Operator: +
         FallbackA: 0
         FallbackB: 1
-    - rid: 1007
+    - rid: 1023
       type: {class: SetVariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 22f718b9-adfb-49c7-9011-c5fe71ce294f
@@ -171,12 +171,12 @@ MonoBehaviour:
         VariableName: times
         Operator: ==
         Value: 
-    - rid: 1008
+    - rid: 1024
       type: {class: StartNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: START_NODE_GUID
         Position: {x: -438.5, y: 533}
-    - rid: 1009
+    - rid: 1025
       type: {class: SetVariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 62b61b9c-fae8-43e3-8490-3b9d35bc8a87
@@ -184,7 +184,7 @@ MonoBehaviour:
         VariableName: times
         Operator: ==
         Value: 
-    - rid: 1010
+    - rid: 1026
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: f0ab9603-ccad-4a4e-a957-c0bf00441970
@@ -192,7 +192,7 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: Hello
         FallbackDelay: 0
-    - rid: 1011
+    - rid: 1027
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 575cfe8e-57ca-424d-be8b-1fc0a1d0fcc6
@@ -200,7 +200,7 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: ...
         FallbackDelay: 1
-    - rid: 1012
+    - rid: 1028
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: c775203d-fd68-460d-81ce-cae58fc59ae1
@@ -208,7 +208,7 @@ MonoBehaviour:
         CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
         MessageText: ...
         FallbackDelay: 1
-    - rid: 1013
+    - rid: 1029
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 689a03b8-7b5b-4d50-b850-4bcbeab5ea96
@@ -216,7 +216,7 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: What?!?!
         FallbackDelay: 1
-    - rid: 1014
+    - rid: 1030
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 7fd4e722-bda7-4f6a-a04a-3fe7bc0832e6
@@ -224,7 +224,7 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: Why are you not responding????
         FallbackDelay: 0
-    - rid: 1015
+    - rid: 1031
       type: {class: ChoiceNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 0b5d6b76-f58d-4ea5-9355-40d5266611b3
@@ -236,7 +236,5 @@ MonoBehaviour:
           ChoiceText: What is this?
         - PortID: d494cdfe-588b-4524-8248-32f55299b48f
           ChoiceText: No way
-        - PortID: 742beb29-7e64-4fa3-81f8-d34cd3dd4f8e
-          ChoiceText: New Choice
         ExpirationType: 1
         FallbackTimer: 5
