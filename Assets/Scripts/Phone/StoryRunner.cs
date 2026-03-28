@@ -167,12 +167,54 @@ public class StoryRunner : MonoBehaviour
 
         PhoneOS.Instance.GetApp<ChatApp>().ShowChoices(choiceNode.Choices, (portID) =>
         {
+            if (!_isWaitingForInput) return; // Prevent clicking if it just expired!
             _selectedChoicePortID = portID;
             _isWaitingForInput = false;
         });
 
-        yield return new WaitUntil(() => !_isWaitingForInput);
+        // --- EXPIRATION LOGIC ---
+        if (choiceNode.ExpirationType == ChoiceExpirationType.Timer)
+        {
+            float timeLimit = ResolveNumber(choiceNode.GUID, "Time Limit", choiceNode.FallbackTimer);
+            float timer = 0f;
 
+            // Wait until the player clicks OR the timer hits the limit
+            while (_isWaitingForInput && timer < timeLimit)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            if (_isWaitingForInput) // If they STILL haven't clicked, force expire!
+            {
+                _isWaitingForInput = false;
+                _selectedChoicePortID = "Expired"; // This perfectly matches the name of our output port!
+                PhoneOS.Instance.GetApp<ChatApp>().ClearChoicesUI(); // IMPORTANT: Hide the buttons so they can't click late!
+            }
+        }
+        else if (choiceNode.ExpirationType == ChoiceExpirationType.Condition)
+        {
+            // Wait until the player clicks OR the graph condition becomes true
+            while (_isWaitingForInput)
+            {
+                bool forceExpire = ResolveBool(choiceNode.GUID, "Force Expiry", "False");
+                if (forceExpire)
+                {
+                    _isWaitingForInput = false;
+                    _selectedChoicePortID = "Expired";
+                    PhoneOS.Instance.GetApp<ChatApp>().ClearChoicesUI(); // Hide buttons!
+                    break;
+                }
+                yield return null;
+            }
+        }
+        else
+        {
+            // Normal wait (No Expiration)
+            yield return new WaitUntil(() => !_isWaitingForInput);
+        }
+
+        // Advance down whichever wire won the race!
         _currentNode = GetNextNode(_currentNode.GUID, _selectedChoicePortID);
     }
 

@@ -98,4 +98,13 @@ public class ChatApp : PhoneApp
             chatHistory.scrollOffset = new Vector2(0, chatHistory.contentContainer.layout.height);
         }).ExecuteLater(50);
     }
+
+    public void ClearChoicesUI()
+    {
+        if (currentChoiceContainer != null)
+        {
+            currentChoiceContainer.RemoveFromHierarchy();
+            currentChoiceContainer = null;
+        }
+    }
 }

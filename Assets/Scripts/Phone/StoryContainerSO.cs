@@ -70,12 +70,18 @@ public class ChoiceSaveData
     public string PortID;
     public string ChoiceText;
 }
+public enum ChoiceExpirationType { None, Timer, Condition }
 
 [Serializable]
 public class ChoiceNodeData : BaseNodeData
 {
     public List<ChoiceSaveData> Choices = new List<ChoiceSaveData>();
+
+    // NEW EXPIRATION DATA
+    public ChoiceExpirationType ExpirationType = ChoiceExpirationType.None;
+    public string FallbackTimer = "5";
 }
+
 
 [Serializable]
 public class TimerNodeData : BaseNodeData {
