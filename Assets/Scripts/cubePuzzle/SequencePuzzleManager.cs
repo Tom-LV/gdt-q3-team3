@@ -18,6 +18,11 @@ public class SequencePuzzleManager : MonoBehaviour
     private int _currentStepIndex = 0;
     private bool _isSolved = false;
 
+    private void Start()
+    {
+        room = transform.parent.parent.GetComponent<PuzzleRoom>();
+    }
+
 
     // The individual nodes will call this method when the player touches them
     public void OnNodeTouched(PuzzleTile touchedNode)
@@ -47,7 +52,8 @@ public class SequencePuzzleManager : MonoBehaviour
         {
             // INCORRECT! Reset the puzzle.
             Debug.Log($"Wrong! Expected {CorrectSequence[_currentStepIndex]}, but touched {touchedNode.RequiredElement}. Resetting...");
-            room.ResetRoom();
+            if (room != null) room.ResetRoom();
+            else Debug.Log("Room instance set to null");
         }
     }
 }
