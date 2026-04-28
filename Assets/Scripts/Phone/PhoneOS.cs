@@ -1,117 +1,54 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public class PhoneOS : MonoBehaviour
 {
-    private UIDocument phoneDoc;
+    public static PhoneOS Instance;
 
-    [Header("Player Reference")]
-    [Tooltip("Drag your player here so we can change settings live!")]
-    public PlayerControls playerControls;
+    private UIDocument _phoneDoc;
+    private List<PhoneApp> _installedApps = new List<PhoneApp>();
 
-    // Screens
-    private VisualElement homeScreen;
-    private VisualElement settingsScreen;
-
-    // Home Buttons
-    private Button btnResetRoom;
-    private Button btnResetWorld;
-    private Button btnSettings;
-
-    // Back Buttons
-    private Button btnBackSettings;
-
-    // App Content
-    private Slider sliderSensitivity;
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+    }
 
     private void OnEnable()
     {
-        phoneDoc = GetComponent<UIDocument>();
-        VisualElement root = phoneDoc.rootVisualElement;
+        _phoneDoc = GetComponent<UIDocument>();
+        VisualElement root = _phoneDoc.rootVisualElement;
 
-        // 1. QUERY SCREENS
-        homeScreen = root.Q<VisualElement>("HomeScreen");
-        settingsScreen = root.Q<VisualElement>("SettingsScreen");
+        // Find all PhoneApp scripts attached to this GameObject
+        _installedApps = GetComponents<PhoneApp>().ToList();
 
-        // 2. QUERY BUTTONS & CONTROLS
-        btnResetRoom = root.Q<Button>("Btn_ResetRoom");
-        btnResetWorld = root.Q<Button>("Btn_ResetLevel");
-        btnSettings = root.Q<Button>("Btn_Settings");
-
-        btnBackSettings = root.Q<Button>("Btn_Back_Settings");
-
-        sliderSensitivity = root.Q<Slider>("Slider_Sensitivity");
-
-        // 3. ASSIGN BUTTON CLICKS
-        btnResetRoom?.RegisterCallback<ClickEvent>(ev => App_ResetRoom());
-        btnResetWorld?.RegisterCallback<ClickEvent>(ev => App_ResetWorld());
-        btnSettings?.RegisterCallback<ClickEvent>(ev => OpenScreen(settingsScreen, SetupSettingsApp));
-
-        // Assign Back Buttons
-        btnBackSettings?.RegisterCallback<ClickEvent>(ev => OpenScreen(homeScreen));
-
-        // 4. SETUP SLIDER EVENT (Live updates!)
-        if (sliderSensitivity != null)
+        // Boot them up
+        foreach (var app in _installedApps)
         {
-            // Load saved sensitivity, default to 15
-            sliderSensitivity.value = PlayerPrefs.GetFloat("MouseSensitivity", 0.1f);
-
-            // Listen for changes
-            sliderSensitivity.RegisterValueChangedCallback(ev => OnSensitivityChanged(ev.newValue));
+            app.Initialize(root, this);
+            app.Close(); // Make sure everything starts hidden
         }
 
-        // Start on Home Screen
-        OpenScreen(homeScreen);
+        // Open the Home Screen by default
+        OpenApp<HomeApp>();
     }
 
-    // --- SCREEN NAVIGATION ENGINE ---
-    private void OpenScreen(VisualElement screenToShow, System.Action onScreenOpened = null)
+    // OS ROUTING API
+
+    public void OpenApp<T>() where T : PhoneApp
     {
-        // Hide everything
-        homeScreen.style.display = DisplayStyle.None;
-        settingsScreen.style.display = DisplayStyle.None;
+        // Close all apps
+        foreach (var app in _installedApps) { app.Close(); }
 
-        // Show the requested screen
-        if (screenToShow != null)
-        {
-            screenToShow.style.display = DisplayStyle.Flex;
-        }
-
-        // Run any specific setup code for that app
-        onScreenOpened?.Invoke();
+        // Find and open the requested app
+        T appToOpen = GetApp<T>();
+        if (appToOpen != null) { appToOpen.Open(); }
     }
 
-    // --- APP SPECIFIC LOGIC ---
-
-    private void App_ResetRoom()
+    public T GetApp<T>() where T : PhoneApp
     {
-        if (CheckpointManager.Instance != null) CheckpointManager.Instance.ReloadCheckpoint();
-        PhoneController.ClosePhoneFromButton();
-    }
-
-    private void App_ResetWorld()
-    {
-        PhoneController.isGamePaused = false;
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-    }
-
-    private void SetupSettingsApp()
-    {
-        // The slider visually updates itself, so nothing needed here right now!
-    }
-
-    private void OnSensitivityChanged(float newValue)
-    {
-        // Save to hard drive
-        PlayerPrefs.SetFloat("MouseSensitivity", newValue);
-        PlayerPrefs.Save();
-
-        // Push live update to player script!
-        if (playerControls != null)
-        {
-            playerControls.SetSensitivity(newValue);
-        }
+        return _installedApps.OfType<T>().FirstOrDefault();
     }
 }

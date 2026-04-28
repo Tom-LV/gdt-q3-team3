@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class CheckpointManager : MonoBehaviour
     private Quaternion savedRotation;
 
     private PuzzleRoom activeRoom;
+
+    
 
     private void Awake()
     {
@@ -34,6 +37,8 @@ public class CheckpointManager : MonoBehaviour
         savedPosition = checkpointNode.position;
         savedRotation = checkpointNode.rotation;
         activeRoom = roomToLink;
+
+        PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
 
         Debug.Log("Checkpoint saved");
     }

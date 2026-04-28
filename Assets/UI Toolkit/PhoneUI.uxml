@@ -1,17 +1,40 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="ScreenRoot" style="flex-grow: 1; width: 100%; height: 100%;">
-        <ui:VisualElement name="HomeScreen" enabled="true" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgb(45, 44, 44); position: absolute;">
-            <ui:VisualElement name="AppGrid" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; align-content: flex-start; margin-top: 2%; margin-right: 2%; margin-bottom: 2%; margin-left: 2%;">
-                <ui:Button text="Reset&#10;level" name="Btn_ResetLevel" style="width: 30%; height: auto; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; margin-top: 1.67%; margin-right: 1.67%; margin-bottom: 1.67%; margin-left: 1.67%; aspect-ratio: 1; font-size: 80px; -unity-text-outline-width: 0;"/>
-                <ui:Button text="Reload&#10;room" name="Btn_ResetRoom" style="width: 30%; height: auto; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; margin-top: 1.67%; margin-right: 1.67%; margin-bottom: 1.67%; margin-left: 1.67%; aspect-ratio: 1; font-size: 80px;"/>
-                <ui:Button text="Settings" name="Btn_Settings" style="width: 30%; height: auto; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; margin-top: 1.67%; margin-right: 1.67%; margin-bottom: 1.67%; margin-left: 1.67%; aspect-ratio: 1; font-size: 80px;"/>
+    <Style src="project://database/Assets/UI%20Toolkit/PhoneStyles.uss?fileID=7433441132597879392&amp;guid=9dac2f8a2caaf4e43879c45a5c247915&amp;type=3#PhoneStyles"/>
+    <ui:VisualElement name="ScreenRoot" picking-mode="Ignore" class="phone-background" style="flex-grow: 1; width: 100%; height: 100%;">
+        <ui:VisualElement name="HomeScreen" enabled="true" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(45, 44, 44, 0); position: absolute; display: flex; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); top: 0; left: 0; border-top-width: 30px; border-left-width: 30px; border-bottom-width: 30px; border-right-width: 30px; overflow: visible;">
+            <ui:VisualElement name="HomeScreenHeader" enabled="true" class="chat-header app-header" style="flex-grow: 0; overflow: visible;">
+                <ui:Label text="Apps&#10;" class="screen-title chat-title app-title" style="border-top-width: 0; font-size: 72px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="AppGrid" picking-mode="Ignore" style="flex-direction: row; flex-wrap: wrap; width: 100%; flex-grow: 1; overflow: visible; max-width: none; min-width: auto; align-content: flex-start; justify-content: flex-start; flex-basis: auto; visibility: visible;">
+                <ui:Button text="Reload&#10;room" name="Btn_ResetRoom" class="app-chat app-button" style="aspect-ratio: 1;"/>
+                <ui:Button text="Chat" name="Btn_Chat" class="app-chat app-button" style="aspect-ratio: 1;">
+                    <ui:Label text="12" name="Chat_NotifDot" picking-mode="Ignore" class="notification-dot hidden"/>
+                </ui:Button>
+                <ui:Button text="Reset&#10;world" name="Btn_ResetLevel" class="app-button app-reset" style="aspect-ratio: 1;"/>
+                <ui:Button text="Exit" name="Btn_Exit" class="app-button app-reset" style="aspect-ratio: 1; align-self: auto;"/>
+                <ui:Button text="Settings" name="Btn_Settings" class="app-button app-settings" style="aspect-ratio: 1;"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="SettingsScreen" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; background-color: rgb(45, 44, 44); font-size: 70px; display: none;">
-            <ui:Label text="SETTINGS&#10;" style="align-self: center; font-size: 100px; color: rgb(226, 226, 226);"/>
-            <ui:Slider label="Look Sensitivity" value="0.1" high-value="0.5" name="Slider_Sensitivity" low-value="0.01" style="font-size: 70px; margin-top: 10px; margin-right: 30px; margin-bottom: 10px; margin-left: 30px; color: rgb(226, 226, 226);"/>
-            <ui:VisualElement style="flex-grow: 1; align-self: auto; justify-content: flex-end; align-items: center; margin-top: 30px; margin-right: 30px; margin-bottom: 30px; margin-left: 30px;">
-                <ui:Button text="Back&#10;" name="Btn_Back_Settings" style="width: 20%; aspect-ratio: auto;"/>
+        <ui:VisualElement name="SettingsScreen" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; background-color: rgba(45, 44, 44, 0); font-size: 70px; display: none; border-left-color: rgba(40, 40, 45, 0); border-right-color: rgba(40, 40, 45, 0); border-top-color: rgba(40, 40, 45, 0); border-bottom-color: rgba(40, 40, 45, 0); left: 0; top: 0; border-top-width: 30px; border-left-width: 30px; border-right-width: 30px; border-bottom-width: 30px;">
+            <ui:VisualElement name="SettingsHeader" class="chat-header app-header" style="flex-grow: 0;">
+                <ui:Button text="←&#10;" name="Btn_Back_Settings" class="chat-back-btn"/>
+                <ui:Label text="SETTINGS" name="Title_Settings" class="chat-title app-title"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="SettingsContainer" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ChatScreen" picking-mode="Ignore" style="flex-grow: 1; width: 100%; height: 100%; position: absolute; background-color: rgba(45, 44, 44, 0); font-size: 70px; display: none; border-left-color: rgba(40, 40, 45, 0); border-right-color: rgba(40, 40, 45, 0); border-top-color: rgba(40, 40, 45, 0); border-bottom-color: rgba(40, 40, 45, 0); flex-shrink: 1; top: 0; left: 0; border-top-width: 30px; border-left-width: 30px; border-bottom-width: 30px; border-right-width: 30px;">
+            <ui:VisualElement name="ChatHeader" class="chat-header app-header" style="flex-grow: 0;">
+                <ui:Button text="←&#10;" name="Btn_Back_Chat" class="chat-back-btn"/>
+                <ui:Label text="CHAT&#10;" name="Title_Chat" class="chat-title app-title"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="ChatHistory" style="flex-grow: 1;"/>
+            <ui:VisualElement name="ChatFooter" class="chat-footer" style="flex-grow: 0; bottom: auto; flex-shrink: 0; flex-direction: row;">
+                <ui:VisualElement name="FakeInputBox" class="chat-fake-input" style="flex-grow: 1;">
+                    <ui:Label text="Message...&#10;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="FakeSendBtn" class="chat-fake-send" style="flex-grow: 1;">
+                    <ui:Label text="↑&#10;"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
