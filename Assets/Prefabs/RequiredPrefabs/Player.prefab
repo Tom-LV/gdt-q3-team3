@@ -133,8 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
   interactRange: 5
   cameraTransform: {fileID: 2041171735964456609}
-  player: {fileID: 0}
-  holdPositionR: {fileID: 0}
+  player: {fileID: 1844393785302030564}
+  holdPositionR: {fileID: 4285526377648423750}
   holdPositionL: {fileID: 0}
   throwForceMultiplier: 12
   itemRadius: 0.2
@@ -152,10 +152,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
   walkSpeed: 5
   sprintSpeed: 8
+  crouchSpeed: 2.5
   airSpeed: 1
   gravity: -15
   jumpHeight: 1.5
   jumpBufferTime: 0.2
+  crouchHeight: 1
+  crouchTransitionSpeed: 10
+  pushSpeed: 1
+  pushExitTime: 0.5
   cameraPivotTransform: {fileID: 6679835883971722511}
   cameraTransform: {fileID: 2041171735964456609}
   mouseSensitivity: 15
