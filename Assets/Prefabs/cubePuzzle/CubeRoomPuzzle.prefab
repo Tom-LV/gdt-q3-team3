@@ -4762,6 +4762,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2476918418589388996}
+  - component: {fileID: 6556856733938173378}
   m_Layer: 0
   m_Name: CubeRoomPuzzle
   m_TagString: Untagged
@@ -4789,6 +4790,19 @@ Transform:
   - {fileID: 6655573393328815614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6556856733938173378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5465517047585480656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f26c2066a7ad847a648ba5c6e2b9d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleRoom
+  roomPrefab: {fileID: 5465517047585480656}
 --- !u!1 &5510401042983201161
 GameObject:
   m_ObjectHideFlags: 0
@@ -8236,7 +8250,7 @@ PrefabInstance:
       objectReference: {fileID: 8070391567892628794}
     - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveForward
+      value: MoveRight
       objectReference: {fileID: 0}
     - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -8256,7 +8270,7 @@ PrefabInstance:
       objectReference: {fileID: 8070391567892628794}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveRight
+      value: MoveBackwards
       objectReference: {fileID: 0}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -8320,7 +8334,7 @@ PrefabInstance:
       objectReference: {fileID: 8070391567892628794}
     - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveLeft
+      value: MoveForward
       objectReference: {fileID: 0}
     - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -8340,7 +8354,7 @@ PrefabInstance:
       objectReference: {fileID: 8070391567892628794}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveBackwards
+      value: MoveLeft
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
