@@ -82,12 +82,13 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        if(isShifting) HandleShiftLerp();
+        // Crudely Disabling Crouch (forgot it existed while designing the layout so crouching breaks the current level design)
+        // if(isShifting) HandleShiftLerp();
         if (PhoneController.isGamePaused) return;
 
         ReadInputs();
         HandleLooking();
-        HandleCrouching();
+        // HandleCrouching();
         HandleMovement();
     }
 
