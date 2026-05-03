@@ -1,64 +1,69 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
-public class LightPole : PushableItem
+public class LightPole : MonoBehaviour
 {
     [SerializeField] private Collider storedItem;
     [SerializeField] private Transform topTransform;
+    [SerializeField] private Transform pivot;
     [SerializeField] protected Transform bottomTransform;
     [SerializeField] protected Transform crystalTransform;
     [SerializeField] protected float collapseTime = 2f;
-    [SerializeField] private float turnRadius;
-    private float rotationOffset;
+    private bool collapsed = false;
+    private Transform[] otherPoles;
+    private int currentAimedPole = 0;
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private float changeTime;
 
-    public override Vector3 FindNearestPointOnPath(Vector3 pos)
+    public void Initialize(Transform[] positions)
     {
-        Vector3 dir = pos - pushObject.position;
-        dir.y = 0f;
-        if (dir.sqrMagnitude < 0.0001f) return pushObject.position + Vector3.forward * turnRadius;
-        dir.Normalize();
-        return pushObject.position + dir * turnRadius;
+        if(positions == null || positions.Length == 0) return;
+        otherPoles = positions.Where(t => t != transform).ToArray();
+        otherPoles = otherPoles.OrderBy(t =>
+            {
+                Vector3 dir = t.position - transform.position;
+                return Mathf.Atan2(dir.x, dir.z);
+            }).ToArray();
+        Vector3 dirToTarget = otherPoles[0].position - pivot.position;
+        dirToTarget.y = 0;
+        targetRotation = Quaternion.LookRotation(dirToTarget);
+        pivot.rotation = targetRotation;
     }
-    public override Quaternion FindStartOrientation()
+    void Start()
     {
-        Vector3 dir = relativeStartPos;
-        dir.y = 0f;
-        dir.Normalize();
-        Vector3 tangent = Vector3.Cross(Vector3.up, dir);
-        return Quaternion.LookRotation(tangent);
+        if (otherPoles == null || otherPoles.Length == 0) Collapse();
     }
-    public override void PushToPlayerPos(Vector3 pos)
+    public void Rotate(int amount)
     {
-        Vector3 dir = pos - pushObject.position;
-        dir.y = 0f;
-        if (dir.sqrMagnitude < 0.0001f) return;
-        dir.Normalize();
-        float angle = Vector3.SignedAngle(relativeStartPos, dir, Vector3.up);
-        pushObject.rotation = Quaternion.Euler(0f, angle + rotationOffset, 0f);
+        if(isCollapsed()) return;
+        currentAimedPole += amount;
+        if (currentAimedPole < 0) currentAimedPole = otherPoles.Length - 1;
+        if (currentAimedPole >= otherPoles.Length) currentAimedPole = 0;
+        Vector3 dir = otherPoles[currentAimedPole].position - pivot.position;
+        dir.y = 0;
+        startRotation = pivot.rotation;
+        targetRotation = Quaternion.LookRotation(dir);
+        changeTime = Time.time;
     }
-    public override float[] GetAngleChange(Vector3 startPos, Vector3 endPos)
+    void Update()
     {
-        startPos -= pushObject.position;
-        startPos.y = 0f;
-        startPos.Normalize();
-
-        endPos -= pushObject.position;
-        endPos.y = 0f;
-        endPos.Normalize();
-
-        float[] angle = {0f, Vector3.SignedAngle(startPos, endPos, Vector3.up)};
-        return angle;
+        if(isCollapsed()) return;
+        float t = Mathf.Clamp01(Time.time - changeTime);
+        pivot.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
     }
-    public override void ExitInteraction() => rotationOffset = pushObject.eulerAngles.y;
+    public bool isCollapsed()
+    {
+        return collapsed;
+    }
     public virtual void Collapse()
     {
-        Debug.Log("Tried Collapsing, " + IsInteractable());
-        if (!IsInteractable()) return;
-        SetInteractable(false);
-        Debug.Log("Started Collapsing");
+        if(isCollapsed()) return;
+        collapsed = true;
         StartCoroutine(CollapseRoutine()); // this is magic to avoid lag
     }
-    private IEnumerator CollapseRoutine() // afforementioned magic
+    private IEnumerator CollapseRoutine() // aforementioned magic
     {
         float t = 0f;
         Vector3 startPos = topTransform.position;
@@ -72,9 +77,10 @@ public class LightPole : PushableItem
 
             yield return null;
         }
-        Debug.Log("Finished Collapsing");
         FireBeam();
     }
+    // light stuff
+    private LineRenderer lr;
     private void FireBeam()
     {
         Vector3 origin = crystalTransform.position;
@@ -93,8 +99,6 @@ public class LightPole : PushableItem
         }
     }
 
-    // light stuff
-    private LineRenderer lr;
     void Awake()
     {
         if(storedItem != null) Physics.IgnoreCollision(topTransform.GetComponent<Collider>(), storedItem);
@@ -104,9 +108,6 @@ public class LightPole : PushableItem
         lr.startWidth = 0.05f;
         lr.endWidth = 0.05f;
         lr.material = new Material(Shader.Find("Unlit/Color")) {color = Color.yellow};
-
-        rotationOffset = pushObject.eulerAngles.y;
-        Debug.Log("offset: " + rotationOffset);
     }
     public void DrawBeam(Vector3 start, Vector3 end)
     {

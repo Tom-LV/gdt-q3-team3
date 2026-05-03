@@ -4,22 +4,18 @@ using System.Collections;
 public class CenterLightPole : LightPole
 {
     [SerializeField] private Transform topCover;
+    [SerializeField] private LightPuzzleManager manager;
     public void StartLight()
     {
         base.Collapse();
     }
     public override void Collapse()
     {
-        LightPole[] allPoles = FindObjectsOfType<LightPole>();
-        foreach(LightPole pole in allPoles)
-        {
-            if(pole.IsInteractable()) return;
-        }
+        if(!manager.PuzzleSolved()) return;
         RevealButton();
     }
     public void RevealButton()
     {
-        if (IsInteractable()) return;
         StartCoroutine(RevealRoutine());
     }
     private IEnumerator RevealRoutine()
