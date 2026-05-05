@@ -3,15 +3,14 @@ using UnityEngine;
 public class WaterCurrent : MonoBehaviour
 {
     [Header("Dials")]
-    public TimerDial startDial;
-    public TimerDial stopDial;
+    public TimerDial dial;
 
     [Header("Flow Settings")]
     public Vector3 flowDirection = Vector3.forward;
     public float flowForce = 10f;
     public ParticleSystem waterParticles; // Optional: to visually show flow turning on/off
 
-    private bool isActive = true;
+    private bool isActive = false;
 
     private void Start()
     {
@@ -27,7 +26,7 @@ public class WaterCurrent : MonoBehaviour
     public void EvaluateTime(float elapsedTime)
     {
         // If the elapsed time is between the start and stop dial settings, turn on
-        if (elapsedTime >= startDial.currentTime && elapsedTime <= stopDial.currentTime)
+        if (elapsedTime >= dial.startTime && elapsedTime <= dial.startTime + dial.length)
         {
             if (!isActive) SetFlowActive(true);
         }

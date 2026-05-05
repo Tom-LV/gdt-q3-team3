@@ -3,12 +3,22 @@ using UnityEngine;
 
 public class WaterPuzzleManager : MonoBehaviour
 {
+    [Header("Timeline Scrubber")]
+    [Tooltip("The actual sliding scrubber object.")]
+    public Transform timelineScrubber;
+    [Tooltip("Empty GameObject placed at the exact 0-second mark of the track.")]
+    public Transform trackStartAnchor;
+    [Tooltip("Empty GameObject placed at the exact maxTime mark of the track.")]
+    public Transform trackEndAnchor;
+
     [Header("Ball Settings")]
     public Transform puzzleBall;
     public Transform ballSpawnPoint;
 
     [Header("Puzzle Elements")]
     public List<WaterCurrent> waterCurrents;
+
+    public float maxTime = 20f;
 
     private bool isPlaying = false;
     private float timer = 0f;
@@ -20,6 +30,7 @@ public class WaterPuzzleManager : MonoBehaviour
         {
             ballRb = puzzleBall.GetComponent<Rigidbody>();
         }
+        ResetPuzzle();
     }
 
     void Update()
@@ -28,10 +39,26 @@ public class WaterPuzzleManager : MonoBehaviour
 
         timer += Time.deltaTime;
 
+        // --- SCRUBBER MOVEMENT ---
+        // Calculate what percentage of the total time has passed (0.0 to 1.0)
+        float timePercentage = Mathf.Clamp01(timer / maxTime);
+
+        // Move the scrubber smoothly between the start and end anchors
+        if (timelineScrubber != null && trackStartAnchor != null && trackEndAnchor != null)
+        {
+            timelineScrubber.position = Vector3.Lerp(trackStartAnchor.position, trackEndAnchor.position, timePercentage);
+        }
+
         // Tell every pipe to check if it should be on or off based on the current time
         foreach (var current in waterCurrents)
         {
             current.EvaluateTime(timer);
+        }
+
+        // Stop the puzzle if we reach the end of the timeline
+        if (timer >= maxTime)
+        {
+            ResetPuzzle();
         }
     }
 
@@ -47,6 +74,12 @@ public class WaterPuzzleManager : MonoBehaviour
     {
         isPlaying = false;
         timer = 0f;
+
+        // Reset scrubber visually to the start anchor position
+        if (timelineScrubber != null && trackStartAnchor != null)
+        {
+            timelineScrubber.position = trackStartAnchor.position;
+        }
 
         // Reset Ball physics and position
         if (ballRb != null)

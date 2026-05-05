@@ -81,19 +81,30 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
         }
 
-        if (lookingAtItem != null && interactAction.WasPressedThisFrame())
+        // --- UPDATED INPUT LOGIC ---
+        if (lookingAtItem != null)
         {
-            lookingAtItem.OnInteract(this);
+            if (interactAction.WasPressedThisFrame())
+            {
+                lookingAtItem.OnInteract(this);
+            }
+            else if (interactAction.WasReleasedThisFrame())
+            {
+                // Tell the item we let go of the button
+                lookingAtItem.StopInteract();
+            }
         }
 
-        if(currentHeldItemR != null) DoHeldItemStuff(currentHeldItemR, holdPositionR);
-        else if(currentHeldItemL != null) DoHeldItemStuff(currentHeldItemL, holdPositionL);
+        if (currentHeldItemR != null) DoHeldItemStuff(currentHeldItemR, holdPositionR);
+        else if (currentHeldItemL != null) DoHeldItemStuff(currentHeldItemL, holdPositionL);
     }
 
     private void ClearHoverState()
     {
         if (lookingAtItem != null)
         {
+            // Failsafe: if we look away while holding the button, force it to stop interacting
+            lookingAtItem.StopInteract();
             lookingAtItem.OnHoverLeave();
             lookingAtItem = null;
         }
@@ -105,7 +116,7 @@ public class PlayerInteract : MonoBehaviour
         {
             DropItem(currentHeldItem, holdPosition);
         }
-        else if(interactAction.WasPressedThisFrame() && lookingAtItem == null)
+        else if (interactAction.WasPressedThisFrame() && lookingAtItem == null)
         {
             currentHeldItem.Use();
         }
@@ -132,8 +143,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void ClearItem(PickableItem currentHeldItem)
     {
-        if(currentHeldItem == currentHeldItemR) currentHeldItemR = null;
-        else if(currentHeldItem == currentHeldItemL) currentHeldItemL = null;
+        if (currentHeldItem == currentHeldItemR) currentHeldItemR = null;
+        else if (currentHeldItem == currentHeldItemL) currentHeldItemL = null;
     }
 
     private Vector3 GetSafeDropPosition(Transform holdPosition)
