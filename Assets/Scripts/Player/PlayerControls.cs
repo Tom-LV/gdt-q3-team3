@@ -261,14 +261,10 @@ public class PlayerControls : MonoBehaviour
 
     public void ShiftToPos(Vector3 pos, Quaternion orientation)
     {
-        shiftStartPos = tr.position;
-        shiftStartRot = tr.rotation;
-        shiftTimer = 0f;
-        PhoneController.isGamePaused = true;
+        transform.position = pos;
+        transform.rotation = orientation;
+        cameraTransform.rotation = orientation;
         velocity = Vector3.zero;
-        shiftTargetPos = pos;
-        shiftTargetOrientation = orientation;
-        isShifting = true;
     }
 
     public void HandleShiftLerp()
