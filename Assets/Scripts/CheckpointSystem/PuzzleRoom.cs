@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PuzzleRoom : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class PuzzleRoom : MonoBehaviour
     [Tooltip("Drag room content prefab here")]
     [SerializeField] private GameObject roomPrefab;
     private GameObject currentRoomInstance;
+
+    [SerializeField]
+    private UnityEvent m_OnReload;
 
     void Start()
     {
@@ -19,6 +23,8 @@ public class PuzzleRoom : MonoBehaviour
         {
             Destroy(currentRoomInstance);
         }
+
+        if (m_OnReload != null) m_OnReload.Invoke();
 
         // Spawn a new room
         SpawnFreshRoom();

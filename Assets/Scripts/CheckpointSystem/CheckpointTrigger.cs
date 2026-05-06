@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class CheckpointTrigger : MonoBehaviour
 {
     [Tooltip("Should this checkpoint only work once per life?")]
-    public bool triggerOnlyOnce = true;
+    public bool triggerOnlyOnce = false;
 
     [Tooltip("Drag the PuzzleRoom script here")]
     public PuzzleRoom linkedRoom;
