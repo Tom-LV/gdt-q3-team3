@@ -7723,6 +7723,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &389601413443665972
 GameObject:
   m_ObjectHideFlags: 0
@@ -7866,6 +7869,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &495992107865894392
 GameObject:
   m_ObjectHideFlags: 0
@@ -8009,6 +8015,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &499273082951133585
 GameObject:
   m_ObjectHideFlags: 0
@@ -8266,6 +8275,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &956098152274409702
 GameObject:
   m_ObjectHideFlags: 0
@@ -8781,6 +8793,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
   topCover: {fileID: 1930633370476746699}
   manager: {fileID: 1030885765170475677}
 --- !u!1 &1130245543371475308
@@ -8926,6 +8941,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &1295791150986158249
 GameObject:
   m_ObjectHideFlags: 0
@@ -9623,6 +9641,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2358765959776685499
 GameObject:
   m_ObjectHideFlags: 0
@@ -9766,6 +9787,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &2428353180733479295
 GameObject:
   m_ObjectHideFlags: 0
@@ -9935,6 +9959,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2774084011295097662
 GameObject:
   m_ObjectHideFlags: 0
@@ -10078,6 +10105,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &2804557032755399308
 GameObject:
   m_ObjectHideFlags: 0
@@ -10451,6 +10481,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &3782526542099950686
 GameObject:
   m_ObjectHideFlags: 0
@@ -10626,6 +10659,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &4150882447554026601
 GameObject:
   m_ObjectHideFlags: 0
@@ -10907,6 +10943,9 @@ MonoBehaviour:
   crystalTransform: {fileID: 8247498730513900275}
   collapseTime: 2
   onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollapse:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4663934291272585915
@@ -11229,6 +11268,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5081219941948977265
 GameObject:
   m_ObjectHideFlags: 0
@@ -11488,6 +11530,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5380114476226645353
 GameObject:
   m_ObjectHideFlags: 0
@@ -11689,6 +11734,9 @@ MonoBehaviour:
   crystalTransform: {fileID: 8127955302825567717}
   collapseTime: 2
   onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollapse:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5621638565261332200
@@ -11948,6 +11996,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5648766805552483158
 GameObject:
   m_ObjectHideFlags: 0
@@ -12205,6 +12256,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5688734485452459416
 GameObject:
   m_ObjectHideFlags: 0
@@ -12258,6 +12312,9 @@ MonoBehaviour:
   crystalTransform: {fileID: 817124706669389091}
   collapseTime: 2
   onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollapse:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5711290436390759443
@@ -12403,6 +12460,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5805263539075817701
 GameObject:
   m_ObjectHideFlags: 0
@@ -13362,6 +13422,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &7434235584208254712
 GameObject:
   m_ObjectHideFlags: 0
@@ -13417,6 +13480,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7476064016597930545
 GameObject:
   m_ObjectHideFlags: 0
@@ -13470,6 +13536,9 @@ MonoBehaviour:
   crystalTransform: {fileID: 7635916320770268214}
   collapseTime: 2
   onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollapse:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7552815805314751638
@@ -14075,6 +14144,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &8122731545168049604
 GameObject:
   m_ObjectHideFlags: 0
@@ -14448,6 +14520,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &8304053507998704738
 GameObject:
   m_ObjectHideFlags: 0
@@ -14707,6 +14782,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &8414044278945775508
 GameObject:
   m_ObjectHideFlags: 0
@@ -14894,6 +14972,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &8577397702839290990
 GameObject:
   m_ObjectHideFlags: 0
@@ -22680,7 +22761,6 @@ MonoBehaviour:
   - {fileID: 6449883766973791207}
   - {fileID: 1089636920248317503}
   - {fileID: 3972781654932171129}
-  entrance: {fileID: 0}
   starter: {fileID: 8402998003122227329}
 --- !u!1001 &1185084506884821163
 PrefabInstance:
