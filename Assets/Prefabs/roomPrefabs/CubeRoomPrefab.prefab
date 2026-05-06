@@ -2556,6 +2556,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &2591030847573271623
 GameObject:
   m_ObjectHideFlags: 0
@@ -4223,6 +4226,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &4147329376213528832
 GameObject:
   m_ObjectHideFlags: 0
@@ -4784,6 +4790,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &4783846559028795156
 GameObject:
   m_ObjectHideFlags: 0
@@ -5054,6 +5063,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5067387358329333810
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,7 +5368,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0701c53ad4236d4380827ab627fb95d, type: 2}
+  - {fileID: 2100000, guid: 2182554a910066246b0aec09c6415288, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

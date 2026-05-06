@@ -1677,7 +1677,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 2182554a910066246b0aec09c6415288, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1999,6 +1999,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &1603503108846776640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,6 +2230,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &1988141735978967139
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,6 +2409,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &2040793928075675600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4228,6 +4237,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &4667708550870971113
 GameObject:
   m_ObjectHideFlags: 0
@@ -5251,6 +5263,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5499118100987668177
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,6 +5662,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5757122967533503489
 GameObject:
   m_ObjectHideFlags: 0
@@ -5790,6 +5808,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5810925708691927802
 GameObject:
   m_ObjectHideFlags: 0
@@ -11202,6 +11223,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &6607702225179626356
 GameObject:
   m_ObjectHideFlags: 0
@@ -12207,6 +12231,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &8249043390276374397
 GameObject:
   m_ObjectHideFlags: 0
