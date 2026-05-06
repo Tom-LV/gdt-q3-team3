@@ -1999,7 +1999,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &1603503108846776640
@@ -2230,7 +2230,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &1988141735978967139
@@ -2409,7 +2409,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &2040793928075675600
@@ -4237,7 +4237,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &4667708550870971113
@@ -5662,7 +5662,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &5757122967533503489
@@ -5808,7 +5808,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &5810925708691927802
@@ -11223,7 +11223,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &6607702225179626356
@@ -12231,7 +12231,7 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  supportsHolding: 0
+  supportsHolding: 1
   initialHoldDelay: 0.5
   holdRepeatRate: 0.1
 --- !u!1 &8249043390276374397
