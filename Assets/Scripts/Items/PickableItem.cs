@@ -7,6 +7,7 @@ public class PickableItem : InteractableItem
     [SerializeField] protected UnityEvent m_OnPickup;
     [SerializeField] protected UnityEvent m_OnDrop;
     [SerializeField] protected UnityEvent m_OnUse;
+    [SerializeField] private int keyID;
 
     private Rigidbody rb;
     private Collider col;
@@ -75,5 +76,10 @@ public class PickableItem : InteractableItem
         rb.AddForce(throwForce, ForceMode.Impulse);
 
         if (m_OnDrop != null) m_OnDrop.Invoke();
+    }
+
+    public bool HasKeyID(int other)
+    {
+        return other == keyID;
     }
 }

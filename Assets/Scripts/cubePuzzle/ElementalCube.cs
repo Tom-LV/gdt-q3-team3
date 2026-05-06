@@ -62,7 +62,7 @@ public class ElementalCube : MonoBehaviour
         Element predictedLandingElement = GetElementFacingDirection(direction);
 
         // Check what tile is at the target position using a Raycast
-        if (Physics.Raycast(targetPosition + Vector3.up * 5f, Vector3.down, out RaycastHit hit, 10f))
+        if (Physics.Raycast(targetPosition + Vector3.up * 0f, Vector3.down, out RaycastHit hit, 10f))
         {
             PuzzleTile tile = hit.collider.GetComponent<PuzzleTile>();
 

@@ -10,18 +10,12 @@ public class SequencePuzzleManager : MonoBehaviour
 
     [Header("Scene References")]
     public List<PuzzleTile> AllNodes;
-    public PuzzleRoom room;
 
     [Header("Win Event")]
     public UnityEvent m_OnPuzzleSolved;
 
     private int _currentStepIndex = 0;
     private bool _isSolved = false;
-
-    private void Start()
-    {
-        room = transform.parent.parent.GetComponent<PuzzleRoom>();
-    }
 
 
     // The individual nodes will call this method when the player touches them
@@ -52,7 +46,7 @@ public class SequencePuzzleManager : MonoBehaviour
         {
             // INCORRECT! Reset the puzzle.
             Debug.Log($"Wrong! Expected {CorrectSequence[_currentStepIndex]}, but touched {touchedNode.RequiredElement}. Resetting...");
-            if (room != null) room.ResetRoom();
+            if (CheckpointManager.Instance != null) CheckpointManager.Instance.ReloadCheckpoint();
             else Debug.Log("Room instance set to null");
         }
     }

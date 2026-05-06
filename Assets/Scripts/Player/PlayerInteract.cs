@@ -57,6 +57,10 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
             return;
         }
+        if(player.IsPushing()) {
+            if(interactAction.WasPressedThisFrame()) player.ClearPushState();
+            return;
+        }
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactRange))
         {
@@ -141,7 +145,7 @@ public class PlayerInteract : MonoBehaviour
         ClearItem(currentHeldItem);
     }
 
-    private void ClearItem(PickableItem currentHeldItem)
+    public void ClearItem(PickableItem currentHeldItem)
     {
         if (currentHeldItem == currentHeldItemR) currentHeldItemR = null;
         else if (currentHeldItem == currentHeldItemL) currentHeldItemL = null;
@@ -162,5 +166,21 @@ public class PlayerInteract : MonoBehaviour
 
         // The path is clear, it's safe to drop it directly at the hand position
         return target;
+    }
+
+
+    //---------------------
+    // special interactions
+
+    public void StartPushInteraction(PushableItem pushable)
+    {
+        player.SetPushObject(pushable);
+    }
+
+    public PickableItem GetKeyItem(int keyID)
+    {
+        if(currentHeldItemR?.HasKeyID(keyID) == true) return currentHeldItemR;
+        if(currentHeldItemL?.HasKeyID(keyID) == true) return currentHeldItemL;
+        return null;
     }
 }
