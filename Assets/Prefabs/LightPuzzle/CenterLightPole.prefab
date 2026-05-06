@@ -136,11 +136,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.191
+      value: -0.34349698
+      objectReference: {fileID: 0}
+    - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.07000004
       objectReference: {fileID: 0}
     - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.608
+      value: 0.5406717
+      objectReference: {fileID: 0}
+    - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9741081
+      objectReference: {fileID: 0}
+    - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.22608268
+      objectReference: {fileID: 0}
+    - target: {fileID: 611510391182893173, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -26.133
       objectReference: {fileID: 0}
     - target: {fileID: 970459743532812995, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_Name
@@ -200,11 +216,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.20669784
+      value: 0.345
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.06599997
       objectReference: {fileID: 0}
     - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6049285
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.23030442
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.97311866
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351859145631686330, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 206.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685568373632868377, guid: 5e599b805c31aee42940726c4690c652, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7835296143063649367, guid: 5e599b805c31aee42940726c4690c652, type: 3}
       propertyPath: m_LocalScale.x
@@ -235,11 +271,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7835296143063649367, guid: 5e599b805c31aee42940726c4690c652, type: 3}
   m_PrefabInstance: {fileID: 9177905198373625852}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1582706933253046245 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7685568373632868377, guid: 5e599b805c31aee42940726c4690c652, type: 3}
-  m_PrefabInstance: {fileID: 9177905198373625852}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2643956530572538146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6624584299781615326, guid: 5e599b805c31aee42940726c4690c652, type: 3}
@@ -267,17 +298,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa06be93e26ec5645aba0b6ca2c66e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterLightPole
-  m_OnInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  displayText: Turn
-  cooldown: 0
-  pushObject: {fileID: 1582706933253046245}
-  relativeStartPos: {x: 0, y: 0, z: 1}
   storedItem: {fileID: 0}
   topTransform: {fileID: 2643956530572538146}
+  pivot: {fileID: 0}
   bottomTransform: {fileID: 1432963210164130731}
   crystalTransform: {fileID: 5865107834677408818}
   collapseTime: 2
-  turnRadius: 1.2
+  onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
   topCover: {fileID: 8766742067687522004}
+  manager: {fileID: 0}
