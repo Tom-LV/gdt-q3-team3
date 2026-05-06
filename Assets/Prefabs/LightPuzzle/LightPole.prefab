@@ -171,6 +171,9 @@ MonoBehaviour:
   onPlayerHit:
     m_PersistentCalls:
       m_Calls: []
+  onCollapse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1559424489484275364
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +656,8 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1
 --- !u!4 &611510391182893173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1922d3ab4bee21847953419bca284fc4, type: 3}
@@ -769,3 +774,5 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1

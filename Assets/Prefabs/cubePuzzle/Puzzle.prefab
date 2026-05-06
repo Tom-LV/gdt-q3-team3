@@ -387,6 +387,8 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1
 --- !u!1 &222461106664584815
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +786,8 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1
 --- !u!1 &396770274219758861
 GameObject:
   m_ObjectHideFlags: 0
@@ -8099,6 +8103,8 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1
 --- !u!1 &7551750954551059389
 GameObject:
   m_ObjectHideFlags: 0
@@ -8623,6 +8629,8 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
+  holdRepeatTime: 0
+  supportsHold: 1
 --- !u!1 &8213611588813446041
 GameObject:
   m_ObjectHideFlags: 0
