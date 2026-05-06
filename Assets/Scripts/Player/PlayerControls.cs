@@ -19,6 +19,10 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float crouchHeight = 1f;
     [SerializeField] private float crouchTransitionSpeed = 10f;
 
+    [Header("Push Settings")]
+    [SerializeField] private float pushSpeed = 1f;
+    [SerializeField] private float pushExitTime = 0.5f;
+
     [Header("Look Settings")]
     [SerializeField] private Transform cameraPivotTransform;
     [SerializeField] private Transform cameraTransform;
@@ -78,7 +82,9 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-
+        // Crudely Disabling Crouch (forgot it existed while designing the layout so crouching breaks the current level design)
+        // if(isShifting) HandleShiftLerp();
+        if (PhoneController.isGamePaused) return;
 
         ReadInputs();
         HandleLooking();
@@ -159,34 +165,17 @@ public class PlayerControls : MonoBehaviour
     {
         bool isGrounded = cc.isGrounded;
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         Vector3 moveDirection = (transform.right * moveInput.x) + (transform.forward * moveInput.y);
         moveDirection.Normalize();
 
         float currentSpeed;
-
-        // Speed override logic: Crouching beats Sprinting
-        if (isCrouching)
-        {
-            currentSpeed = crouchSpeed;
-            isSprinting = false;
-        }
-        else if (sprintAction.IsPressed() && isSprinting)
-        {
-            currentSpeed = sprintSpeed;
-        }
-        else if (isSprinting)
-        {
-            currentSpeed = (sprintSpeed + walkSpeed) / 2;
-        }
-        else
-        {
-            currentSpeed = walkSpeed;
-        }
+        if (IsPushing()) currentSpeed = pushSpeed;
+        else if (isCrouching) currentSpeed = crouchSpeed;
+        else if (sprintAction.IsPressed() && isSprinting) currentSpeed = sprintSpeed;
+        else if (isSprinting) currentSpeed = (sprintSpeed + walkSpeed) / 2;
+        else currentSpeed = walkSpeed;
 
         Vector3 xzMovement = new Vector3(velocity.x, 0, velocity.z);
         if (isGrounded)
@@ -204,7 +193,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         // Prevent jumping while crouched
-        if (jumpAction.IsPressed() && jumpBuffer > 0 && isGrounded && !isCrouching)
+        if (jumpAction.IsPressed() && jumpBuffer > 0 && isGrounded && !isCrouching && !IsPushing())
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -212,16 +201,43 @@ public class PlayerControls : MonoBehaviour
         Vector3 oldPosition = tr.position;
         velocity.y += gravity * Time.deltaTime;
         cc.Move(velocity * Time.deltaTime);
-        xzMovement = (oldPosition - tr.position) / Time.deltaTime;
-        xzMovement.y = 0;
+        Vector3 xzTrueVelocity = (tr.position - oldPosition) / Time.deltaTime;
+        xzTrueVelocity.y = 0;
+
+        if(IsPushing())
+        {
+            ClampToPath();
+            pushObject.PushToPlayerPos(tr.position);
+            
+            xzTrueVelocity = tr.position - oldPosition;
+            xzTrueVelocity.y = 0;
+            float[] angleChange = pushObject.GetAngleChange(oldPosition, oldPosition + xzTrueVelocity);
+            cameraPitch += angleChange[0];
+            playerYaw += angleChange[1];
+            if ((xzTrueVelocity / Time.deltaTime).sqrMagnitude < 0.3f && xzMovement.sqrMagnitude > 0.01f) pushExitTimer -= Time.deltaTime;
+            else pushExitTimer = pushExitTime;
+            if (pushExitTimer <= 0) ClearPushState();
+            return;
+        }
 
         isSprinting = sprintAction.IsPressed() ? true : isSprinting;
-        if (Vector3.Dot(xzMovement.normalized, cameraPivotTransform.forward) > -0.7 || xzMovement.magnitude < walkSpeed)
-        {
+        if (Vector3.Dot(xzTrueVelocity.normalized, cameraPivotTransform.forward) < 0.7 || xzTrueVelocity.magnitude < walkSpeed)
             isSprinting = false;
-        }
+
     }
 
+    //---------------------
+    // special interactions
+    private bool isShifting;
+    readonly float shiftDuration = 1f;
+    private Vector3 shiftTargetPos;
+    private Vector3 shiftStartPos;
+    private Quaternion shiftTargetOrientation;
+    private Quaternion shiftStartRot;
+    private float shiftTimer;
+    private PushableItem pushObject;
+    private float pushExitTimer;
+    
     public Vector3 GetCameraForward()
     {
         return cameraTransform.forward;
@@ -231,9 +247,66 @@ public class PlayerControls : MonoBehaviour
     {
         return isSprinting;
     }
-
     public bool IsCrouching()
     {
         return isCrouching;
+    }
+    public bool IsPushing()
+    {
+        return pushObject != null;
+    }
+    public bool IsShifting()
+    {
+        return isShifting;
+    }
+
+    public void ShiftToPos(Vector3 pos, Quaternion orientation)
+    {
+        transform.position = pos;
+        transform.rotation = orientation;
+        cameraTransform.rotation = orientation;
+        velocity = Vector3.zero;
+    }
+
+    public void HandleShiftLerp()
+    {
+        shiftTimer += Time.deltaTime;
+        float t = shiftTimer / shiftDuration;
+
+        t = Mathf.Clamp01(t);
+
+        float easedT = Mathf.SmoothStep(0f, 1f, t);
+
+        tr.position = Vector3.Lerp(shiftStartPos, shiftTargetPos, easedT);
+        tr.rotation = Quaternion.Slerp(shiftStartRot, shiftTargetOrientation, easedT);
+
+        if(Vector3.Distance(tr.position, shiftTargetPos) < 0.01f && Quaternion.Angle(tr.rotation, shiftTargetOrientation) < 1f)
+        {
+            isShifting = false;
+            PhoneController.isGamePaused = false;
+            playerYaw = transform.rotation.eulerAngles.y;
+            return;
+        }
+    }
+
+    public void SetPushObject(PushableItem pushable)
+    {
+        ShiftToPos(pushable.FindStartPointOnPath(), pushable.FindStartOrientation());
+        pushObject = pushable;
+    }
+
+    public void ClearPushState()
+    {
+        pushObject.ExitInteraction();
+        pushObject = null;
+        pushExitTimer = 0;
+    }
+
+    public void ClampToPath()
+    {
+        Vector3 clampedPos = pushObject.FindNearestPointOnPath(tr.position);
+        Vector3 delta = clampedPos - tr.position;
+        delta.y = 0;
+        cc.Move(delta);
     }
 }

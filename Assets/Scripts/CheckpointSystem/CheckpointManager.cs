@@ -6,7 +6,8 @@ public class CheckpointManager : MonoBehaviour
     public static CheckpointManager Instance { get; private set; }
 
     [Header("Player Reference")]
-    public CharacterController playerController;
+    public PlayerControls player;
+    private CharacterController playerController;
 
     private Vector3 savedPosition;
     private Quaternion savedRotation;
@@ -17,6 +18,7 @@ public class CheckpointManager : MonoBehaviour
 
     private void Awake()
     {
+        playerController = player.GetComponent<CharacterController>();
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
@@ -36,25 +38,19 @@ public class CheckpointManager : MonoBehaviour
         savedRotation = checkpointNode.rotation;
         activeRoom = roomToLink;
 
-        PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
+        //PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
 
         Debug.Log("Checkpoint saved");
     }
 
     public void ReloadCheckpoint()
     {
-        if (playerController == null) return;
-
-        playerController.enabled = false;
-        playerController.transform.position = savedPosition;
-        playerController.transform.rotation = savedRotation;
-        playerController.enabled = true;
+        if (player == null) return;
+        player.ShiftToPos(savedPosition, savedRotation);
 
         if (activeRoom != null)
         {
             activeRoom.ResetRoom();
         }
-
-        Debug.Log("Player respawned and room reset");
     }
 }

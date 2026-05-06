@@ -108,6 +108,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  displayText: 
+  cooldown: 0
 --- !u!4 &4468269167405251873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1922d3ab4bee21847953419bca284fc4, type: 3}
@@ -299,6 +301,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  displayText: 
+  cooldown: 0
 --- !u!4 &4152675328300163553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1922d3ab4bee21847953419bca284fc4, type: 3}
@@ -412,6 +416,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  displayText: 
+  cooldown: 0
 --- !u!4 &5483550915915586419 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1922d3ab4bee21847953419bca284fc4, type: 3}
@@ -525,6 +531,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  displayText: 
+  cooldown: 0
 --- !u!4 &6499065759346740184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1922d3ab4bee21847953419bca284fc4, type: 3}
