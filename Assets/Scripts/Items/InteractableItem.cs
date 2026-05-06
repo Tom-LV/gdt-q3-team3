@@ -9,6 +9,8 @@ public class InteractableItem : MonoBehaviour
     [SerializeField] protected UnityEvent m_OnInteract;
     [SerializeField] private string displayText;
     [SerializeField] protected float cooldown;
+    [SerializeField] private float holdRepeatTime;
+    [SerializeField] private bool supportsHold;
 
     protected float lastUseTime = float.NegativeInfinity;
     public void SetInteractable(bool interactable)
