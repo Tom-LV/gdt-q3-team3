@@ -12,6 +12,9 @@ public class PickableItem : InteractableItem
     private Rigidbody rb;
     private Collider col;
 
+    // Track the hold position and whether the item is currently held
+    private Transform currentHoldPosition;
+    private bool isHeld = false;
 
     protected override void Start()
     {
@@ -20,10 +23,11 @@ public class PickableItem : InteractableItem
         col = GetComponent<Collider>();
     }
 
-    public override bool OffCooldown() // now the cooldown is not for "Interacting" (picking up) but "Using" the item, soooo
+    public override bool OffCooldown()
     {
         return true;
     }
+
     public override void OnInteract(PlayerInteract player)
     {
         if (m_OnInteract != null) m_OnInteract.Invoke();
@@ -33,15 +37,14 @@ public class PickableItem : InteractableItem
 
     private void Pickup(Transform holdPosition)
     {
-        if(holdPosition == null) return;
+        if (holdPosition == null) return;
 
         rb.isKinematic = true;
         col.enabled = false;
 
-        transform.SetParent(holdPosition);
-
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        // Instead of setting parent, we store the target and flag it as held
+        currentHoldPosition = holdPosition;
+        isHeld = true;
 
         OnHoverLeave();
 
@@ -50,7 +53,7 @@ public class PickableItem : InteractableItem
 
     public void Use()
     {
-        if(Time.time - lastUseTime < cooldown) return;
+        if (Time.time - lastUseTime < cooldown) return;
         lastUseTime = Time.time;
 
         if (m_OnUse != null) m_OnUse.Invoke();
@@ -58,7 +61,9 @@ public class PickableItem : InteractableItem
 
     public void Drop()
     {
-        transform.SetParent(null);
+        // Clear the held state instead of setting parent to null
+        isHeld = false;
+        currentHoldPosition = null;
 
         rb.isKinematic = false;
         col.enabled = true;
@@ -68,7 +73,9 @@ public class PickableItem : InteractableItem
 
     public void Throw(Vector3 throwForce)
     {
-        transform.SetParent(null);
+        // Clear the held state instead of setting parent to null
+        isHeld = false;
+        currentHoldPosition = null;
 
         rb.isKinematic = false;
         col.enabled = true;
@@ -81,5 +88,16 @@ public class PickableItem : InteractableItem
     public bool HasKeyID(int other)
     {
         return other == keyID;
+    }
+
+    // LateUpdate runs after Update. This ensures the player's movement and animations 
+    // are fully calculated before we snap the item to the hand, preventing jitter.
+    private void LateUpdate()
+    {
+        if (isHeld && currentHoldPosition != null)
+        {
+            transform.position = currentHoldPosition.position;
+            transform.rotation = currentHoldPosition.rotation;
+        }
     }
 }

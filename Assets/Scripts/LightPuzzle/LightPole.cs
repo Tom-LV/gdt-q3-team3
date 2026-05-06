@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Linq;
 
@@ -10,12 +11,15 @@ public class LightPole : MonoBehaviour
     [SerializeField] protected Transform bottomTransform;
     [SerializeField] protected Transform crystalTransform;
     [SerializeField] protected float collapseTime = 2f;
+    [SerializeField] private UnityEvent onPlayerHit;
+    [SerializeField] private UnityEvent onCollapse;
     private bool collapsed = false;
     private Transform[] otherPoles;
     private int currentAimedPole = 0;
     private Quaternion startRotation;
     private Quaternion targetRotation;
     private float changeTime;
+    private bool beamActive = false;
 
     public void Initialize(Transform[] positions)
     {
@@ -26,10 +30,7 @@ public class LightPole : MonoBehaviour
                 Vector3 dir = t.position - transform.position;
                 return Mathf.Atan2(dir.x, dir.z);
             }).ToArray();
-        Vector3 dirToTarget = otherPoles[0].position - pivot.position;
-        dirToTarget.y = 0;
-        targetRotation = Quaternion.LookRotation(dirToTarget);
-        pivot.rotation = targetRotation;
+        Rotate(0);
     }
     void Start()
     {
@@ -49,6 +50,11 @@ public class LightPole : MonoBehaviour
     }
     void Update()
     {
+        if(Quaternion.Angle(startRotation,targetRotation) > 0.01f) RotateLerp();
+        if(beamActive) UpdateBeam();
+    }
+    void RotateLerp()
+    {
         if(isCollapsed()) return;
         float t = Mathf.Clamp01(Time.time - changeTime);
         pivot.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
@@ -60,7 +66,9 @@ public class LightPole : MonoBehaviour
     public virtual void Collapse()
     {
         if(isCollapsed()) return;
+        onCollapse?.Invoke();
         collapsed = true;
+        targetRotation = startRotation;
         StartCoroutine(CollapseRoutine()); // this is magic to avoid lag
     }
     private IEnumerator CollapseRoutine() // aforementioned magic
@@ -77,11 +85,11 @@ public class LightPole : MonoBehaviour
 
             yield return null;
         }
-        FireBeam();
+        beamActive = true;
     }
     // light stuff
     private LineRenderer lr;
-    private void FireBeam()
+    private void UpdateBeam()
     {
         Vector3 origin = crystalTransform.position;
         Vector3 direction = topTransform.forward;
@@ -92,13 +100,13 @@ public class LightPole : MonoBehaviour
 
             LightPole other = hit.collider.GetComponentInParent<LightPole>();
             other?.Collapse();
+            if (hit.collider.transform.root.CompareTag("Player")) onPlayerHit?.Invoke();
         }
         else
         {
             DrawBeam(origin, origin + direction * 100f);
         }
     }
-
     void Awake()
     {
         if(storedItem != null) Physics.IgnoreCollision(topTransform.GetComponent<Collider>(), storedItem);

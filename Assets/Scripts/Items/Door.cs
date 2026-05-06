@@ -9,16 +9,14 @@ public class Door : MonoBehaviour
     [SerializeField] private float doorHeight;
     [SerializeField] private float openTime = 4;
     private bool isOpen;
-    private Rigidbody rb;
-
+    private Vector3 closedPos;
     void Awake()
     {
-        rb = door.GetComponent<Rigidbody>(); // fix rotation and xz movement (just y movement)
+        closedPos = door.localPosition;
     }
     public void Open()
     {
         isOpen = true;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
         StartCoroutine(OpenRoutine()); // second instance of the magic Coroutine
     }
     
@@ -26,7 +24,7 @@ public class Door : MonoBehaviour
     {
         float t = 0f;
         Vector3 startPos = door.localPosition;
-        Vector3 endPos = startPos + new Vector3(0f, doorHeight, 0f);
+        Vector3 endPos = closedPos + new Vector3(0f, doorHeight, 0f);
 
         while (t < openTime)
         {
@@ -40,8 +38,23 @@ public class Door : MonoBehaviour
     }
     public void Close()
     {
-        rb.linearVelocity = Vector3.zero;
         isOpen = false;
-        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        StartCoroutine(CloseRoutine()); // second instance of the magic Coroutine
+    }
+    private IEnumerator CloseRoutine() // afforementioned magic
+    {
+        float t = 0f;
+        Vector3 startPos = door.localPosition;
+        Vector3 endPos = closedPos;
+
+        while (t < openTime)
+        {
+            t += Time.deltaTime;
+            float lerpT = t / openTime;
+            door.localPosition = Vector3.Lerp(startPos, endPos, lerpT);
+
+            yield return null;
+        }
+        if (m_OnOpen!= null) m_OnOpen.Invoke();
     }
 }

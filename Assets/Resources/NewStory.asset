@@ -65,10 +65,6 @@ MonoBehaviour:
     BasePortName: Out
     TargetNodeGUID: 82fb2614-a83e-492d-bc30-db6aa5ea4aad
     TargetPortName: In
-  - BaseNodeGUID: START_NODE_GUID
-    BasePortName: Out
-    TargetNodeGUID: 62b61b9c-fae8-43e3-8490-3b9d35bc8a87
-    TargetPortName: In
   - BaseNodeGUID: 62b61b9c-fae8-43e3-8490-3b9d35bc8a87
     BasePortName: Out
     TargetNodeGUID: 82fb2614-a83e-492d-bc30-db6aa5ea4aad
@@ -93,6 +89,70 @@ MonoBehaviour:
     BasePortName: Expired
     TargetNodeGUID: 7fd4e722-bda7-4f6a-a04a-3fe7bc0832e6
     TargetPortName: In
+  - BaseNodeGUID: START_NODE_GUID
+    BasePortName: Out
+    TargetNodeGUID: 720be3d1-9b97-4487-b1c3-c64b5016cbd5
+    TargetPortName: In
+  - BaseNodeGUID: 720be3d1-9b97-4487-b1c3-c64b5016cbd5
+    BasePortName: Out
+    TargetNodeGUID: bb79b186-18b1-4ed9-b3ae-58860060b6ab
+    TargetPortName: In
+  - BaseNodeGUID: bb79b186-18b1-4ed9-b3ae-58860060b6ab
+    BasePortName: Out
+    TargetNodeGUID: 8f48d4ce-ad43-49c6-b08e-43147b7a2c4e
+    TargetPortName: In
+  - BaseNodeGUID: 8f48d4ce-ad43-49c6-b08e-43147b7a2c4e
+    BasePortName: Out
+    TargetNodeGUID: 22f420dc-a63d-4618-8bf0-42105a8cba22
+    TargetPortName: In
+  - BaseNodeGUID: 22f420dc-a63d-4618-8bf0-42105a8cba22
+    BasePortName: 88e52a75-369d-4b76-8f83-03ad3f21eeb8
+    TargetNodeGUID: aa14c141-f980-4805-8737-c162b248c36d
+    TargetPortName: In
+  - BaseNodeGUID: 22f420dc-a63d-4618-8bf0-42105a8cba22
+    BasePortName: 9ee4f72a-3d51-41c6-8369-12c6262f02f6
+    TargetNodeGUID: ddfddb1a-3d0a-46c4-8501-b057e29189f3
+    TargetPortName: In
+  - BaseNodeGUID: aa14c141-f980-4805-8737-c162b248c36d
+    BasePortName: Out
+    TargetNodeGUID: 4e520a9d-c8ee-49ad-8e6d-dc35241e3f64
+    TargetPortName: In
+  - BaseNodeGUID: 4e520a9d-c8ee-49ad-8e6d-dc35241e3f64
+    BasePortName: Out
+    TargetNodeGUID: e7c7a492-0e62-42a0-8e88-0369fd101fed
+    TargetPortName: In
+  - BaseNodeGUID: ddfddb1a-3d0a-46c4-8501-b057e29189f3
+    BasePortName: Out
+    TargetNodeGUID: 4e520a9d-c8ee-49ad-8e6d-dc35241e3f64
+    TargetPortName: In
+  - BaseNodeGUID: e7c7a492-0e62-42a0-8e88-0369fd101fed
+    BasePortName: 4475f6d9-ab4b-46cc-b961-2caf4f040baf
+    TargetNodeGUID: 8182d229-61cd-4fa7-ad2e-6f6fc8b8c6b8
+    TargetPortName: In
+  - BaseNodeGUID: e7c7a492-0e62-42a0-8e88-0369fd101fed
+    BasePortName: 31dd03fb-8b7d-4287-9c6d-da490e107697
+    TargetNodeGUID: 55d6e295-c8d6-4a6e-a87f-fad3417b1aaf
+    TargetPortName: In
+  - BaseNodeGUID: 8182d229-61cd-4fa7-ad2e-6f6fc8b8c6b8
+    BasePortName: Out
+    TargetNodeGUID: 3e9d06fe-ff0c-42ba-bc3c-6a2aae58d1f2
+    TargetPortName: In
+  - BaseNodeGUID: 3e9d06fe-ff0c-42ba-bc3c-6a2aae58d1f2
+    BasePortName: Out
+    TargetNodeGUID: 4e520a9d-c8ee-49ad-8e6d-dc35241e3f64
+    TargetPortName: In
+  - BaseNodeGUID: 55d6e295-c8d6-4a6e-a87f-fad3417b1aaf
+    BasePortName: Out
+    TargetNodeGUID: bd9bb9ee-bb78-4f68-a121-5ad2f799fe93
+    TargetPortName: In
+  - BaseNodeGUID: bd9bb9ee-bb78-4f68-a121-5ad2f799fe93
+    BasePortName: 84f4b6ab-3073-4a6e-8a34-286ee939cbbd
+    TargetNodeGUID: c102455f-7555-4b61-977b-a2f171f374dc
+    TargetPortName: In
+  - BaseNodeGUID: bd9bb9ee-bb78-4f68-a121-5ad2f799fe93
+    BasePortName: d32f117c-15ff-4538-b3ef-e3ac02e5c1d5
+    TargetNodeGUID: 6738e7c0-3330-4b9a-a1af-ab964de0ccc6
+    TargetPortName: In
   StoryNodes:
   - rid: 1016
   - rid: 1017
@@ -110,18 +170,24 @@ MonoBehaviour:
   - rid: 1029
   - rid: 1030
   - rid: 1031
+  - rid: 1046
+  - rid: 1047
+  - rid: 1048
+  - rid: 1049
+  - rid: 1050
+  - rid: 1051
+  - rid: 1052
+  - rid: 1053
+  - rid: 1054
+  - rid: 1055
+  - rid: 1056
+  - rid: 1057
+  - rid: 1058
+  - rid: 1059
   references:
     version: 2
     RefIds:
     - rid: 1016
-      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
-      data:
-        GUID: 73b5ed62-4cd0-49b9-b9ed-fca6f03d0de3
-        Position: {x: 727, y: 84}
-        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
-        MessageText: Hello
-        FallbackDelay: 1
-    - rid: 1017
       type: {class: ConditionNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 82fb2614-a83e-492d-bc30-db6aa5ea4aad
@@ -129,13 +195,13 @@ MonoBehaviour:
         VariableName: HasKey
         Operator: ==
         Value: False
-    - rid: 1018
+    - rid: 1017
       type: {class: VariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: bdbdae23-336d-4fab-9277-fa48be227b83
         Position: {x: -255, y: 741}
         VariableName: times
-    - rid: 1019
+    - rid: 1018
       type: {class: CompareNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 50e093ce-017d-4d5b-9a11-3751aba8409c
@@ -143,19 +209,19 @@ MonoBehaviour:
         Operator: '>='
         FallbackA: 0
         FallbackB: 5
-    - rid: 1020
+    - rid: 1019
       type: {class: VariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: f658e47a-9426-498b-a621-4f80ae4e60e1
         Position: {x: -318, y: 1044}
         VariableName: times
-    - rid: 1021
+    - rid: 1020
       type: {class: TimerNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 85ebda1f-8d1c-4454-8876-4738b13936ff
         Position: {x: 254.5, y: 721.5}
         WaitTime: 1
-    - rid: 1022
+    - rid: 1021
       type: {class: MathNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: c7db260f-2ded-4340-a070-5a7ea662e072
@@ -163,7 +229,7 @@ MonoBehaviour:
         Operator: +
         FallbackA: 0
         FallbackB: 1
-    - rid: 1023
+    - rid: 1022
       type: {class: SetVariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 22f718b9-adfb-49c7-9011-c5fe71ce294f
@@ -171,12 +237,12 @@ MonoBehaviour:
         VariableName: times
         Operator: ==
         Value: 
-    - rid: 1024
+    - rid: 1023
       type: {class: StartNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: START_NODE_GUID
         Position: {x: -438.5, y: 533}
-    - rid: 1025
+    - rid: 1024
       type: {class: SetVariableNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 62b61b9c-fae8-43e3-8490-3b9d35bc8a87
@@ -184,7 +250,7 @@ MonoBehaviour:
         VariableName: times
         Operator: ==
         Value: 
-    - rid: 1026
+    - rid: 1025
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: f0ab9603-ccad-4a4e-a957-c0bf00441970
@@ -192,31 +258,7 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: Hello
         FallbackDelay: 0
-    - rid: 1027
-      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
-      data:
-        GUID: 575cfe8e-57ca-424d-be8b-1fc0a1d0fcc6
-        Position: {x: 1407, y: 116.5}
-        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
-        MessageText: ...
-        FallbackDelay: 1
-    - rid: 1028
-      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
-      data:
-        GUID: c775203d-fd68-460d-81ce-cae58fc59ae1
-        Position: {x: 1335.5, y: -54}
-        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
-        MessageText: ...
-        FallbackDelay: 1
-    - rid: 1029
-      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
-      data:
-        GUID: 689a03b8-7b5b-4d50-b850-4bcbeab5ea96
-        Position: {x: 1466, y: 278}
-        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
-        MessageText: What?!?!
-        FallbackDelay: 1
-    - rid: 1030
+    - rid: 1026
       type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 7fd4e722-bda7-4f6a-a04a-3fe7bc0832e6
@@ -224,11 +266,71 @@ MonoBehaviour:
         CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
         MessageText: Why are you not responding????
         FallbackDelay: 0
+    - rid: 1027
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 720be3d1-9b97-4487-b1c3-c64b5016cbd5
+        Position: {x: -246.5, y: 281.5}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Hi, you are stuck in a pyramid
+        FallbackDelay: 0
+    - rid: 1028
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: bb79b186-18b1-4ed9-b3ae-58860060b6ab
+        Position: {x: 11, y: 281.5}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Get out!
+        FallbackDelay: 2
+    - rid: 1029
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 8f48d4ce-ad43-49c6-b08e-43147b7a2c4e
+        Position: {x: 184, y: 84}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Do you know where to go?
+        FallbackDelay: 1
+    - rid: 1030
+      type: {class: ChoiceNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 22f420dc-a63d-4618-8bf0-42105a8cba22
+        Position: {x: 416, y: 64.5}
+        Choices:
+        - PortID: 88e52a75-369d-4b76-8f83-03ad3f21eeb8
+          ChoiceText: Yes
+        - PortID: 9ee4f72a-3d51-41c6-8369-12c6262f02f6
+          ChoiceText: No
+        ExpirationType: 0
+        FallbackTimer: 5
     - rid: 1031
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 73b5ed62-4cd0-49b9-b9ed-fca6f03d0de3
+        Position: {x: 675.5, y: 306}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Hello
+        FallbackDelay: 1
+    - rid: 1046
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: aa14c141-f980-4805-8737-c162b248c36d
+        Position: {x: 699, y: -176}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Good
+        FallbackDelay: 1
+    - rid: 1047
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: ddfddb1a-3d0a-46c4-8501-b057e29189f3
+        Position: {x: 733.5, y: 32.5}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: Go forward, and solve the first puzzle
+        FallbackDelay: 1
+    - rid: 1048
       type: {class: ChoiceNodeData, ns: , asm: Assembly-CSharp}
       data:
         GUID: 0b5d6b76-f58d-4ea5-9355-40d5266611b3
-        Position: {x: 967, y: 138.5}
+        Position: {x: 969.5, y: 248.5}
         Choices:
         - PortID: cebd8583-f771-4758-abd3-aa622b0adccf
           ChoiceText: Hello
@@ -238,3 +340,98 @@ MonoBehaviour:
           ChoiceText: No way
         ExpirationType: 1
         FallbackTimer: 5
+    - rid: 1049
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 4e520a9d-c8ee-49ad-8e6d-dc35241e3f64
+        Position: {x: 949, y: -146}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: Are you stuck?
+        FallbackDelay: 120
+    - rid: 1050
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 575cfe8e-57ca-424d-be8b-1fc0a1d0fcc6
+        Position: {x: 1963, y: 248.5}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: ...
+        FallbackDelay: 1
+    - rid: 1051
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 689a03b8-7b5b-4d50-b850-4bcbeab5ea96
+        Position: {x: 1682, y: 721.5}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: What?!?!
+        FallbackDelay: 1
+    - rid: 1052
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: c775203d-fd68-460d-81ce-cae58fc59ae1
+        Position: {x: 1535, y: 153}
+        CharacterGUID: ab62868f-43d4-42d8-95fd-0ac007faae0e
+        MessageText: ...
+        FallbackDelay: 1
+    - rid: 1053
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 8182d229-61cd-4fa7-ad2e-6f6fc8b8c6b8
+        Position: {x: 1049, y: -536}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: Okay
+        FallbackDelay: 1
+    - rid: 1054
+      type: {class: ChoiceNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: e7c7a492-0e62-42a0-8e88-0369fd101fed
+        Position: {x: 1234.5, y: -235.5}
+        Choices:
+        - PortID: 31dd03fb-8b7d-4287-9c6d-da490e107697
+          ChoiceText: Yes
+        - PortID: 4475f6d9-ab4b-46cc-b961-2caf4f040baf
+          ChoiceText: No
+        ExpirationType: 0
+        FallbackTimer: 5
+    - rid: 1055
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 55d6e295-c8d6-4a6e-a87f-fad3417b1aaf
+        Position: {x: 1571.5, y: -373.5}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: The 5x5 puzzle has they key on the left and the exit on the
+          right
+        FallbackDelay: 2
+    - rid: 1056
+      type: {class: TimerNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 3e9d06fe-ff0c-42ba-bc3c-6a2aae58d1f2
+        Position: {x: 833.5, y: -360.5}
+        WaitTime: 240
+    - rid: 1057
+      type: {class: ChoiceNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: bd9bb9ee-bb78-4f68-a121-5ad2f799fe93
+        Position: {x: 1866, y: -373.5}
+        Choices:
+        - PortID: 84f4b6ab-3073-4a6e-8a34-286ee939cbbd
+          ChoiceText: Thanks!
+        - PortID: d32f117c-15ff-4538-b3ef-e3ac02e5c1d5
+          ChoiceText: Already knew that
+        ExpirationType: 0
+        FallbackTimer: 5
+    - rid: 1058
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: c102455f-7555-4b61-977b-a2f171f374dc
+        Position: {x: 2197.5, y: -458}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: No problem!
+        FallbackDelay: 2
+    - rid: 1059
+      type: {class: MessageNodeData, ns: , asm: Assembly-CSharp}
+      data:
+        GUID: 6738e7c0-3330-4b9a-a1af-ab964de0ccc6
+        Position: {x: 2159, y: -254}
+        CharacterGUID: f7b6bc47-fe94-4199-ae78-ab609ed55daa
+        MessageText: Well maybe some other time I'll be more useful.
+        FallbackDelay: 2
