@@ -38,14 +38,14 @@ public class CheckpointManager : MonoBehaviour
         savedRotation = checkpointNode.rotation;
         activeRoom = roomToLink;
 
-        PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
+        //PhoneOS.Instance.GetApp<ChatApp>().ReceiveMessage("System", "Checkpoint saved!", Color.cyan);
 
         Debug.Log("Checkpoint saved");
     }
 
     public void ReloadCheckpoint()
     {
-        if (player == null || player.IsShifting()) return;
+        if (player == null) return;
         player.ShiftToPos(savedPosition, savedRotation);
 
         if (activeRoom != null)
