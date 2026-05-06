@@ -12,6 +12,7 @@ public class LightPole : MonoBehaviour
     [SerializeField] protected Transform crystalTransform;
     [SerializeField] protected float collapseTime = 2f;
     [SerializeField] private UnityEvent onPlayerHit;
+    [SerializeField] private UnityEvent onCollapse;
     private bool collapsed = false;
     private Transform[] otherPoles;
     private int currentAimedPole = 0;
@@ -29,10 +30,7 @@ public class LightPole : MonoBehaviour
                 Vector3 dir = t.position - transform.position;
                 return Mathf.Atan2(dir.x, dir.z);
             }).ToArray();
-        Vector3 dirToTarget = otherPoles[0].position - pivot.position;
-        dirToTarget.y = 0;
-        targetRotation = Quaternion.LookRotation(dirToTarget);
-        pivot.rotation = targetRotation;
+        Rotate(0);
     }
     void Start()
     {
@@ -68,6 +66,7 @@ public class LightPole : MonoBehaviour
     public virtual void Collapse()
     {
         if(isCollapsed()) return;
+        onCollapse?.Invoke();
         collapsed = true;
         targetRotation = startRotation;
         StartCoroutine(CollapseRoutine()); // this is magic to avoid lag
@@ -101,7 +100,7 @@ public class LightPole : MonoBehaviour
 
             LightPole other = hit.collider.GetComponentInParent<LightPole>();
             other?.Collapse();
-            if (hit.collider.CompareTag("Player")) onPlayerHit?.Invoke();
+            if (hit.collider.transform.root.CompareTag("Player")) onPlayerHit?.Invoke();
         }
         else
         {

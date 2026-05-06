@@ -4,8 +4,7 @@ public class PuzzleRoom : MonoBehaviour
 {
     [Header("Room Setup")]
     [Tooltip("Drag room content prefab here")]
-    public GameObject roomPrefab;
-
+    [SerializeField] private GameObject roomPrefab;
     private GameObject currentRoomInstance;
 
     void Start()

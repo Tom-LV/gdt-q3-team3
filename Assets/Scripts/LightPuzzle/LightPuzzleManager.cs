@@ -3,7 +3,6 @@ using UnityEngine;
 public class LightPuzzleManager : MonoBehaviour
 {
     [SerializeField] private LightPole[] puzzleElements;
-    [SerializeField] private Door entrance;
     [SerializeField] private Door starter;
 
     void Awake()
@@ -20,8 +19,6 @@ public class LightPuzzleManager : MonoBehaviour
         {
             pole.Initialize(polePositions);
         }
-
-        entrance.Open();
         starter.Open();
     }
 

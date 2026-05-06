@@ -38,7 +38,7 @@ public class CenterLightPole : LightPole
     {
         float t = 0f;
         Vector3 startPos = transform.position;
-        Vector3 endPos = transform.position - new Vector3(0, -1, 0);
+        Vector3 endPos = transform.position - Vector3.up;
 
         while (t < collapseTime)
         {
@@ -48,5 +48,6 @@ public class CenterLightPole : LightPole
 
             yield return null;
         }
+        transform.position = endPos;
     }
 }
