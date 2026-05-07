@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaterPuzzleManager : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class WaterPuzzleManager : MonoBehaviour
     public Transform ballSpawnPoint;
 
     [Header("Puzzle Elements")]
-    public List<WaterCurrent> waterCurrents;
+    public List<TimelineEvent> timelineEvents;
 
     public float maxTime = 20f;
+
+    public UnityEvent OnPlay;
 
     private bool isPlaying = false;
     private float timer = 0f;
@@ -49,10 +52,10 @@ public class WaterPuzzleManager : MonoBehaviour
             timelineScrubber.position = Vector3.Lerp(trackStartAnchor.position, trackEndAnchor.position, timePercentage);
         }
 
-        // Tell every pipe to check if it should be on or off based on the current time
-        foreach (var current in waterCurrents)
+        // Update every event
+        foreach (var timelineEvent in timelineEvents)
         {
-            current.EvaluateTime(timer);
+            timelineEvent.EvaluateTime(timer);
         }
 
         // Stop the puzzle if we reach the end of the timeline
@@ -65,6 +68,7 @@ public class WaterPuzzleManager : MonoBehaviour
     // Call this from your player interact script when the Master Play Button is clicked
     public void PressPlayButton()
     {
+        
         ResetPuzzle();
         isPlaying = true;
         Debug.Log("Puzzle Started!");
@@ -90,11 +94,13 @@ public class WaterPuzzleManager : MonoBehaviour
             ballRb.linearVelocity = Vector3.zero;
         }
 
-        // Turn off all currents
-        foreach (var current in waterCurrents)
+        // Turn off all events
+        foreach (var timelineEvent in timelineEvents)
         {
-            current.SetFlowActive(false);
+            timelineEvent.ResetEvent();
         }
+
+        if (OnPlay != null) OnPlay.Invoke();
     }
 
     public void FailRun()
