@@ -12,12 +12,15 @@ public class WaterPuzzleManager : MonoBehaviour
     [Tooltip("Empty GameObject placed at the exact maxTime mark of the track.")]
     public Transform trackEndAnchor;
 
-    [Header("Ball Settings")]
+    [Header("Ball and goal Settings")]
     public Transform puzzleBall;
     public Transform ballSpawnPoint;
+    public WaterPuzzleGoal puzzleGoal;
 
     [Header("Puzzle Elements")]
     public List<TimelineEvent> timelineEvents;
+
+    public UnityEvent OnPuzzleSolved;
 
     public float maxTime = 20f;
 
@@ -74,6 +77,17 @@ public class WaterPuzzleManager : MonoBehaviour
         Debug.Log("Puzzle Started!");
     }
 
+    public void CompletePuzzle()
+    {
+        isPlaying = false; // Stop the timeline from moving forward
+        Debug.Log("Puzzle Solved!");
+
+        if (OnPuzzleSolved != null)
+        {
+            OnPuzzleSolved.Invoke();
+        }
+    }
+
     public void ResetPuzzle()
     {
         isPlaying = false;
@@ -92,6 +106,11 @@ public class WaterPuzzleManager : MonoBehaviour
             puzzleBall.position = ballSpawnPoint.position;
             ballRb.isKinematic = false;
             ballRb.linearVelocity = Vector3.zero;
+        }
+
+        if (puzzleGoal != null)
+        {
+            puzzleGoal.ResetGoal();
         }
 
         // Turn off all events

@@ -5,6 +5,7 @@ using System.Linq;
 
 public class LightPole : MonoBehaviour
 {
+    [SerializeField] private Material beamMaterial;
     [SerializeField] private Collider storedItem;
     [SerializeField] private Transform topTransform;
     [SerializeField] private Transform pivot;
@@ -115,7 +116,7 @@ public class LightPole : MonoBehaviour
         lr.positionCount = 2;
         lr.startWidth = 0.05f;
         lr.endWidth = 0.05f;
-        lr.material = new Material(Shader.Find("Unlit/Color")) {color = Color.yellow};
+        lr.material = beamMaterial;
     }
     public void DrawBeam(Vector3 start, Vector3 end)
     {
