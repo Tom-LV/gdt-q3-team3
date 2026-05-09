@@ -13,6 +13,7 @@ public class LightPole : MonoBehaviour
     [SerializeField] protected float collapseTime = 2f;
     [SerializeField] private UnityEvent onPlayerHit;
     [SerializeField] private UnityEvent onCollapse;
+    private LightPuzzleManager puzzleManager;
     private bool collapsed = false;
     private Transform[] otherPoles;
     private int currentAimedPole = 0;
@@ -21,22 +22,33 @@ public class LightPole : MonoBehaviour
     private float changeTime;
     private bool beamActive = false;
 
-    public void Initialize(Transform[] positions)
+    public void Initialize(Transform[] positions, LightPuzzleManager manager)
     {
+        puzzleManager = manager;
         if(positions == null || positions.Length == 0) return;
         otherPoles = positions.Where(t => t != transform).ToArray();
+        Transform center = otherPoles[0];
         otherPoles = otherPoles.OrderBy(t =>
             {
                 Vector3 dir = t.position - transform.position;
                 return Mathf.Atan2(dir.x, dir.z);
+                
             }).ToArray();
-        Rotate(0);
+        for(int i = 0; i < otherPoles.Length; i++)
+        {
+            if(center == otherPoles[i])
+            {
+                currentAimedPole = i;
+                break;
+            }
+        }
+        SetTargetRotation(0);
     }
     void Start()
     {
         if (otherPoles == null || otherPoles.Length == 0) Collapse();
     }
-    public void Rotate(int amount)
+    public void SetTargetRotation(int amount)
     {
         if(isCollapsed()) return;
         currentAimedPole += amount;
@@ -47,6 +59,11 @@ public class LightPole : MonoBehaviour
         startRotation = pivot.rotation;
         targetRotation = Quaternion.LookRotation(dir);
         changeTime = Time.time;
+    }
+    public void Rotate(int amount)
+    {
+        SetTargetRotation(amount);
+        puzzleManager.Highlight(otherPoles[currentAimedPole]);
     }
     void Update()
     {

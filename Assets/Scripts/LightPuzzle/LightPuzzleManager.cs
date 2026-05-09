@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class LightPuzzleManager : MonoBehaviour
 {
+    [Tooltip("CenterPole goes at index 0.")]
     [SerializeField] private LightPole[] puzzleElements;
-    [SerializeField] private Door starter;
+    private int interactOutlineLayer = 0;
+    private LightPole highlighted;
+    private float highlightTimer;
 
     void Awake()
     {
+        interactOutlineLayer = LayerMask.NameToLayer("InteractOutline");
         // CenterPole goes at index 0
         Transform[] polePositions = new Transform[puzzleElements.Length];
 
@@ -17,9 +21,8 @@ public class LightPuzzleManager : MonoBehaviour
 
         foreach (LightPole pole in puzzleElements)
         {
-            pole.Initialize(polePositions);
+            pole.Initialize(polePositions, this);
         }
-        starter.Open();
     }
 
     public bool PuzzleSolved()
@@ -29,5 +32,50 @@ public class LightPuzzleManager : MonoBehaviour
             if(!pole.isCollapsed()) return false;
         }
         return true;
+    }
+
+    public void Highlight(Transform polePosition)
+    {
+        LightPole closestPole = null;
+        float currentDistance = 100000000f;
+        foreach(LightPole pole in puzzleElements)
+        {
+            float newDistance = Vector3.Distance(pole.transform.position, polePosition.transform.position);
+            if(newDistance < currentDistance)
+            {
+                currentDistance = newDistance;
+                closestPole = pole;
+            }  
+        }
+        UnHighlightLayer(highlighted);
+        HighlightLayer(closestPole);
+        highlightTimer = 0f;
+    }
+    void Update()
+    {
+        if(highlighted != null) highlightTimer += Time.deltaTime;
+        if(highlightTimer > 1f) UnHighlightLayer(highlighted);
+    }
+
+    private void HighlightLayer(LightPole pole)
+    {
+        highlighted = pole;
+        highlightTimer = 0f;
+        SetLayerRecursively(pole, interactOutlineLayer);
+    }
+
+    private void UnHighlightLayer(LightPole pole)
+    {
+        if(highlighted == null) return;
+        SetLayerRecursively(pole, 0);
+        highlighted = null;
+    }
+    private void SetLayerRecursively(LightPole obj, int newLayer)
+    {
+        Transform[] allChildren = obj.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in allChildren)
+        {
+            child.gameObject.layer = newLayer;
+        }
     }
 }

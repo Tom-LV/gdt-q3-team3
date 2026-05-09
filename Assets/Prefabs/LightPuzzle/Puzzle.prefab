@@ -7577,8 +7577,9 @@ MonoBehaviour:
   m_OnOpen:
     m_PersistentCalls:
       m_Calls: []
+  startOpen: 1
   door: {fileID: 8598691718139799260}
-  doorHeight: 3.254
+  relativeOpenPos: {x: 0, y: 3.254, z: 0}
   openTime: 1
 --- !u!1 &360758355537983976
 GameObject:
@@ -22743,7 +22744,6 @@ MonoBehaviour:
   - {fileID: 6449883766973791207}
   - {fileID: 1089636920248317503}
   - {fileID: 3972781654932171129}
-  starter: {fileID: 8402998003122227329}
 --- !u!1001 &1185084506884821163
 PrefabInstance:
   m_ObjectHideFlags: 0

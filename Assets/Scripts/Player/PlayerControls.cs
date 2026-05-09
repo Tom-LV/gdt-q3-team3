@@ -281,13 +281,16 @@ public class PlayerControls : MonoBehaviour
         float easedT = Mathf.SmoothStep(0f, 1f, t);
 
         tr.position = Vector3.Lerp(shiftStartPos, shiftTargetPos, easedT);
-        tr.rotation = Quaternion.Slerp(shiftStartRot, shiftTargetOrientation, easedT);
+        tr.rotation = Quaternion.Lerp(shiftStartRot, shiftTargetOrientation, easedT);
+        Vector3 currentRotation = tr.rotation.eulerAngles;
+        cameraPitch = currentRotation.x;
+        playerYaw = currentRotation.y;
+        
 
         if(Vector3.Distance(tr.position, shiftTargetPos) < 0.01f && Quaternion.Angle(tr.rotation, shiftTargetOrientation) < 1f)
         {
             isShifting = false;
             PhoneController.isGamePaused = false;
-            playerYaw = transform.rotation.eulerAngles.y;
             return;
         }
     }
