@@ -1,59 +1,83 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.Events;
 
 public class Door : MonoBehaviour
 {
+    [Header("Events")]
     [SerializeField] protected UnityEvent m_OnOpen;
-    [SerializeField] private bool startOpen = false;
+    [SerializeField] protected UnityEvent m_OnClose;
+
+    [Header("Door Settings")]
     [SerializeField] private Transform door;
-    [SerializeField] private Vector3 relativeOpenPos;
-    [SerializeField] private float openTime = 4;
+    [SerializeField] private float doorHeight = 3f;
+    [SerializeField] private float openTime = 4f;
+
     private Vector3 closedPos;
+    private Vector3 openPos;
+
+    private bool targetStateIsOpen = false;
+
+    // Tracks where the door currently is
+    private float transitionProgress = 0f;
+
+    // Prevents the UnityEvents from firing every single frame once the door stops moving
+    private bool eventFired = false;
+
     void Awake()
     {
+        // Calculate start and end positions
         closedPos = door.localPosition;
-        if(startOpen) Open();
+        openPos = closedPos + new Vector3(0f, doorHeight, 0f);
     }
+
     public void Open()
     {
-        StartCoroutine(OpenRoutine());
-    }
-    
-    private IEnumerator OpenRoutine()
-    {
-        float t = 0f;
-        Vector3 startPos = door.localPosition;
-        Vector3 endPos = closedPos + relativeOpenPos;
-
-        while (t < openTime)
+        if (!targetStateIsOpen)
         {
-            t += Time.deltaTime;
-            float lerpT = t / openTime;
-            door.localPosition = Vector3.Lerp(startPos, endPos, lerpT);
-
-            yield return null;
+            targetStateIsOpen = true;
+            eventFired = false; // Reset the flag so the Open event can fire when it reaches the top
         }
-        if (m_OnOpen!= null) m_OnOpen.Invoke();
     }
+
     public void Close()
     {
-        StartCoroutine(CloseRoutine());
-    }
-    private IEnumerator CloseRoutine()
-    {
-        float t = 0f;
-        Vector3 startPos = door.localPosition;
-        Vector3 endPos = closedPos;
-
-        while (t < openTime)
+        if (targetStateIsOpen)
         {
-            t += Time.deltaTime;
-            float lerpT = t / openTime;
-            door.localPosition = Vector3.Lerp(startPos, endPos, lerpT);
-
-            yield return null;
+            targetStateIsOpen = false;
+            eventFired = false; // Reset the flag so the Close event can fire when it reaches the bottom
         }
-        if (m_OnOpen!= null) m_OnOpen.Invoke();
+    }
+
+    private void Update()
+    {
+        // Adjust the progress depending on whether we want to be open or closed
+        if (targetStateIsOpen && transitionProgress < 1f)
+        {
+            // Move towards 1
+            transitionProgress += Time.deltaTime / openTime;
+        }
+        else if (!targetStateIsOpen && transitionProgress > 0f)
+        {
+            // Move towards 0
+            transitionProgress -= Time.deltaTime / openTime;
+        }
+
+        // Clamp the progress so it never goes below 0 or above 1
+        transitionProgress = Mathf.Clamp01(transitionProgress);
+
+        // Move the door
+        door.localPosition = Vector3.Lerp(closedPos, openPos, transitionProgress);
+
+        // Check if we have arrived at our destination and fire the correct event ONCE
+        if (targetStateIsOpen && transitionProgress == 1f && !eventFired)
+        {
+            eventFired = true;
+            if (m_OnOpen != null) m_OnOpen.Invoke();
+        }
+        else if (!targetStateIsOpen && transitionProgress == 0f && !eventFired)
+        {
+            eventFired = true;
+            if (m_OnClose != null) m_OnClose.Invoke();
+        }
     }
 }
