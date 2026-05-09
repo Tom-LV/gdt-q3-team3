@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,7 +25,7 @@ public class TimelineEvent : MonoBehaviour
     public UnityEvent OnEventEnd;
 
     [Header("UI & Scene References")]
-    public WaterPuzzleManager waterPuzzleManager;
+    public TimelineConsole console;
     [Tooltip("Empty GameObject placed at the exact 0-second mark of the physical track.")]
     public Transform trackStart;
     [Tooltip("Empty GameObject placed at the exact maxTime mark of the physical track.")]
@@ -42,30 +43,32 @@ public class TimelineEvent : MonoBehaviour
     public void MoveRight()
     {
         startTime += interval;
-
+        console.ResetPuzzle();
         // Clamp so the RIGHT edge of the block doesn't go past maxTime
-        if (waterPuzzleManager != null && (startTime + length > waterPuzzleManager.maxTime))
+        if (console != null && (startTime + length > console.GetMaxTime()))
         {
-            startTime = waterPuzzleManager.maxTime - length;
+            startTime = console.GetMaxTime() - length;
         }
+        
         UpdateVisuals();
     }
 
     public void MoveLeft()
     {
         startTime -= interval;
-
+        console.ResetPuzzle();  
         // Clamp so the LEFT edge doesn't go below 0
         if (startTime < 0)
         {
             startTime = 0;
         }
+
         UpdateVisuals();
     }
 
     public void UpdateVisuals()
     {
-        if (trackStart == null || trackEnd == null || waterPuzzleManager == null)
+        if (trackStart == null || trackEnd == null || console == null)
         {
             Debug.LogWarning($"TimelineEvent '{gameObject.name}' is missing UI references!");
             return;
@@ -73,7 +76,7 @@ public class TimelineEvent : MonoBehaviour
 
         // Calculate and set the physical SCALE
         float totalPhysicalLength = Vector3.Distance(trackStart.localPosition, trackEnd.localPosition);
-        float lengthPercentage = length / waterPuzzleManager.maxTime;
+        float lengthPercentage = length / console.GetMaxTime();
         float blockPhysicalLength = totalPhysicalLength * lengthPercentage;
 
         // Apply scale
@@ -81,10 +84,10 @@ public class TimelineEvent : MonoBehaviour
 
         // Calculate and set the physical POSITION
         float centerTime = startTime + (length / 2f);
-        float centerPercentage = centerTime / waterPuzzleManager.maxTime;
+        float centerPercentage = centerTime / console.GetMaxTime();
 
         Vector3 targetPos = Vector3.Lerp(trackStart.localPosition, trackEnd.localPosition, centerPercentage);
-        targetPos.y += (rowLevel * rowSpacing);
+        targetPos.x += (rowLevel * rowSpacing);
 
         // Smoothly interpolate between the start and end anchors using Local Position
         transform.localPosition = targetPos;

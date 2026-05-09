@@ -1,3 +1,4 @@
+using Bitgem.VFX.StylisedWater;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -25,11 +26,12 @@ public class WaterPuzzleGoal : MonoBehaviour
 
             // Stop the ball's physics so it doesn't bounce around
             Rigidbody rb = other.attachedRigidbody;
+            other.GetComponent<WateverVolumeFloater>().enabled = false;
             if (rb != null)
             {
-                rb.isKinematic = true;
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
             }
 
             // Snap to the exact correct position

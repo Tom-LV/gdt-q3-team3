@@ -12,6 +12,11 @@ public class WaterPusherBehavior : MonoBehaviour
 
     private void Start()
     {
+        ResetState();
+    }
+
+    public void ResetState()
+    {
         SetActive(isActiveAtStart);
     }
 
