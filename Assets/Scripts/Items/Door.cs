@@ -9,8 +9,9 @@ public class Door : MonoBehaviour
 
     [Header("Door Settings")]
     [SerializeField] private Transform door;
-    [SerializeField] private float doorHeight = 3f;
+    [SerializeField] private Vector3 relativeDoorPos = new Vector3(0, 4, 0);
     [SerializeField] private float openTime = 4f;
+    [SerializeField] private bool startOpen = false;
 
     private Vector3 closedPos;
     private Vector3 openPos;
@@ -27,7 +28,8 @@ public class Door : MonoBehaviour
     {
         // Calculate start and end positions
         closedPos = door.localPosition;
-        openPos = closedPos + new Vector3(0f, doorHeight, 0f);
+        openPos = closedPos + relativeDoorPos;
+        if(startOpen) Open();
     }
 
     public void Open()

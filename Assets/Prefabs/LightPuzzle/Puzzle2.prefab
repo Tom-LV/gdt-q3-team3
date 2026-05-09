@@ -7577,10 +7577,13 @@ MonoBehaviour:
   m_OnOpen:
     m_PersistentCalls:
       m_Calls: []
-  startOpen: 1
+  m_OnClose:
+    m_PersistentCalls:
+      m_Calls: []
   door: {fileID: 8598691718139799260}
-  relativeOpenPos: {x: 0, y: 3.254, z: 0}
+  relativeDoorPos: {x: 0, y: 3.254, z: 0}
   openTime: 1
+  startOpen: 1
 --- !u!1 &360758355537983976
 GameObject:
   m_ObjectHideFlags: 0
@@ -8785,6 +8788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa06be93e26ec5645aba0b6ca2c66e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterLightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 7794484101792479459}
   pivot: {fileID: 7227974844185274480}
@@ -9633,6 +9637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 8339036730432272228}
   pivot: {fileID: 4341306676102883904}
@@ -9951,6 +9956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 5414259964082558153}
   pivot: {fileID: 7345647795745369938}
@@ -10937,6 +10943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 4607680740672179808}
   pivot: {fileID: 5357745714545599634}
@@ -18707,6 +18714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 6732964000710143419}
   pivot: {fileID: 1262210024781591033}
@@ -19175,6 +19183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 2174384486077351077}
   pivot: {fileID: 5473243101135790586}
@@ -19753,6 +19762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 6431806380258433231}
   pivot: {fileID: 8831486329349973963}
@@ -20919,6 +20929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 3377443970375778378}
   pivot: {fileID: 5462582413485812760}
@@ -20977,6 +20988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 0}
   storedItem: {fileID: 0}
   topTransform: {fileID: 5957339355948320911}
   pivot: {fileID: 7126528673364955374}
@@ -30197,77 +30209,3 @@ MonoBehaviour:
   - {fileID: 6449883766973791207}
   - {fileID: 1089636920248317503}
   - {fileID: 3972781654932171129}
-  starter: {fileID: 8402998003122227329}
---- !u!1001 &1185084506884821163
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8532032493557740702}
-    m_Modifications:
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -16.088184
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.7500014
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -45.51998
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522720732036201376, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-      propertyPath: m_Name
-      value: LightCrystal 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e9952f003f7010948ac12687f15d9423, type: 3}
---- !u!114 &666085069836195944 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1822881165417597123, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-  m_PrefabInstance: {fileID: 1185084506884821163}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d666df3b6e54e3b4e947444800b9f032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickableItem
---- !u!4 &952079485014077859 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
-  m_PrefabInstance: {fileID: 1185084506884821163}
-  m_PrefabAsset: {fileID: 0}
