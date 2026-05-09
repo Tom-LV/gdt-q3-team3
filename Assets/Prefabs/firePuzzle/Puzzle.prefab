@@ -2643,12 +2643,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Spark, Assembly-CSharp
-        m_MethodName: Ignite
-        m_Mode: 2
+        m_TargetAssemblyTypeName: FuseNode, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8643162795097662522}
-          m_ObjectArgumentAssemblyTypeName: FuseNode, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2668,8 +2668,9 @@ MonoBehaviour:
         m_CallState: 2
   displayText: 
   cooldown: 0
-  holdRepeatTime: 0
-  supportsHold: 0
+  supportsHolding: 0
+  initialHoldDelay: 0.5
+  holdRepeatRate: 0.1
 --- !u!1 &5447414215195712008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3723,17 +3724,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 4368
   m_IsSelectable: 1
-  m_SelectedFaces: 02000000
-  m_SelectedEdges:
-  - a: 8
-    b: 9
-  - a: 10
-    b: 8
-  - a: 9
-    b: 11
-  - a: 11
-    b: 10
-  m_SelectedVertices: 08000000090000000a0000000b000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &8223825359140797376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4689,6 +4682,7 @@ GameObject:
   - component: {fileID: 897807418008390521}
   - component: {fileID: 2540773777764764318}
   - component: {fileID: 3397853080977989057}
+  - component: {fileID: 2890149559267613179}
   m_Layer: 0
   m_Name: fuseLast
   m_TagString: Untagged
@@ -4774,6 +4768,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.02
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2890149559267613179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7627184913608072946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f76b4bafc672c499e77105721c302d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutsceneTrigger
+  cutscenePos: {x: 45.3, y: -20.3, z: -99.7}
+  cutsceneEuler: {x: -6.7, y: -90.5, z: 0}
+  cutsceneTime: 0.5
+  triggerOnlyOnce: 1
 --- !u!1 &7649674190520793899
 GameObject:
   m_ObjectHideFlags: 0
@@ -5976,6 +5986,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -5997,6 +6011,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: supportsHold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
@@ -6072,6 +6090,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -6093,6 +6115,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: supportsHold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
@@ -6776,6 +6802,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 719711869662865393, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -6801,6 +6831,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: abe57a96ec5c5994fb8964e59545372b, type: 2}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: supportsHold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3407990299960255469, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
@@ -6876,6 +6910,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7507825692078566602, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -6897,6 +6935,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: supportsHold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
+      propertyPath: supportsHolding
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}

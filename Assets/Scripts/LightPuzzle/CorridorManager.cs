@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class CorridorManager : MonoBehaviour
 {

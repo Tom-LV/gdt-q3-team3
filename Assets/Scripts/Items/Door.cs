@@ -24,7 +24,7 @@ public class Door : MonoBehaviour
     {
         float t = 0f;
         Vector3 startPos = door.localPosition;
-        Vector3 endPos = startPos + relativeOpenPos;
+        Vector3 endPos = closedPos + relativeOpenPos;
 
         while (t < openTime)
         {

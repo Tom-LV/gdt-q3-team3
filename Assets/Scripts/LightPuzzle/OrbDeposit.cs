@@ -3,22 +3,44 @@ using UnityEngine.Events;
 
 public class OrbDeposit : MonoBehaviour
 {
-    [SerializeField] private Transform orb;
     [SerializeField] private UnityEvent start;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float maxTriggerDistance;
+    [SerializeField] private Transform resetBowl;
     private bool hasStarted = false;
     private Vector3 target;
 
     void Start()
     {
         target = transform.position + offset;
+        PickableItem item = GetOrbNearby();
+        if(item == null) return;
+        item.transform.position = resetBowl.position + offset;
+        item.SetInteractable(true);
     }
     void Update()
     {
-        if(!hasStarted && Vector3.Distance(orb.position, target) < maxTriggerDistance)
+        PickableItem item = GetOrbNearby();
+        if(!hasStarted && item != null)
         {
+            hasStarted = true;
+            item.SetInteractable(false);
             start?.Invoke();
         }
+    }
+
+    private PickableItem GetOrbNearby()
+    {
+        Collider[] colliders = Physics.OverlapSphere(target, maxTriggerDistance);
+        if(colliders.Length > 3) return null;
+        foreach (Collider col in colliders)
+        {
+            PickableItem item = col.GetComponent<PickableItem>();
+            if(item != null && item.HasKeyID(50))
+            {
+                return item;
+            }
+        }
+        return null;
     }
 }
