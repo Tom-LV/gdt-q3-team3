@@ -261,10 +261,13 @@ public class PlayerControls : MonoBehaviour
 
     public void ShiftToPos(Vector3 pos, Quaternion orientation)
     {
-        transform.position = pos;
-        transform.rotation = orientation;
-        cameraTransform.rotation = orientation;
         velocity = Vector3.zero;
+        shiftTargetPos = pos;
+        shiftTargetOrientation = orientation;
+        shiftStartPos = transform.position;
+        shiftStartRot = transform.rotation;
+        shiftTimer = 0f;
+        isShifting = true;
     }
 
     public void HandleShiftLerp()

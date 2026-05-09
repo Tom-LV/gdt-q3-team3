@@ -9,8 +9,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private PlayerControls player;
 
     [Header("Hold Settings")]
-    public Transform holdPositionR;
-    public Transform holdPositionL;
+    public Transform holdPosition;
     [SerializeField] private float throwForceMultiplier = 12f;
 
     [Tooltip("How thick the item is. Used to prevent dropping items inside walls.")]
@@ -18,9 +17,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool canInteract = true;
     private InteractableItem lookingAtItem;
-    private PickableItem currentHeldItemR;
-    private PickableItem currentHeldItemL;
-
+    private PickableItem currentHeldItem;
     private InputAction interactAction;
     private InputAction dropAction;
 
@@ -37,15 +34,10 @@ public class PlayerInteract : MonoBehaviour
 
     public Transform GetPickupHandAndPickUpItem(PickableItem item)
     {
-        if (currentHeldItemR == null)
+        if (currentHeldItem == null)
         {
-            currentHeldItemR = item;
-            return holdPositionR;
-        }
-        if (currentHeldItemL == null)
-        {
-            currentHeldItemL = item;
-            return holdPositionL;
+            currentHeldItem = item;
+            return holdPosition;
         }
         return null;
     }
@@ -99,8 +91,7 @@ public class PlayerInteract : MonoBehaviour
             }
         }
 
-        if (currentHeldItemR != null) DoHeldItemStuff(currentHeldItemR, holdPositionR);
-        else if (currentHeldItemL != null) DoHeldItemStuff(currentHeldItemL, holdPositionL);
+        if (currentHeldItem != null) DoHeldItemStuff(currentHeldItem, holdPosition);
     }
 
     private void ClearHoverState()
@@ -147,8 +138,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void ClearItem(PickableItem currentHeldItem)
     {
-        if (currentHeldItem == currentHeldItemR) currentHeldItemR = null;
-        else if (currentHeldItem == currentHeldItemL) currentHeldItemL = null;
+        this.currentHeldItem = null;
     }
 
     private Vector3 GetSafeDropPosition(Transform holdPosition)
@@ -179,8 +169,7 @@ public class PlayerInteract : MonoBehaviour
 
     public PickableItem GetKeyItem(int keyID)
     {
-        if(currentHeldItemR?.HasKeyID(keyID) == true) return currentHeldItemR;
-        if(currentHeldItemL?.HasKeyID(keyID) == true) return currentHeldItemL;
+        if(currentHeldItem?.HasKeyID(keyID) == true) return currentHeldItem;
         return null;
     }
 }

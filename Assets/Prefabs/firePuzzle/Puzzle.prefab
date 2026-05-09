@@ -504,6 +504,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1096982737498905692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9116586736187758744}
+  - component: {fileID: 2686173176274224905}
+  m_Layer: 0
+  m_Name: Spark
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9116586736187758744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096982737498905692}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.171, y: -23.041, z: -48.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1563916099885954216}
+  m_Father: {fileID: 5158523290919414162}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2686173176274224905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096982737498905692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb13ac46e1b219447b33aaeba8b8deeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Spark
+  burnSpeed: 3
 --- !u!1 &1106389398183300718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1071,7 @@ Transform:
   - {fileID: 8716363407336689260}
   - {fileID: 2571292068604881027}
   - {fileID: 4920024460123706474}
-  - {fileID: 1563916099885954216}
+  - {fileID: 9116586736187758744}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2342863750007030546
@@ -2643,7 +2689,7 @@ MonoBehaviour:
   m_OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7430095649624526929}
+      - m_Target: {fileID: 2686173176274224905}
         m_TargetAssemblyTypeName: Spark, Assembly-CSharp
         m_MethodName: Ignite
         m_Mode: 2
@@ -4127,9 +4173,8 @@ GameObject:
   - component: {fileID: 1563916099885954216}
   - component: {fileID: 5254132104615042952}
   - component: {fileID: 8513489759285560716}
-  - component: {fileID: 7430095649624526929}
   m_Layer: 0
-  m_Name: Spark
+  m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4144,11 +4189,11 @@ Transform:
   m_GameObject: {fileID: 6753043465426496847}
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710593, y: -0, z: -0, w: 0.7071077}
-  m_LocalPosition: {x: 6.171, y: -23.041, z: -48.12}
+  m_LocalPosition: {x: 0, y: 0.14, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.225, z: 0.475}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5158523290919414162}
+  m_Father: {fileID: 9116586736187758744}
   m_LocalEulerAnglesHint: {x: -60, y: 0, z: 0}
 --- !u!198 &5254132104615042952
 ParticleSystem:
@@ -4233,7 +4278,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4286,7 +4331,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4728,7 +4773,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.005
+      scalar: -0.01
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -8953,19 +8998,6 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!114 &7430095649624526929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6753043465426496847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb13ac46e1b219447b33aaeba8b8deeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Spark
-  burnSpeed: 3
 --- !u!1 &6812032630386957634
 GameObject:
   m_ObjectHideFlags: 0
@@ -9590,6 +9622,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2890149559267613179}
+        m_TargetAssemblyTypeName: CutsceneTrigger, Assembly-CSharp
+        m_MethodName: DoStaticCutscene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10982,7 +11026,7 @@ PrefabInstance:
       objectReference: {fileID: 7622134561442811028}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveForward
+      value: MoveBack
       objectReference: {fileID: 0}
     - target: {fileID: 8102854232454506203, guid: bbd9c6dacc53313498577aedfc470e1a, type: 3}
       propertyPath: m_OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
