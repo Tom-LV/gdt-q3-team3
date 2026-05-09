@@ -30197,7 +30197,6 @@ MonoBehaviour:
   - {fileID: 6449883766973791207}
   - {fileID: 1089636920248317503}
   - {fileID: 3972781654932171129}
-<<<<<<< HEAD:Assets/Prefabs/LightPuzzle/Puzzle.prefab
   starter: {fileID: 8402998003122227329}
 --- !u!1001 &1185084506884821163
 PrefabInstance:
@@ -30272,5 +30271,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2108866788707213576, guid: e9952f003f7010948ac12687f15d9423, type: 3}
   m_PrefabInstance: {fileID: 1185084506884821163}
   m_PrefabAsset: {fileID: 0}
-=======
->>>>>>> Completed-Light-Puzzle:Assets/Prefabs/LightPuzzle/Puzzle2.prefab

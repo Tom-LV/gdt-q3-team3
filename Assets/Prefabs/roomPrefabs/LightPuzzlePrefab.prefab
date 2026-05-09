@@ -1686,6 +1686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 7091234702880693300}
   pivot: {fileID: 2234779919403464698}
@@ -1744,6 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 3261513255411717340}
   pivot: {fileID: 2913491880712828452}
@@ -1948,6 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 6948161510373381352}
   pivot: {fileID: 3327531180091732754}
@@ -2006,6 +2009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 6531636693623902369}
   pivot: {fileID: 9004197629377164751}
@@ -2178,6 +2182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 3117290036282841757}
   pivot: {fileID: 434010090482248266}
@@ -2236,6 +2241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 121350293724390586}
   pivot: {fileID: 2857714928741543810}
@@ -3592,6 +3598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 7018046627552108114}
   pivot: {fileID: 5607118454800271870}
@@ -4611,6 +4618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa06be93e26ec5645aba0b6ca2c66e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterLightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 3680571458522512009}
   pivot: {fileID: 7014012630108499990}
@@ -4679,7 +4687,6 @@ MonoBehaviour:
   - {fileID: 7648248494581745104}
   - {fileID: 1323230519741945848}
   - {fileID: 6310947433934621642}
-  starter: {fileID: 3310672268340355295}
 --- !u!1 &5782635653232009948
 GameObject:
   m_ObjectHideFlags: 0
@@ -13251,6 +13258,9 @@ MonoBehaviour:
   m_OnOpen:
     m_PersistentCalls:
       m_Calls: []
+  m_OnClose:
+    m_PersistentCalls:
+      m_Calls: []
   door: {fileID: 6016861525359725598}
   doorHeight: 3.254
   openTime: 1
@@ -20860,7 +20870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880a0b7feb24c8f47adca20193fccce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbDeposit
-  orb: {fileID: 2058996683734156226}
   start:
     m_PersistentCalls:
       m_Calls:
@@ -20902,6 +20911,7 @@ MonoBehaviour:
         m_CallState: 2
   offset: {x: 0, y: 0.3, z: 0}
   maxTriggerDistance: 0.5
+  resetBowl: {fileID: 0}
 --- !u!1 &7602576046018394499
 GameObject:
   m_ObjectHideFlags: 0
@@ -22310,6 +22320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 4088973167850729980}
   pivot: {fileID: 7383818878279163523}

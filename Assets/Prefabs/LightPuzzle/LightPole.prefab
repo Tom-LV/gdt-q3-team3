@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81b5bb6f1fd9564fa49d36d1feb6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightPole
+  beamMaterial: {fileID: 2100000, guid: 289bdb3f52f236b4ea15d45886a52739, type: 2}
   storedItem: {fileID: 0}
   topTransform: {fileID: 6624584299781615326}
   pivot: {fileID: 7685568373632868377}
