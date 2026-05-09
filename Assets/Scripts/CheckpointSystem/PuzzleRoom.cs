@@ -15,6 +15,10 @@ public class PuzzleRoom : MonoBehaviour
     {
         SpawnFreshRoom();
     }
+    public GameObject GetRoomInstance()
+    {
+        return currentRoomInstance;
+    }
 
     public void ResetRoom()
     {

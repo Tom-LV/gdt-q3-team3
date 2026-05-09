@@ -6,7 +6,11 @@ TagManager:
   tags:
   - Ground
   - Item
+<<<<<<< HEAD
   - PuzzleBall
+=======
+  - LightPuzzleStartOrb
+>>>>>>> Completed-Light-Puzzle
   layers:
   - Default
   - TransparentFX

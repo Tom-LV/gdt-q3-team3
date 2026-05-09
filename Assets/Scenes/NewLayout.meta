@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/NewLayout.meta
 guid: f6aa8248c8c604d4097cd2f440cde796
+========
+guid: 08f76d916309003418c18cdb9fc6a071
+>>>>>>>> Completed-Light-Puzzle:Assets/Scripts/Cutscenes.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

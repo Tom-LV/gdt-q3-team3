@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/roomPrefabs.meta
 guid: 680169cb30da3644e8d5f9c56c7065a2
+========
+guid: f6aa8248c8c604d4097cd2f440cde796
+>>>>>>>> Completed-Light-Puzzle:Assets/Scenes/NewLayout.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

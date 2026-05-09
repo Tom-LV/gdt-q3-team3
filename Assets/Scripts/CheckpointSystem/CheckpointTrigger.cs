@@ -16,7 +16,7 @@ public class CheckpointTrigger : MonoBehaviour
     [SerializeField]
     private UnityEvent m_OnCheckpointActivated;
 
-    private bool hasTriggered = false;
+    private bool hasTriggered = true;
 
     private void Start()
     {

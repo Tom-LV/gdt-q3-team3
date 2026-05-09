@@ -5,26 +5,26 @@ using UnityEngine.Events;
 public class Door : MonoBehaviour
 {
     [SerializeField] protected UnityEvent m_OnOpen;
+    [SerializeField] private bool startOpen = false;
     [SerializeField] private Transform door;
-    [SerializeField] private float doorHeight;
+    [SerializeField] private Vector3 relativeOpenPos;
     [SerializeField] private float openTime = 4;
-    private bool isOpen;
     private Vector3 closedPos;
     void Awake()
     {
         closedPos = door.localPosition;
+        if(startOpen) Open();
     }
     public void Open()
     {
-        isOpen = true;
-        StartCoroutine(OpenRoutine()); // second instance of the magic Coroutine
+        StartCoroutine(OpenRoutine());
     }
     
-    private IEnumerator OpenRoutine() // afforementioned magic
+    private IEnumerator OpenRoutine()
     {
         float t = 0f;
         Vector3 startPos = door.localPosition;
-        Vector3 endPos = closedPos + new Vector3(0f, doorHeight, 0f);
+        Vector3 endPos = closedPos + relativeOpenPos;
 
         while (t < openTime)
         {
@@ -38,10 +38,9 @@ public class Door : MonoBehaviour
     }
     public void Close()
     {
-        isOpen = false;
-        StartCoroutine(CloseRoutine()); // second instance of the magic Coroutine
+        StartCoroutine(CloseRoutine());
     }
-    private IEnumerator CloseRoutine() // afforementioned magic
+    private IEnumerator CloseRoutine()
     {
         float t = 0f;
         Vector3 startPos = door.localPosition;

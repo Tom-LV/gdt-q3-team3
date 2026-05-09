@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 5bb1a294b19aea642a279c572a268064
+<<<<<<<< HEAD:Assets/Scenes/NewLayoutWithWater.unity.meta
+guid: c54912d496e31834aabb342458df705a
+========
+guid: 7a4d01c6e28ea034c845b159380cbf6f
+>>>>>>>> Completed-Light-Puzzle:Assets/Scenes/Final Layout.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
