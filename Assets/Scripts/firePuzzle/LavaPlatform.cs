@@ -1,62 +1,119 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class LavaPlatform : MonoBehaviour
 {
-    [HideInInspector] public Vector3 moveDirection;
-    [HideInInspector] public float moveSpeed;
-    [HideInInspector] public float lifeTime;
+    private enum PlatformState { Rising, Moving, Sinking }
+    private PlatformState currentState = PlatformState.Rising;
 
-    [SerializeField]
-    private float floorDetectionHeight;
+    [Header("Platform Settings")]
+    [Tooltip("How fast the platform travels physically along the curve (Meters per Second).")]
+    public float moveSpeed = 4f;
+    public float verticalSpeed = 2f;
+    public float sinkDepth = 2f;
 
-    private float age = 0f;
-    private BoxCollider platformCollider;
+    private Spline myPath;
 
     private Transform objectOnPlatform;
-    private Vector3 previousPosition; // Tracks platform movement
+    private CharacterController playerCC;
 
-    void Start()
+    private Rigidbody rb;
+    private Vector3 previousPosition;
+    private Vector3 currentVelocity;
+
+    private float currentDistance = 0f;
+
+    public void Initialize(Spline path)
     {
-        platformCollider = GetComponent<BoxCollider>();
-        previousPosition = transform.position; // Set initial position
+        myPath = path;
+
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        Vector3 startPos = myPath.GetPoint(0f);
+        Vector3 hiddenSpawnPos = startPos - (Vector3.up * sinkDepth);
+        transform.position = hiddenSpawnPos;
+        rb.position = hiddenSpawnPos;
+        previousPosition = transform.position;
+
+        currentState = PlatformState.Rising;
     }
 
     void FixedUpdate()
     {
-        // 1. Move the platform (Note: changed to fixedDeltaTime for FixedUpdate)
-        transform.position += moveDirection * moveSpeed * Time.fixedDeltaTime;
+        if (myPath == null) return;
 
-        // 2. Calculate how much the platform moved this frame
-        Vector3 deltaPosition = transform.position - previousPosition;
+        Vector3 nextPos = rb.position;
 
-        // 3. Move the player by the exact same amount
+        Vector3 startPos = myPath.GetPoint(0f);
+        Vector3 endPos = myPath.GetPoint(1f);
+
+        switch (currentState)
+        {
+            case PlatformState.Rising:
+                nextPos = Vector3.MoveTowards(rb.position, startPos, verticalSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(rb.position, startPos) < 0.01f)
+                    currentState = PlatformState.Moving;
+                break;
+
+            case PlatformState.Moving:
+                // Move forward by constant physical speed
+                currentDistance += moveSpeed * Time.fixedDeltaTime;
+
+                // Check if we hit the total measured length of the spline
+                if (currentDistance >= myPath.TotalLength)
+                {
+                    currentDistance = myPath.TotalLength;
+                    currentState = PlatformState.Sinking;
+                }
+
+                // Get the position using our new Lookup Table method!
+                nextPos = myPath.GetPointAtDistance(currentDistance);
+                break;
+
+            case PlatformState.Sinking:
+                Vector3 sinkTarget = endPos - (Vector3.up * sinkDepth);
+                nextPos = Vector3.MoveTowards(rb.position, sinkTarget, verticalSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(rb.position, sinkTarget) < 0.01f)
+                    Destroy(gameObject);
+                break;
+        }
+
+        Vector3 deltaPosition = nextPos - previousPosition;
+        currentVelocity = deltaPosition / Time.fixedDeltaTime;
+
+        rb.MovePosition(nextPos);
+
         if (objectOnPlatform != null)
         {
-            objectOnPlatform.position += deltaPosition;
+            if (playerCC != null) playerCC.Move(deltaPosition);
+            else objectOnPlatform.position += deltaPosition;
         }
 
-        // 4. Update the previous position for the next frame
-        previousPosition = transform.position;
-
-        // 5. Handle Lifetime
-        age += Time.fixedDeltaTime;
-        if (age >= lifeTime)
-        {
-            Destroy(gameObject);
-        }
+        previousPosition = nextPos;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Consider adding a tag check here, e.g., if(other.CompareTag("Player"))
-        objectOnPlatform = other.transform;
+        if (other.CompareTag("Player"))
+        {
+            objectOnPlatform = other.transform;
+            playerCC = other.GetComponent<CharacterController>();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (objectOnPlatform == other.transform)
         {
+            if (other.CompareTag("Player"))
+            {
+                PlayerControls player = other.GetComponent<PlayerControls>();
+                if (player != null) player.AddMomentum(currentVelocity);
+            }
+
             objectOnPlatform = null;
+            playerCC = null;
         }
     }
 }

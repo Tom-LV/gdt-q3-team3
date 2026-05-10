@@ -48,6 +48,7 @@ public class PlayerControls : MonoBehaviour
     private float cameraPitch = 0f;
     private float playerYaw = 0f;
     private Vector3 velocity;
+    private Vector3 externalMomentum;
 
     // Stored default sizes for crouching math
     private float standingHeight;
@@ -199,7 +200,16 @@ public class PlayerControls : MonoBehaviour
 
         Vector3 oldPosition = tr.position;
         velocity.y += gravity * Time.deltaTime;
-        cc.Move(velocity * Time.deltaTime);
+
+        if (isGrounded)
+            externalMomentum = Vector3.Lerp(externalMomentum, Vector3.zero, 8f * Time.deltaTime); // Ground friction
+        else
+            externalMomentum = Vector3.Lerp(externalMomentum, Vector3.zero, 1.5f * Time.deltaTime); // Air resistance
+
+        if (externalMomentum.magnitude < 0.1f) externalMomentum = Vector3.zero;
+
+        cc.Move((velocity + externalMomentum) * Time.deltaTime);
+
         Vector3 xzTrueVelocity = (tr.position - oldPosition) / Time.deltaTime;
         xzTrueVelocity.y = 0;
 
@@ -313,5 +323,10 @@ public class PlayerControls : MonoBehaviour
         Vector3 delta = clampedPos - tr.position;
         delta.y = 0;
         cc.Move(delta);
+    }
+
+    public void AddMomentum(Vector3 force)
+    {
+        externalMomentum += force;
     }
 }
