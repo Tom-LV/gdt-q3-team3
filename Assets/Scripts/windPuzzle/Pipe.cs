@@ -9,6 +9,10 @@ public class Pipe : MonoBehaviour
     [Tooltip("What color is this pipe?")]
     public PipeColor pipeColor = PipeColor.Normal;
 
+    [Header("Effects")]
+    public GameObject leakParticlePrefab;
+    private List<GameObject> activeLeaks = new List<GameObject>();
+
     [Header("Pipe Connections")]
     public Vector3[] localPorts;
 
@@ -17,6 +21,8 @@ public class Pipe : MonoBehaviour
     public bool showDebugLines = true;
     [Tooltip("How long should the debug lines be?")]
     public float debugLineLength = 0.5f;
+
+
 
     public List<Vector3> GetWorldPorts()
     {
@@ -32,6 +38,30 @@ public class Pipe : MonoBehaviour
         return worldPorts;
     }
 
+    // Call this to shoot air out of an unconnected port
+    public void LeakAir(Vector3 direction, float pipeSpacing)
+    {
+        if (leakParticlePrefab == null) return;
+
+        // Calculate the edge of the pipe so the particle doesn't spawn dead in the center
+        // (Assuming the pivot is in the center, we move out by half the spacing)
+        Vector3 spawnPos = transform.position + (direction * (pipeSpacing * 0.5f));
+        spawnPos.y += 0.12f;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+
+        GameObject leak = Instantiate(leakParticlePrefab, spawnPos, rotation, transform);
+        activeLeaks.Add(leak);
+    }
+
+    // Call this when the lever is pulled to clear old particles
+    public void ClearLeaks()
+    {
+        foreach (GameObject leak in activeLeaks)
+        {
+            if (leak != null) Destroy(leak);
+        }
+        activeLeaks.Clear();
+    }
     private void OnDrawGizmos()
     {
         // Only draw if the toggle is checked and we have ports to draw!
@@ -60,4 +90,8 @@ public class Pipe : MonoBehaviour
             Gizmos.DrawSphere(endPoint, 0.1f);
         }
     }
+
+
+
+
 }

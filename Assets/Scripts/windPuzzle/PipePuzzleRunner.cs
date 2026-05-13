@@ -34,7 +34,7 @@ public class PipePuzzleRunner : MonoBehaviour
         foreach (PipeInput input in allInputs)
         {
             Pipe startPipe = input.GetComponent<Pipe>();
-            Search(startPipe, new HashSet<Pipe>(), 0);
+            Search(startPipe, new HashSet<Pipe>(), 0, Vector3.zero);
         }
 
         // 4. Check if ALL outputs got what they needed
@@ -77,12 +77,16 @@ public class PipePuzzleRunner : MonoBehaviour
             Vector2Int coord = new Vector2Int(x, z);
 
             // Add it to our routing map
-            if (!pipeGrid.ContainsKey(coord)) pipeGrid.Add(coord, pipe);
+            if (!pipeGrid.ContainsKey(coord))
+            {
+                pipe.ClearLeaks();
+                pipeGrid.Add(coord, pipe);
+            }
         }
     }
 
     // The Recursive Branching Search
-    private void Search(Pipe currentPipe, HashSet<Pipe> visited, int currentPitch)
+    private void Search(Pipe currentPipe, HashSet<Pipe> visited, int currentPitch, Vector3 entryPort)
     {
         HashSet<Pipe> currentVisited = new HashSet<Pipe>(visited);
         currentVisited.Add(currentPipe);
@@ -107,6 +111,8 @@ public class PipePuzzleRunner : MonoBehaviour
 
         foreach (Vector3 openPort in currentPipe.GetWorldPorts())
         {
+            if (entryPort != Vector3.zero && Vector3.Distance(openPort, entryPort) < 0.1f) continue;
+
             Vector2Int neighborOffset = new Vector2Int(Mathf.RoundToInt(openPort.x), Mathf.RoundToInt(openPort.z));
             Vector2Int neighborCoord = currentCoord + neighborOffset;
 
@@ -130,11 +136,20 @@ public class PipePuzzleRunner : MonoBehaviour
 
                 if (portsConnect)
                 {
-                    Vector3 startPos = currentPipe.transform.position + (Vector3.up * 0.5f);
-                    Vector3 endPos = neighborPipe.transform.position + (Vector3.up * 0.5f);
-                    Debug.DrawLine(startPos, endPos, Color.magenta, 10f);
-                    Search(neighborPipe, currentVisited, currentPitch);
+                    // Branch into the next pipe!
+                    // We pass 'directionBackToUs' so the next pipe knows where the air came from
+                    Search(neighborPipe, currentVisited, currentPitch, directionBackToUs);
                 }
+                else
+                {
+                    // A pipe is there, but its hole doesn't line up. LEAK!
+                    currentPipe.LeakAir(openPort, gridSpacing);
+                }
+            }
+            else
+            {
+                // No valid neighbor pipe found. LEAK!
+                currentPipe.LeakAir(openPort, gridSpacing);
             }
         }
     }
