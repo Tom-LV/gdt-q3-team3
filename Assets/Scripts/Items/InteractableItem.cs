@@ -42,12 +42,14 @@ public class InteractableItem : MonoBehaviour
         return Time.time - lastUseTime > cooldown;
     }
 
-    public void OnHoverEnter()
+    // Added 'virtual' keyword
+    public virtual void OnHoverEnter(PlayerInteract player = null)
     {
         SetLayerRecursively(gameObject, interactOutlineLayer);
     }
 
-    public void OnHoverLeave()
+    // Added 'virtual' keyword AND the player parameter
+    public virtual void OnHoverLeave(PlayerInteract player = null)
     {
         SetLayerRecursively(gameObject, 0);
     }
@@ -89,6 +91,7 @@ public class InteractableItem : MonoBehaviour
             }
         }
     }
+
 
     // Extracted the actual firing logic so both single-clicks and holds can use it securely
     protected virtual void TriggerInteraction()

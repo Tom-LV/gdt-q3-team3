@@ -36,7 +36,7 @@ public class OrbDeposit : MonoBehaviour
         foreach (Collider col in colliders)
         {
             PickableItem item = col.GetComponent<PickableItem>();
-            if(item != null && item.HasKeyID(50))
+            if(item != null && item.HasType("50"))
             {
                 return item;
             }

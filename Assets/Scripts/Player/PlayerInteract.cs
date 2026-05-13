@@ -18,13 +18,13 @@ public class PlayerInteract : MonoBehaviour
     private bool canInteract = true;
     private InteractableItem lookingAtItem;
     private PickableItem currentHeldItem;
+
     private InputAction interactAction;
-    private InputAction dropAction;
+    // Removed dropAction since Interact handles it now!
 
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
-        dropAction = InputSystem.actions.FindAction("Throw");
     }
 
     public void SetInteract(bool canInteract)
@@ -49,11 +49,13 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
             return;
         }
-        if(player.IsPushing()) {
-            if(interactAction.WasPressedThisFrame()) player.ClearPushState();
+        if (player.IsPushing())
+        {
+            if (interactAction.WasPressedThisFrame()) player.ClearPushState();
             return;
         }
 
+        // --- RAYCAST & HOVER LOGIC ---
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, interactRange))
         {
             InteractableItem interactableItem = hit.collider.GetComponentInParent<InteractableItem>();
@@ -64,7 +66,7 @@ public class PlayerInteract : MonoBehaviour
                 {
                     ClearHoverState();
                     lookingAtItem = interactableItem;
-                    lookingAtItem.OnHoverEnter();
+                    lookingAtItem.OnHoverEnter(this);
                 }
             }
             else
@@ -77,87 +79,82 @@ public class PlayerInteract : MonoBehaviour
             ClearHoverState();
         }
 
-        // --- UPDATED INPUT LOGIC ---
+        // --- UNIFIED INPUT LOGIC ---
         if (lookingAtItem != null)
         {
+            // 1. LOOKING AT SOMETHING: Interact with it (Pickup, Place in Slot, etc.)
             if (interactAction.WasPressedThisFrame())
             {
                 lookingAtItem.OnInteract(this);
             }
             else if (interactAction.WasReleasedThisFrame())
             {
-                // Tell the item we let go of the button
                 lookingAtItem.StopInteract();
             }
         }
-
-        if (currentHeldItem != null) DoHeldItemStuff(currentHeldItem, holdPosition);
+        else if (currentHeldItem != null)
+        {
+            // 2. LOOKING AT NOTHING & HOLDING AN ITEM: Drop or Throw it
+            if (interactAction.WasPressedThisFrame())
+            {
+                DropItem(currentHeldItem, holdPosition);
+            }
+        }
     }
 
     private void ClearHoverState()
     {
         if (lookingAtItem != null)
         {
-            // Failsafe: if we look away while holding the button, force it to stop interacting
             lookingAtItem.StopInteract();
-            lookingAtItem.OnHoverLeave();
+            lookingAtItem.OnHoverLeave(this);
             lookingAtItem = null;
         }
     }
 
-    private void DoHeldItemStuff(PickableItem currentHeldItem, Transform holdPosition)
+    private void DropItem(PickableItem itemToDrop, Transform holdPos)
     {
-        if (dropAction.WasPressedThisFrame())
-        {
-            DropItem(currentHeldItem, holdPosition);
-        }
-        else if (interactAction.WasPressedThisFrame() && lookingAtItem == null)
-        {
-            currentHeldItem.Use();
-        }
-    }
+        itemToDrop.transform.position = GetSafeDropPosition(holdPos);
 
-    private void DropItem(PickableItem currentHeldItem, Transform holdPosition)
-    {
-        currentHeldItem.transform.position = GetSafeDropPosition(holdPosition);
-
+        // If you are sprinting while pressing Interact, it throws the item instead!
         if (player.IsSprinting())
         {
             Vector3 force = cameraTransform.forward * throwForceMultiplier;
             force += Vector3.up * (throwForceMultiplier * 0.2f);
 
-            currentHeldItem.Throw(force);
+            itemToDrop.Throw(force);
         }
         else
         {
-            currentHeldItem.Drop();
+            itemToDrop.Drop();
         }
 
-        ClearItem(currentHeldItem);
+        ClearItem(itemToDrop);
     }
 
-    public void ClearItem(PickableItem currentHeldItem)
+    public void ClearItem(PickableItem itemToClear)
     {
-        this.currentHeldItem = null;
+        // This ensures the player's hands are empty
+        if (currentHeldItem == itemToClear)
+        {
+            currentHeldItem = null;
+        }
     }
 
-    private Vector3 GetSafeDropPosition(Transform holdPosition)
+    private Vector3 GetSafeDropPosition(Transform holdPos)
     {
         Vector3 origin = cameraTransform.position;
-        Vector3 target = holdPosition.position;
+        Vector3 target = holdPos.position;
         Vector3 direction = target - origin;
         float distance = direction.magnitude;
 
         if (Physics.SphereCast(origin, itemRadius, direction.normalized, out RaycastHit hit, distance))
         {
-            // If we hit a wall, place the item at the hit point, pushed slightly back along the surface normal
             return hit.point + (hit.normal * itemRadius);
         }
 
-        // The path is clear, it's safe to drop it directly at the hand position
         return target;
     }
-
 
     //---------------------
     // special interactions
@@ -167,9 +164,23 @@ public class PlayerInteract : MonoBehaviour
         player.SetPushObject(pushable);
     }
 
-    public PickableItem GetKeyItem(int keyID)
+    public PickableItem GetKeyItem(string type)
     {
-        if(currentHeldItem?.HasKeyID(keyID) == true) return currentHeldItem;
+        if (currentHeldItem?.HasType(type) == true) return currentHeldItem;
         return null;
+    }
+
+    public PickableItem GetCurrentHeldItem()
+    {
+        return currentHeldItem;
+    }
+
+    public Vector3 GetCameraForward()
+    {
+        if (cameraTransform != null)
+        {
+            return cameraTransform.forward;
+        }
+        return transform.forward;
     }
 }

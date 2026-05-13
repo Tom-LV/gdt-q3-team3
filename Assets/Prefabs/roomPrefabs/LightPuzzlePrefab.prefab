@@ -13262,8 +13262,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   door: {fileID: 6016861525359725598}
-  doorHeight: 3.254
+  relativeDoorPos: {x: 0, y: 4, z: 0}
   openTime: 1
+  startOpen: 1
 --- !u!1 &7138748302269843244
 GameObject:
   m_ObjectHideFlags: 0
