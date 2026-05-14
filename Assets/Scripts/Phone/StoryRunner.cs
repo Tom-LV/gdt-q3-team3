@@ -33,7 +33,7 @@ public class StoryRunner : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    void Start()
+    public void StartStory()
     {
         if (StoryGraph != null)
         {

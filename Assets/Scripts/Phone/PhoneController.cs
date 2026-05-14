@@ -21,6 +21,8 @@ public class PhoneController : MonoBehaviour
 
     private InputAction togglePhoneAction;
 
+    [SerializeField] private bool canOpenPhone;
+
     private void Start()
     {
         togglePhoneAction = InputSystem.actions.FindAction("TogglePhone");
@@ -29,11 +31,22 @@ public class PhoneController : MonoBehaviour
 
     void Update()
     {
-        if (togglePhoneAction != null && togglePhoneAction.WasPressedThisFrame())
+        if (canOpenPhone && togglePhoneAction != null && togglePhoneAction.WasPressedThisFrame())
         {
             isGamePaused = !isGamePaused;
             UpdatePhoneState();
         }
+    }
+
+    public void OpenPhone()
+    {
+        isGamePaused = true;
+        UpdatePhoneState();
+    }
+
+    public void SetCanOpenPhone(bool canOpen)
+    {
+        canOpenPhone = canOpen;
     }
 
     private void UpdatePhoneState()

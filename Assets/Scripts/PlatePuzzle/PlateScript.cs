@@ -13,7 +13,8 @@ public class PlateScript : MonoBehaviour
     [Tooltip("Create an Empty GameObject right on the top center of the plate and assign it here.")]
     public Transform surfaceCenter;
     public float spacing = 0.5f;
-    public float heightOffset = 0.02f; // Keeps the glyphs from clipping into the stone
+    public float glyphOffset = 0.02f; // Keeps the glyphs from clipping into the stone
+    public float activeHeight = 0.2f;
     public Boolean isActive = false;
     public float powerOnValue = 2f;
     public float powerOffValue = 0.1f;
@@ -59,27 +60,27 @@ public class PlateScript : MonoBehaviour
             switch (count)
             {
                 case 1:
-                    localPos = new Vector3(0, heightOffset, 0);
+                    localPos = new Vector3(0, glyphOffset, 0);
                     scale = 60f;
                     break;
 
                 case 2:
                     float xOffset2 = (i == 0) ? -spacing : spacing;
-                    localPos = new Vector3(xOffset2, heightOffset, 0);
+                    localPos = new Vector3(xOffset2, glyphOffset, 0);
                     scale = 60f;
                     break;
 
                 case 3:
                     float xOffset3 = (i - 1) * spacing;
                     float yOffset3 = (i == 1) ? 0.2f : -0.2f;
-                    localPos = new Vector3(xOffset3, heightOffset, yOffset3);
+                    localPos = new Vector3(xOffset3, glyphOffset, yOffset3);
                     scale = 60f;
                     break;
 
                 case 4:
                     float xOffset4 = (i % 2 == 0) ? -spacing : spacing;
                     float zOffset4 = (i < 2) ? spacing : -spacing;
-                    localPos = new Vector3(xOffset4, heightOffset, zOffset4);
+                    localPos = new Vector3(xOffset4, glyphOffset, zOffset4);
                     scale = 60f;
                     break;
             }
@@ -95,7 +96,7 @@ public class PlateScript : MonoBehaviour
     {
         isActive = !isActive;
         float targetPower = isActive ? powerOnValue : powerOffValue;
-        transform.localPosition = new Vector3(transform.localPosition.x, isActive ? 0.05f : 0f, transform.localPosition.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, isActive ? activeHeight : 0f, transform.localPosition.z);
         SetGlyphPower(targetPower);
     }
 
@@ -103,7 +104,7 @@ public class PlateScript : MonoBehaviour
     {
         this.isActive = isActive;
         float targetPower = isActive ? powerOnValue : powerOffValue;
-        transform.localPosition = new Vector3(transform.localPosition.x, isActive ? 0.05f : 0f, transform.localPosition.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, isActive ? activeHeight : 0f, transform.localPosition.z);
         SetGlyphPower(targetPower);
     }
 

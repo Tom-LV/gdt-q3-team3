@@ -138,6 +138,7 @@ public class ItemSlot : InteractableItem
                 }
 
                 if (m_OnPlace != null) m_OnPlace.Invoke();
+                if (!canRemove) SetInteractable(false);
 
                 // --- THE FIX ---
                 // Refresh visuals immediately so the placed item gets its outline
