@@ -8,6 +8,7 @@ public class Pipe : MonoBehaviour
     [Header("Pipe Properties")]
     [Tooltip("What color is this pipe?")]
     public PipeColor pipeColor = PipeColor.Normal;
+    
 
     [Header("Effects")]
     public GameObject leakParticlePrefab;
