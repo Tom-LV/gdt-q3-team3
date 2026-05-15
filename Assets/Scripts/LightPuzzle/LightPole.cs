@@ -131,8 +131,8 @@ public class LightPole : MonoBehaviour
 
         lr = gameObject.AddComponent<LineRenderer>();
         lr.positionCount = 2;
-        lr.startWidth = 0.05f;
-        lr.endWidth = 0.05f;
+        lr.startWidth = 0.02f;
+        lr.endWidth = 0.04f;
         lr.material = beamMaterial;
     }
     public void DrawBeam(Vector3 start, Vector3 end)
